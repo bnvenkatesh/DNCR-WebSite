@@ -1,0 +1,41 @@
+@using RJP.MultiUrlPicker.Models
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    ViewBag.carouselCount = 0;
+}
+
+<div class="desktopBannerContainer hideOnTablet hideOnMobile"></div>
+<div class="desktopBannerNextContainer hideOnTablet hideOnMobile"></div>
+<div class="tabletBannerContainer showOnTablet hideOnMobile"></div>
+<div class="tabletBannerNextContainer showOnTablet hideOnMobile"></div>
+<div class="section bannerContent">
+    <div id="slider">
+        <ul class="bxslider">
+            @foreach (var carouselId in Model.MacroParameters["Items"].ToString().Split(','))
+            {
+                var carouselNode = Umbraco.Content(carouselId);
+                if (carouselNode.Id != 0)
+                {
+                    ViewBag.carouselCount++;
+                    var desktopBackgroundImage = Umbraco.Media(carouselNode.GetPropertyValue("desktopBackgroundImage"));
+                    var tabletBackgroundImage = Umbraco.Media(carouselNode.GetPropertyValue("tabletBackgroundImage"));
+                    var itemTitle = carouselNode.GetPropertyValue("carouselTitle");
+                    var itemContent = Html.Raw(carouselNode.GetPropertyValue("carouselContent").ToString().Replace("\n", "<br/>"));
+                    if (ViewBag.carouselCount == 1) {
+                        ViewBag.firstCarouselImage = tabletBackgroundImage;
+                        ViewBag.firstCarouselTitle = itemTitle;                        
+                    }
+                    <li data-desktop-background-image="@desktopBackgroundImage.Url" data-tablet-background-image="@tabletBackgroundImage.Url">
+                        <div class="carousel-title">@itemTitle</div>
+                        <div class="carousel-content">@itemContent</div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <img class="showOnMobile mobileBanner" src="@ViewBag.firstCarouselImage.Url" />
+    <div class="showOnMobile mobileDesc">
+        @ViewBag.firstCarouselTitle
+    </div>
+</div>

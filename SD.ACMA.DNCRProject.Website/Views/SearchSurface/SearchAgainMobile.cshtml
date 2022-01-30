@@ -1,0 +1,9 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SearchViewModel>
+
+@using (Html.BeginUmbracoForm<SearchSurfaceController>("Search"))
+{
+    @Html.AntiForgeryToken()
+    @Html.TextBoxFor(model => model.Keywords, new { @type = "search" })
+    <button class="ProxiBold">SEARCH</button>
+}

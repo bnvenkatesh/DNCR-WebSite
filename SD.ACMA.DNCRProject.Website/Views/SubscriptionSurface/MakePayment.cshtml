@@ -1,0 +1,106 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.MakePaymentViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+<div class="form-holder floatLeft">
+    <div class="formDesc">@ViewBag.PageSummary</div>
+    <div class="formError">@ViewBag.ErrorMessage</div>
+    @using (Html.BeginUmbracoForm<SubscriptionSurfaceController>("MakePayment"))
+    {
+        @Html.AntiForgeryToken()
+        <ul id="formAccordion" class="accordion globalAccordion">
+            <li>
+                <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                    <span class="title">1. Payment details</span>
+                    <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                </div>
+                <div class="accordionContent">
+                    <div class="subHeader">
+                        <p>Order details #@Model.OrderNumber</p>
+                    </div>
+                    <div class="tableHolder">
+                        <table>
+                            <caption>Order Summary</caption>
+                            <tr>
+                                <th class="addborderLeftTop">Type</th>
+                                <th class="right addborderRightTop">Fee</th>
+                            </tr>
+                            @{
+        var counter = 0;
+        foreach (var subscription in Model.Subscriptions)
+        {
+            @Html.HiddenFor(model => model.Subscriptions[counter].Price)
+                                @Html.HiddenFor(model => model.Subscriptions[counter].Type)
+                                @Html.HiddenFor(model => model.Subscriptions[counter].Washes)
+                                <tr class="orderItem">
+                                    <td>Subscription Type @subscription.Type (@String.Format("{0:n0} washes", subscription.Washes))</td>
+                                    <td class="right">@String.Format("${0:n}", subscription.Price)</td>
+                                </tr>
+        }
+                            }
+                            <tr class="noBorder">
+                                <td class="ProxiSemiBold">@Html.GetDisplayName(model => model.OrderTotal)</td>
+                                <td class="right ProxiSemiBold">@String.Format("${0:n}", Model.OrderTotal)</td>
+                            </tr>
+                            <tr class="noBorder">
+                                <td>@Html.GetDisplayName(model => model.PaidToDate)</td>
+                                <td class="right">@String.Format("${0:n}", Model.PaidToDate)</td>
+                            </tr>
+                            <tr class="solidBorderTop">
+                                <td class="ProxiSemiBold">@Html.GetDisplayName(model => model.OrderBalance)</td>
+                                <td class="right ProxiSemiBold">@String.Format("${0:n}", Model.OrderBalance)</td>
+                            </tr>
+                        </table>
+                    </div>
+                    @Html.HiddenFor(model => model.OrderNumber)
+                    @Html.HiddenFor(model => model.OrderTotal)
+                    @Html.HiddenFor(model => model.PaidToDate)
+                    @Html.HiddenFor(model => model.OrderBalance)
+                    <hr />
+                    @if (ViewBag.CanPay)
+                    {
+                        <div class="labelDescMargin">
+                            <p>Payment by credit card is via an external site.</p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit nomargin">NEXT</button>
+                        </div>
+                    }
+                   else
+                    {
+                    <div class="labelDescMargin">
+                        <p>This order is no longer payable. Return to the <a href="@ViewBag.AccountDashboardURL">account dashboard</a>.</p>
+                    </div>
+                    }
+                </div>
+            </li>
+        </ul>
+    }
+</div>
+<div class="sidebar floatLeft">
+    @if (ViewBag.Faqs != "")
+    {
+        @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+    }
+
+    @if (ViewBag.Downloads != "")
+    {
+        @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+    }
+
+    @if (ViewBag.RelatedLinks != "")
+    {
+        @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+    }
+    <div class="clear"></div>
+</div>

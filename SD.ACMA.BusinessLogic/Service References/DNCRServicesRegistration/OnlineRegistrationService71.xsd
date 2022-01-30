@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration.Bulk" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration.Bulk" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Registrations/OnlineRegistrationService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="BulkRegistrationRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EvidenceFile" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FaxNumbersFile" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumbersFile" nillable="true" type="xs:base64Binary" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="OperationType" type="q1:BulkRegistrationRequestType.BulkRegistrationRequestTypeEnum" />
+      <xs:element minOccurs="0" name="PostCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="PreferredContactMethod" type="q2:RegistrationRequestAccountContactPreference.RegistrationRequestAccountContactPreferenceEnum" />
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Suburb" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BulkRegistrationRequestArgs" nillable="true" type="tns:BulkRegistrationRequestArgs" />
+  <xs:complexType name="BulkRegistrationRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorsInFaxFile" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ErrorsInPhoneFile" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="HasErrorsInFax" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasErrorsInPhone" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RequestID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BulkRegistrationRequestResult" nillable="true" type="tns:BulkRegistrationRequestResult" />
+</xs:schema>

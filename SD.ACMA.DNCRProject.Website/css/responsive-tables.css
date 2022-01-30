@@ -1,0 +1,77 @@
+/* Foundation v2.1.4 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+	
+	#article table { margin-bottom: 0; }
+	
+	.pinned { position: absolute; display:none; left: 0; top: 0; background: #fff; width: 35%; overflow: hidden; overflow-x: scroll; border-right: 1px solid #ccc; border-left: 1px solid #ccc; }
+	.pinned table { border-right: none; border-left: none; width: 100%; display:none}
+	.pinned table th, .pinned table td { white-space: nowrap; }
+	.pinned td:last-child { border-bottom: 0; }
+	
+	div.table-wrapper { position: relative; margin-bottom: 20px; overflow: hidden; border-right: 1px solid #ccc; }
+	div.table-wrapper div.scrollable table { margin-left:0; }
+	div.table-wrapper div.scrollable { overflow: scroll; overflow-y: hidden; }	
+	
+	#article table td, #article table th { position: relative; white-space: nowrap; overflow: hidden; }
+
+	
+}
+
+/* -----------------------------------------
+   Page Name 1
+----------------------------------------- */
+
+
+
+
+/* -----------------------------------------
+   Page Name 2
+----------------------------------------- */
+
+
+
+#article table tr:nth-child(1) td{font-family:"arimo_semibold"; background:#323232; color:#fff;}
+#article table tr:nth-child(1) td a{ color: #fff;}
+
+#article table tr:last-child td:nth-child(1){
+-webkit-border-bottom-left-radius: 4px;
+-moz-border-radius-bottomleft: 4px;
+border-bottom-left-radius: 4px;
+}
+#article table tr:last-child td:last-child{
+-webkit-border-bottom-right-radius: 4px;
+-moz-border-radius-bottomright: 4px;
+border-bottom-right-radius: 4px;
+
+}
+
+#article table tr:nth-child(1) td:nth-child(1){
+-webkit-border-top-left-radius: 4px;
+-moz-border-radius-topleft: 4px;
+border-top-left-radius: 4px;
+}
+#article table tr:nth-child(1) td:last-child{
+-webkit-border-top-right-radius: 4px;
+-moz-border-radius-topright: 4px;
+border-top-right-radius: 4px;
+}
+#article table p {font-size:1em; line-height:normal;}
+#article table strong{font-weight:normal;}
+#article table tr td p, #article table tr th p{padding-bottom: 0;}

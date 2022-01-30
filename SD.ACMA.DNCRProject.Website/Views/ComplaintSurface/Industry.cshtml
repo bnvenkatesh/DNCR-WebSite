@@ -1,0 +1,352 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.IndustryComplaintViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        $(function () {
+            refreshState();
+            $("select#Country").change(function () {
+                refreshState();
+            });
+            bindHiddenState();
+
+            hideDetails();
+            $(".accordionContent input#IsAnonymous").on("change", function () {
+                hideDetails();
+            });
+        });
+    </script>
+    <div class="form-holder floatLeft">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@ViewBag.ErrorMessage</div>
+        @using (Html.BeginUmbracoForm<ComplaintSurfaceController>("Industry"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">1. About you</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                <div class="accordionContent">
+                <div>
+                    <p class="italic">All fields marked with * are mandatory</p>
+                    <div class="errorContainer"></div>
+                </div>
+                <br />
+                @if (SessionHelper.AgentId != null)
+                {
+                    <div class="formField">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.Channel, new {@class = "inputLabel"})
+                        </div>
+                        <div class="floatLeft">
+                            <div class="selectParent selectShort">
+                                @Html.ChannelDropDownListFor(model => model.Channel)
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Channel, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <hr/>
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.Channel)
+                }
+
+                <div class="formField">
+                    @Html.CheckBoxFor(model => model.IsAnonymous, new {@class = "radioCheck"})
+                    @Html.RequiredLabelFor(model => model.IsAnonymous, new { @class = "radioCheckLabel" })
+                </div>
+                <hr/>
+                <div class="fieldMargin subHeader anonymousHide">
+                    <p>Your details</p>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.Title, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        <div class="selectParent selectShort">
+                            @Html.TitlesDropDownListFor(model => model.Title)
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Title, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.FirstName, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.LastName, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.OrganisationName, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.OrganisationName, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.OrganisationName, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                @if (SessionHelper.AccountUserId > 0)
+                {
+                    <div class="formField fieldMargin anonymousHide">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.AccessSeekerId, new { @class = "inputLabel" })
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.AccessSeekerId, new { @class = "short readonly deny-html", disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.AccessSeekerId, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+                else
+                {
+                    <div class="formField fieldMargin anonymousHide">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.AccessSeekerId, new { @class = "inputLabel" })
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.AccessSeekerId, new { @class = "short deny-html" })
+                            @Html.ValidationMessageFor(model => model.AccessSeekerId, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.AddressLine1, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.AddressLine1, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.AddressLine1, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.AddressLine2, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.AddressLine2, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.AddressLine2, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.City, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.City, new { @class = "long deny-html" })
+                        @Html.ValidationMessageFor(model => model.City, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.Postcode, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.Postcode, new { @class = "short deny-html" })
+                        @Html.ValidationMessageFor(model => model.Postcode, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.State, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        <div class="selectParent selectShort">
+                            @Html.StateDropDownListFor(model => model.State, new {@class = "dropdown"})
+                        </div>
+                        @Html.TextBoxFor(model => model.State, new { @class = "long textbox deny-html" })
+                        @Html.HiddenFor(model => model.State, new {@id = "hiddenState"})
+                        @Html.ValidationMessageFor(model => model.State, "", new {@class = "error", id = "stateError"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin anonymousHide">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.Country, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        <div class="selectParent selectLong">
+                            @Html.DropDownListFor(model => model.Country, Model.CountryList, "Select")
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Country, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <hr class="anonymousHide"/>
+                <div class="fieldMargin subHeader">
+                    <p>How to contact you</p>
+                </div>
+                <div class="formField fieldMargin">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "long deny-html", @type = "email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField fieldMargin">
+                    <div class="floatLeft">
+                        @Html.RequiredLabelFor(model => model.ContactNumber, new { @class = "inputLabel" })
+                    </div>
+                    <div class="floatLeft">
+                        @Html.TextBoxFor(model => model.ContactNumber, new { @class = "long deny-html", @type = "tel" })
+                        @Html.ValidationMessageFor(model => model.ContactNumber, "", new {@class = "error numberError"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <hr/>
+                <div class="note">
+                    <p>
+                        The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="industryBlueColor" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="industryBlueColor" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                    </p>
+                </div>
+                <div>
+                    <button class="ProxiBold next validate">NEXT</button>
+                </div>
+                </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">2. Your complaint</span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin">
+                            @Html.RequiredLabelFor(model => model.Details, new { @class = "ProxiSemiBold" })
+                        </div>
+                        <div class="labelDescMargin">
+                            <p>Please include information that will assist us to investigate your complaint.</p>
+                        </div>
+                        <div class="formField">
+                            @Html.TextAreaFor(model => model.Details, new {@class = "long deny-html"})
+                            @Html.ValidationMessageFor(model => model.Details, "", new {@class = "error"})
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="fieldMargin note">
+                            <p>Please note: Complaints that include inappropriate offensive, threatening or discriminatory language may not receive a response, and may not be included in any relevant investigation or action.</p>
+                        </div>
+                        @if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+                        {
+                            if (ViewBag.Recaptcha)
+                            {
+                                <hr/>
+                                <div class="subHeader">
+                                    <p>Security code</p>
+                                </div>
+                                <div class="labelDescMargin">
+                                    <p>This helps with the security of the register.</p>
+                                </div>
+                                <div class="g-recaptcha" data-sitekey="@ViewBag.Sitekey" data-callback="recaptchaVerified"></div>
+                                <span class="error recaptchaerror hidden">Please verify that you are not a robot</span>
+                            }
+                        }
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="industryBlueColor" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="industryBlueColor" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit checkRecaptcha">SUBMIT COMPLAINT</button>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        <h2 class="ProxiBold industryBlueColor">Complaint received</h2>
+        <p class="desc">Thank you for your complaint. We will respond to you within 14 days.</p>
+        <p>Your reference code is: <strong>@Model.RefCode</strong>.</p>
+        <p>A copy of your complaint has been sent to you by email.</p>
+        <hr />
+        <div>
+            <button class="ProxiBold lodgeAnother" onclick="window.location.replace(window.location.href)">Lodge another complaint</button>
+        </div>
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

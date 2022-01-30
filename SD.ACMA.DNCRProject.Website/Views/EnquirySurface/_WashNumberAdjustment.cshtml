@@ -1,0 +1,45 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.WashNumberAdjustmentViewModel
+
+<script>
+    $(function() {
+        $(".submit.checkRecaptcha").show();
+    });
+</script>
+<div class="formField fieldMargin">
+    <div class="floatLeft">
+        @Html.RequiredLabelFor(model => model.WashCredits, new { @class = "inputLabel" })
+    </div>
+    <div class="floatLeft">
+        <input class="short readonly" value="@String.Format("{0:n0}", Model.WashCredits)" disabled="disabled" />
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="fieldMargin">
+    <div class="labelDescMargin">
+        @Html.RequiredLabelFor(model => model.RefundAcmaIncrementWashCredits, new { @class = "ProxiSemiBold" })
+    </div>
+    <div class="formField toolTipContainer">
+        @Html.TextBoxFor(model => model.RefundAcmaIncrementWashCredits, new { @class = "short hasTooltip deny-html" })
+        <a href="#" class="tooltip afterField">
+            <img src="/images/tooltip.png" alt="tip" />
+            <span>
+                Prefix + or – to the amount for addition or removal of wash numbers respectively.
+                <br />E.g.:
+                <br />+1000: this will add 1000 wash numbers
+                <br />–1000: this will remove 1000 wash numbers
+            </span>
+        </a>
+        @Html.ValidationMessageFor(model => model.RefundAcmaIncrementWashCredits, "", new { @class = "error numberError" })
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="fieldMargin">
+    <div class="labelDescMargin">
+        @Html.RequiredLabelFor(model => model.Description, new { @class = "ProxiSemiBold" })
+    </div>
+    <div class="formField">
+        @Html.TextAreaFor(model => model.Description, new { @class = "long deny-html" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+    </div>
+    <div class="clear"></div>
+</div>

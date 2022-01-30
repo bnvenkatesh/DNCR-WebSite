@@ -1,0 +1,66 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.WashCreditRolloverViewModel
+
+@if (Model.RequirePurchase)
+{
+    <script>
+        $(function() {
+            $(".submit.checkRecaptcha").hide();
+        });
+    </script>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            <p>You cannot request a wash credit rollover without an active paid subscription. Please purchase a new subscription and try again.</p>
+        </div>
+    </div>
+}
+else if (Model.WashCreditsRolloverAmount == 0)
+{
+    <script>
+        $(function () {
+            $(".submit.checkRecaptcha").hide();
+        });
+    </script>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            <p>You are not eligible for a refund. Please contact 1300 785 749.</p>
+        </div>
+    </div>
+}
+else
+{
+    <script>
+        $(function() {
+            $(".submit.checkRecaptcha").show();
+        });
+    </script>
+    @Html.HiddenFor(model => model.WashCreditsRolloverTransactionID)
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.WashCreditsRolloverAmount, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            <input class="short readonly" value="@String.Format("{0:n0}", Model.WashCreditsRolloverAmount)" disabled="disabled"/>
+            @Html.HiddenFor(model => model.WashCreditsRolloverAmount)
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.ExpiryDate, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            <input class="short readonly" value='@Model.ExpiryDate.ToString("dd MMM yyyy")' disabled="disabled" />
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            @Html.RequiredLabelFor(model => model.Description, new { @class = "ProxiSemiBold" })
+        </div>
+        <div class="formField">
+            @Html.TextAreaFor(model => model.Description, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+        </div>
+        <div class="clear"></div>
+    </div>
+}

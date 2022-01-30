@@ -1,0 +1,10 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["Token"]) || String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["accountuserid"]) || String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["agentData"]))
+{
+    Response.Redirect("/");
+}
+else
+{
+    @Html.Action("AccessSeeker", "AgentSurface", new { token = HttpContext.Current.Request.QueryString["Token"], accountUserId = HttpContext.Current.Request.QueryString["accountuserid"], agentData = HttpContext.Current.Request.QueryString["agentData"] })
+}

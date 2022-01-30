@@ -1,0 +1,73 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.WashedNumbersReversalViewModel
+
+@if (Model.Washes.Count > 0)
+{
+    <script>
+        (function ($) {
+            $.validator.setDefaults({
+                ignore: ":hidden:not(#RefundWashTransactionId)"
+            });
+        }(jQuery));
+        $(function() {
+            $(".submit.checkRecaptcha").show();
+            $('#refundTable tr').click(function () {
+                var that = $(this).find("input[type='radio']");
+                that.prop('checked', true);
+                $("input#RefundWashTransactionId").val(that.val());
+            });
+        });
+    </script>
+    <div class="fieldMargin tableHolder">
+        <table id="refundTable" class="responsive">
+            <caption>Reversable Washes</caption>
+            <tr>
+                <th class="addborderLeftTop center">@Html.GetDisplayName(model => model.Washes.FirstOrDefault().WashReference)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Washes.FirstOrDefault().DateWashed)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Washes.FirstOrDefault().User)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Washes.FirstOrDefault().WashSource)</th>
+                <th class="addborderRightTop center">@Html.GetDisplayName(model => model.Washes.FirstOrDefault().WashedNumbers)</th>
+
+            </tr>
+            @foreach (var wash in Model.Washes)
+            {
+                <tr>
+                    <td>
+                        <div class="radio-holder">
+                            <input type="radio" class="radioCheck" name="WashId" value="@wash.WashReference"/>
+                            @wash.WashReference
+                        </div>
+                    </td>
+                    <td data-label="@Html.GetDisplayName(model => model.Washes.FirstOrDefault().DateWashed)" class="center">@wash.DateWashed.ToString("dd MMM yyyy")</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Washes.FirstOrDefault().User)" class="center">@wash.User</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Washes.FirstOrDefault().WashSource)" class="center">@wash.WashSource</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Washes.FirstOrDefault().WashedNumbers)" class="center">@String.Format("{0:n0}", wash.WashedNumbers)</td>
+                </tr>
+            }
+        </table>
+    </div>
+    @Html.HiddenFor(model => model.RefundWashTransactionId)
+    @Html.ValidationMessageFor(model => model.RefundWashTransactionId, "", new { @class = "error" })
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            @Html.RequiredLabelFor(model => model.Description, new { @class = "ProxiSemiBold" })
+        </div>
+        <div class="formField">
+            @Html.TextAreaFor(model => model.Description, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <script>
+        $(function () {
+            $(".submit.checkRecaptcha").hide();
+        });
+    </script>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            <p>You are not eligible for a refund. Please contact 1300 785 749</p>
+        </div>
+    </div>
+}

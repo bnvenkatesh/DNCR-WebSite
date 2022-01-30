@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.WashHistoryViewModel>
+
+<script>
+    $(function() {
+        $("#dashboardWash .paginationHolder li a").off();
+        $("#dashboardWash .paginationHolder li a").on("click", function (event) {
+            event.preventDefault();
+            var page = $(this).data('page');
+            $("#dashboardWash").html("<div class='tableHolder'><p><img class='spinner' src='/images/ajax-loader.gif'/>Please wait</p></div>");
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("LoadDashboardHistory", "WashSurface")',
+                data: { currentPage: page, from: "@Model.FromDate", to: "@Model.ToDate" },
+                success: function (result) {
+                    $("#dashboardWash").html(result);
+                }
+            });
+        });
+    });
+</script>
+
+<div id="dashboardWash">
+    <div class="searchCountHolder">
+        @if (Model.WashCount == 1)
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.WashCount wash found
+            </div>
+        }
+        else
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.WashCount washes found
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="tableHolder">
+        @if (Model.Washes != null && Model.Washes.Count() > 0)
+        {
+            <table id="washHistory" class="responsive">
+                <caption>Account Wash History</caption>
+                <tr>
+                    <th class="addborderLeftTop">Ref No</th>
+                    <th>Date and Time</th>
+                    <th>User</th>
+                    <th>Wash Source</th>
+                    <th class="center">Client Reference</th>
+                    <th class="center">Numbers Washed</th>
+                    <th class="center">Registered Numbers</th>
+                    <th class="center">Unregistered Numbers</th>
+                    <th class="center">Invalid Numbers</th>
+                    <th class="addborderRightTop center">Combined</th>
+                </tr>
+                @Html.Partial("_LoadHistory")
+            </table>
+        }
+
+        <div class="paginationHolder">
+            @Html.Partial("_DashboardPager")
+        </div>
+    </div>
+</div>

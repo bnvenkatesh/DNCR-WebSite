@@ -1,0 +1,10 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+}
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages">
+        @Html.Action("Create", "RegistrationSurface")
+        <div class="clear"></div>
+    </div>
+</div>

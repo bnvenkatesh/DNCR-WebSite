@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OnlineOrderService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOnlineOrderService_CreateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CreateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CreateOrder_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q1:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAvailableSubscriptions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableSubscriptions" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAvailableSubscriptions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableSubscriptionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAvailableSubscriptions_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q2:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionSummarydetailsByAccountID" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionSummarydetailsByAccountIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q3:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionHistorydetailsByAccountID" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSubscriptionHistorydetailsByAccountIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q4:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetFinantialHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinantialHistory" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetFinantialHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFinantialHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetFinantialHistory_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q5:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GenerateInvoice_InputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateInvoice" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GenerateInvoice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GenerateInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GenerateInvoice_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q6:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_PayForOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayForOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_PayForOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayForOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_PayForOrder_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q7:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_RecordPayForOrderFail_InputMessage">
+    <wsdl:part name="parameters" element="tns:RecordPayForOrderFail" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_RecordPayForOrderFail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RecordPayForOrderFailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_RecordPayForOrderFail_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q8:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CancelOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CancelOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CancelOrder_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q9:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CloseOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseOrder" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CloseOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_CloseOrder_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q10:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountSummaryDetailByAccountID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountSummaryDetailByAccountID" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountSummaryDetailByAccountID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountSummaryDetailByAccountIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountSummaryDetailByAccountID_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q11:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountUserHeaderInformationByAccountUserID" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountUserHeaderInformationByAccountUserIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q12:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="IOnlineOrderService">
+    <wsdl:operation name="CreateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/CreateOrder" message="tns:IOnlineOrderService_CreateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/CreateOrderResponse" message="tns:IOnlineOrderService_CreateOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/CreateOrderDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_CreateOrder_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableSubscriptions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAvailableSubscriptions" message="tns:IOnlineOrderService_GetAvailableSubscriptions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAvailableSubscriptionsResponse" message="tns:IOnlineOrderService_GetAvailableSubscriptions_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAvailableSubscriptionsDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetAvailableSubscriptions_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionSummarydetailsByAccountID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionSummarydetailsByAccountID" message="tns:IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionSummarydetailsByAccountIDResponse" message="tns:IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionSummarydetailsByAccountIDDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetSubscriptionSummarydetailsByAccountID_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionHistorydetailsByAccountID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionHistorydetailsByAccountID" message="tns:IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionHistorydetailsByAccountIDResponse" message="tns:IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetSubscriptionHistorydetailsByAccountIDDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetSubscriptionHistorydetailsByAccountID_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFinantialHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetFinantialHistory" message="tns:IOnlineOrderService_GetFinantialHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetFinantialHistoryResponse" message="tns:IOnlineOrderService_GetFinantialHistory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetFinantialHistoryDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetFinantialHistory_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateInvoice">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GenerateInvoice" message="tns:IOnlineOrderService_GenerateInvoice_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GenerateInvoiceResponse" message="tns:IOnlineOrderService_GenerateInvoice_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GenerateInvoiceDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GenerateInvoice_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayForOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/PayForOrder" message="tns:IOnlineOrderService_PayForOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/PayForOrderResponse" message="tns:IOnlineOrderService_PayForOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/PayForOrderDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_PayForOrder_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecordPayForOrderFail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/RecordPayForOrderFail" message="tns:IOnlineOrderService_RecordPayForOrderFail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/RecordPayForOrderFailResponse" message="tns:IOnlineOrderService_RecordPayForOrderFail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/RecordPayForOrderFailDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_RecordPayForOrderFail_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/CancelOrder" message="tns:IOnlineOrderService_CancelOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/CancelOrderResponse" message="tns:IOnlineOrderService_CancelOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/CancelOrderDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_CancelOrder_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/CloseOrder" message="tns:IOnlineOrderService_CloseOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/CloseOrderResponse" message="tns:IOnlineOrderService_CloseOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/CloseOrderDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_CloseOrder_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountSummaryDetailByAccountID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountSummaryDetailByAccountID" message="tns:IOnlineOrderService_GetAccountSummaryDetailByAccountID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountSummaryDetailByAccountIDResponse" message="tns:IOnlineOrderService_GetAccountSummaryDetailByAccountID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountSummaryDetailByAccountIDDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetAccountSummaryDetailByAccountID_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountUserHeaderInformationByAccountUserID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountUserHeaderInformationByAccountUserID" message="tns:IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountUserHeaderInformationByAccountUserIDResponse" message="tns:IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineOrderService/GetAccountUserHeaderInformationByAccountUserIDDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineOrderService_GetAccountUserHeaderInformationByAccountUserID_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOnlineOrderService" type="tns:IOnlineOrderService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateOrder">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableSubscriptions">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetAvailableSubscriptions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionSummarydetailsByAccountID">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetSubscriptionSummarydetailsByAccountID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriptionHistorydetailsByAccountID">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetSubscriptionHistorydetailsByAccountID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetFinantialHistory">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetFinantialHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateInvoice">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GenerateInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PayForOrder">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/PayForOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RecordPayForOrderFail">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/RecordPayForOrderFail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/CancelOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CloseOrder">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/CloseOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountSummaryDetailByAccountID">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetAccountSummaryDetailByAccountID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountUserHeaderInformationByAccountUserID">
+      <soap:operation soapAction="http://tempuri.org/IOnlineOrderService/GetAccountUserHeaderInformationByAccountUserID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OnlineOrderService">
+    <wsdl:port name="BasicHttpBinding_IOnlineOrderService" binding="tns:BasicHttpBinding_IOnlineOrderService">
+      <soap:address location="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

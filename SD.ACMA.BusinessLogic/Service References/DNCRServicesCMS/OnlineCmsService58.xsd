@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="SuburbsInPostCodeRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PostCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SuburbsInPostCodeRequestArgs" nillable="true" type="tns:SuburbsInPostCodeRequestArgs" />
+  <xs:complexType name="SuburbsInPostCodeRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Suburbs" nillable="true" type="q1:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SuburbsInPostCodeRequestResult" nillable="true" type="tns:SuburbsInPostCodeRequestResult" />
+  <xs:complexType name="GetServiceProviderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ServiceProviders" nillable="true" type="tns:ArrayOfServiceProvider" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetServiceProviderRequestResult" nillable="true" type="tns:GetServiceProviderRequestResult" />
+  <xs:complexType name="ArrayOfServiceProvider">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceProvider" nillable="true" type="tns:ServiceProvider" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceProvider" nillable="true" type="tns:ArrayOfServiceProvider" />
+  <xs:complexType name="ServiceProvider">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ServiceProviderID" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceProviderName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceProvider" nillable="true" type="tns:ServiceProvider" />
+  <xs:complexType name="ImpersonateRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SecureData" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImpersonateRequestArgs" nillable="true" type="tns:ImpersonateRequestArgs" />
+  <xs:complexType name="ImpersonationRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentId" type="xs:int" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LogginName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Organisation" nillable="true" type="q2:Organisation.OrganisationEnum" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Role" nillable="true" type="q3:OrganisationGroup.OrganisationGroupEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImpersonationRequestResult" nillable="true" type="tns:ImpersonationRequestResult" />
+  <xs:complexType name="AccountRefundsRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountRefundsRequestArgs" nillable="true" type="tns:AccountRefundsRequestArgs" />
+  <xs:complexType name="AccountRefundsRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="Refunds" nillable="true" type="tns:ArrayOfAccountRefundsRequestEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountRefundsRequestResult" nillable="true" type="tns:AccountRefundsRequestResult" />
+  <xs:complexType name="ArrayOfAccountRefundsRequestEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountRefundsRequestEntry" nillable="true" type="tns:AccountRefundsRequestEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountRefundsRequestEntry" nillable="true" type="tns:ArrayOfAccountRefundsRequestEntry" />
+  <xs:complexType name="AccountRefundsRequestEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EnquiryID" type="xs:int" />
+      <xs:element minOccurs="0" name="EnquiryRefundID" type="xs:int" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="EnquiryStatus" type="q4:enquiry_statuses.enquiry_statusesEnum" />
+      <xs:element minOccurs="0" name="HasBeenAdjusted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasBeenReserved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LodgedTimeStamp" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderID" nillable="true" type="xs:int" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="RefundDecision" type="q5:enquiry_refund_decisions.enquiry_refund_decisionsEnum" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="RefundType" type="q6:enquiry_refund_types.enquiry_refund_typesEnum" />
+      <xs:element minOccurs="0" name="SubscriptionID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCreditsRolloverTrasactionID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WashTransactionID" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountRefundsRequestEntry" nillable="true" type="tns:AccountRefundsRequestEntry" />
+  <xs:complexType name="GetManualAdjustmentWashCreditsLimitArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetManualAdjustmentWashCreditsLimitArgs" nillable="true" type="tns:GetManualAdjustmentWashCreditsLimitArgs" />
+  <xs:complexType name="GetManualAdjustmentWashCreditsLimitResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WashCreditsLimit" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetManualAdjustmentWashCreditsLimitResult" nillable="true" type="tns:GetManualAdjustmentWashCreditsLimitResult" />
+</xs:schema>

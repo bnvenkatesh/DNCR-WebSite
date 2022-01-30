@@ -1,0 +1,24 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+@if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString.ToString()))
+{
+    Response.Redirect("/");
+}
+else if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0 || !SessionHelper.IsAdmin)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <div class="section sectionSubPage addSectionMinHeight">
+        <div class="subPages">
+            @Html.Action("Confirmation", "SubscriptionSurface", new { receipt = HttpContext.Current.Request.QueryString.ToString() })
+            <div class="clear"></div>
+        </div>
+    </div>
+}

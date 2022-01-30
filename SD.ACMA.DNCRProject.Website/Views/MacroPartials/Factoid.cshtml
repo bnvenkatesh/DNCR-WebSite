@@ -1,0 +1,73 @@
+@using RJP.MultiUrlPicker.Models
+@using umbraco.NodeFactory
+@using Umbraco.Web.Models
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    dynamic factoid;
+    if (!String.IsNullOrEmpty(Model.MacroParameters["Item"].ToString()))
+    {
+        factoid = Umbraco.Content(Model.MacroParameters["Item"].ToString());
+    }
+    else
+    {
+        var home = Model.Content.AncestorOrSelf("HomePage");
+        var factoids = home.Siblings().First(x => x.DocumentTypeAlias == "Factoids");
+        var sectionCategory = Model.Content.AncestorOrSelf(2).Name;
+        var factoidList = new List<IPublishedContent>();
+
+        if (factoids.Children.Any(x => x.Name == sectionCategory))
+        {
+            factoidList.AddRange(factoids.Children.First(x => x.Name == sectionCategory).Children);
+            factoidList.AddRange(factoids.Children.First(x => x.Name == "Both").Children);
+        }
+        else
+        {
+            foreach (var category in factoids.Children)
+            {
+                factoidList.AddRange(category.Children);
+            }
+        }
+        
+        var random = new Random().Next(0, factoidList.Count());
+        factoid = factoidList[random];
+    }
+}
+@if(@factoid.Id != 0)
+{
+    IPublishedContent currentFactoid = factoid;
+    <div class="statistics">
+        <div class="statHeading ProxiSemiBold">@currentFactoid.GetPropertyValue("heading")</div>
+        @if (currentFactoid.HasValue("number"))
+        {
+            if (currentFactoid.GetPropertyValue("number").ToString().Count() <= 4)
+            {
+                <div class="statNumber ProxiLight">@currentFactoid.GetPropertyValue("number")</div>
+            }
+            else
+            {
+                <div class="statNumber ProxiLight small">@currentFactoid.GetPropertyValue("number")</div>
+            }
+        }
+        <div class="statLabel ProxiSemiBold">@currentFactoid.GetPropertyValue("numberText")</div>
+        <div class="statDesc">@currentFactoid.GetPropertyValue("content")</div>
+        <div class="statMore ProxiSemiBold">
+            @foreach (var link in currentFactoid.GetPropertyValue<MultiUrls>("learnMore"))
+            {
+                var url = link.Url;
+                if (!url.StartsWith("/") && !url.StartsWith("http"))
+                {
+                    url = "http://" + url;
+                }
+                if (!String.IsNullOrEmpty(currentFactoid.GetPropertyValue("learnMoreText").ToString()))
+                {
+                    <a href="@url" target="@link.Target">@currentFactoid.GetPropertyValue("learnMoreText").ToString()</a>
+                }
+                else
+                {
+                    <a href="@url" target="@link.Target">Learn more</a>
+                }
+            }
+        </div>
+    </div>
+}

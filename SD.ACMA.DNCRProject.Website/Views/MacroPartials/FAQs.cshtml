@@ -1,0 +1,68 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var faqIds = Model.MacroParameters["Items"].ToString().Split(',');
+    var count = 0;
+    var category = Model.Content.AncestorOrSelf("NavigationCategory");
+    var faqIndexPage = new List<IPublishedContent>();
+    if (category != null)
+    {
+        faqIndexPage = category.Children.Where(x => x.DocumentTypeAlias == "FaqIndexPage").ToList();
+    }
+    var nodes = new List<dynamic>();
+    foreach (var faqId in faqIds)
+    {
+        var node = Umbraco.Content(faqId);
+        if (node.Id != 0)
+        {
+            nodes.Add(node);
+        }
+    }
+}
+@if (nodes.Count > 0)
+{
+    <div class="widget">
+        <div class="widgetTitle purple ProxiBold">FAQs</div>
+        <hr/>
+        <nav>
+            <ul id="faqAccordion">
+                @foreach (var node in nodes)
+                {
+                    var faqPageUrl = "";
+                    var faqCategory = node.Parent.Name;
+                    var home = Model.Content.AncestorOrSelf(1);
+                    foreach (var navCategory in home.Children)
+                    {
+                        if (navCategory.Name == faqCategory || (faqCategory == "General" && navCategory.Name == "Home"))
+                        {
+                            faqPageUrl = navCategory.Children.First(x => x.DocumentTypeAlias == "FaqIndexPage").Url;
+                            faqPageUrl = faqPageUrl + "#" + node.UrlName;
+                            break;
+                        }
+                    }
+                    count++;
+                    <li class="widgetItem">
+                        <div class="widgetItemLabel">@node.GetPropertyValue("question")</div>
+                        <div class="widgetItemDesc">
+                            <p>@node.GetPropertyValue("shortAnswer")</p>
+                            @if (!String.IsNullOrEmpty(node.GetPropertyValue("answer").ToString()) && !String.IsNullOrEmpty(faqPageUrl))
+                            {
+                                <br/>
+                                <a class="purple" href="@faqPageUrl">Read More</a>
+                            }
+                        </div>
+                        @if (count != faqIds.Count() || faqIndexPage.Any())
+                        {
+                            <hr/>
+                        }
+                    </li>
+                }
+            </ul>
+        </nav>
+        @if (faqIndexPage.Any())
+        {
+            <div class="widgetMore"><a class="purple" href="@faqIndexPage.First().Url">More FAQs</a>
+            </div>
+        }
+    </div>
+}

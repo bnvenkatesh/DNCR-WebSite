@@ -1,0 +1,66 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SearchResultsViewModel>
+
+@{
+    var cssClass = "";
+    if (ViewBag.MobileOnly)
+    {
+        cssClass = "showOnMobile";
+    }
+}
+
+@if (Model.Pager.IsLastPage)
+{
+    @Html.HiddenFor(model => model.Pager.IsLastPage)
+}
+
+@foreach (var result in Model.SearchResults)
+{
+    var node = Umbraco.TypedContent(result.Id);
+
+    /*
+    var pathIds = result["__Path"].Split(',');
+
+    var path = Umbraco.TypedContent(pathIds).Where(p => p != null).Select(p=> new {p.Name}).ToList();
+    */
+
+    <div class="result-item @cssClass">
+        <div class="itemTitle ProxiBold">
+            @if (node.HasValue("pageTitle"))
+            {
+                <a class="purple" href="@node.Url">@node.GetPropertyValue("pageTitle")</a>
+            }
+            else
+            {
+                <a class="purple" href="@node.Url">@node.Url</a>
+            }
+        </div>
+        <div class="itemCat ProxiBold">
+            @if ((node.DocumentTypeAlias == "MediaReleasePage" || node.DocumentTypeAlias == "ConsumerAlertPage") && node.HasValue("articleDate"))
+            {
+                <span>@node.AncestorOrSelf(2).Name | @DateTime.Parse(node.GetPropertyValue("articleDate").ToString()).ToString("d MMMM yyyy")</span>
+            }
+            else
+            {
+                <span>@node.AncestorOrSelf(2).Name</span>
+            }
+        </div>
+        <div class="itemDesc">
+            @if (node.HasValue("pageSummary"))
+            {
+                <p><span>@node.GetPropertyValue("pageSummary")</span></p>
+            }
+        </div>
+        <div class="itemLink">
+            <a class="purple" href="@node.Url">@node.UrlAbsolute()</a>
+        </div>
+
+        @* Uncomment this to see all the fields returned in the search
+            <p>
+                @foreach (var field in result.Fields)
+                {
+                   <text>[<strong>@field.Key</strong>]@field.Value<br/></text>
+                }
+
+            </p> *@
+    </div>
+}

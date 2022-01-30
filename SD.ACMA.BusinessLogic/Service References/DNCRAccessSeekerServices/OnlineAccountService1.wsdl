@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OnlineAccountService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOnlineAccountService_CreateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_CreateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_CreateAccount_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q1:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccount_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q2:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccount" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccount_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q3:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccount_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q4:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_SendAccountActivationEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendAccountActivationEmail" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_SendAccountActivationEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendAccountActivationEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_SendAccountActivationEmail_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q5:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_CreateWashOnlyUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWashOnlyUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_CreateWashOnlyUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWashOnlyUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_CreateWashOnlyUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q6:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateWashOnlyUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateWashOnlyUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateWashOnlyUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateWashOnlyUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateWashOnlyUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q7:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccountUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccountUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAccountUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q8:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccountUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccountUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccountUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAccountUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_UpdateAccountUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q9:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAllAccountUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAccountUsers" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAllAccountUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAccountUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetAllAccountUsers_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q10:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeActivateAccountUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeActivateAccountUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeActivateAccountUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeActivateAccountUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeActivateAccountUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q11:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccountUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccountUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccountUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccountUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ActivateAccountUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q12:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeleteAccountUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountUser" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeleteAccountUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAccountUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_DeleteAccountUser_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q13:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Login_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q14:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ChangePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ChangePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ChangePassword_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q15:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ResetPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPassword" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ResetPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResetPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ResetPassword_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q16:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ForgotPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ForgotPassword" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ForgotPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ForgotPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_ForgotPassword_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q17:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Impersonate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Impersonate" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Impersonate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImpersonateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_Impersonate_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q18:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetStates_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStates" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetStates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineAccountService_GetStates_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q19:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="IOnlineAccountService">
+    <wsdl:operation name="CreateAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateAccount" message="tns:IOnlineAccountService_CreateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateAccountResponse" message="tns:IOnlineAccountService_CreateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateAccountDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_CreateAccount_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccount" message="tns:IOnlineAccountService_ActivateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccountResponse" message="tns:IOnlineAccountService_ActivateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccountDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ActivateAccount_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccount" message="tns:IOnlineAccountService_GetAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccountResponse" message="tns:IOnlineAccountService_GetAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccountDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_GetAccount_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccount" message="tns:IOnlineAccountService_UpdateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccountResponse" message="tns:IOnlineAccountService_UpdateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccountDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_UpdateAccount_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendAccountActivationEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/SendAccountActivationEmail" message="tns:IOnlineAccountService_SendAccountActivationEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/SendAccountActivationEmailResponse" message="tns:IOnlineAccountService_SendAccountActivationEmail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/SendAccountActivationEmailDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_SendAccountActivationEmail_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateWashOnlyUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateWashOnlyUser" message="tns:IOnlineAccountService_CreateWashOnlyUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateWashOnlyUserResponse" message="tns:IOnlineAccountService_CreateWashOnlyUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/CreateWashOnlyUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_CreateWashOnlyUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateWashOnlyUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateWashOnlyUser" message="tns:IOnlineAccountService_ActivateWashOnlyUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateWashOnlyUserResponse" message="tns:IOnlineAccountService_ActivateWashOnlyUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateWashOnlyUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ActivateWashOnlyUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccountUser" message="tns:IOnlineAccountService_GetAccountUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccountUserResponse" message="tns:IOnlineAccountService_GetAccountUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAccountUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_GetAccountUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccountUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccountUser" message="tns:IOnlineAccountService_UpdateAccountUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccountUserResponse" message="tns:IOnlineAccountService_UpdateAccountUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/UpdateAccountUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_UpdateAccountUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAccountUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAllAccountUsers" message="tns:IOnlineAccountService_GetAllAccountUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAllAccountUsersResponse" message="tns:IOnlineAccountService_GetAllAccountUsers_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/GetAllAccountUsersDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_GetAllAccountUsers_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeActivateAccountUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/DeActivateAccountUser" message="tns:IOnlineAccountService_DeActivateAccountUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/DeActivateAccountUserResponse" message="tns:IOnlineAccountService_DeActivateAccountUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/DeActivateAccountUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_DeActivateAccountUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccountUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccountUser" message="tns:IOnlineAccountService_ActivateAccountUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccountUserResponse" message="tns:IOnlineAccountService_ActivateAccountUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ActivateAccountUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ActivateAccountUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccountUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/DeleteAccountUser" message="tns:IOnlineAccountService_DeleteAccountUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/DeleteAccountUserResponse" message="tns:IOnlineAccountService_DeleteAccountUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/DeleteAccountUserDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_DeleteAccountUser_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/Login" message="tns:IOnlineAccountService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/LoginResponse" message="tns:IOnlineAccountService_Login_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/LoginDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_Login_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ChangePassword" message="tns:IOnlineAccountService_ChangePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ChangePasswordResponse" message="tns:IOnlineAccountService_ChangePassword_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ChangePasswordDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ChangePassword_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ResetPassword" message="tns:IOnlineAccountService_ResetPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ResetPasswordResponse" message="tns:IOnlineAccountService_ResetPassword_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ResetPasswordDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ResetPassword_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ForgotPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/ForgotPassword" message="tns:IOnlineAccountService_ForgotPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ForgotPasswordResponse" message="tns:IOnlineAccountService_ForgotPassword_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ForgotPasswordDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_ForgotPassword_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Impersonate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/Impersonate" message="tns:IOnlineAccountService_Impersonate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/ImpersonateResponse" message="tns:IOnlineAccountService_Impersonate_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/ImpersonateDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_Impersonate_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineAccountService/GetStates" message="tns:IOnlineAccountService_GetStates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineAccountService/GetStatesResponse" message="tns:IOnlineAccountService_GetStates_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineAccountService/GetStatesDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineAccountService_GetStates_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOnlineAccountService" type="tns:IOnlineAccountService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateAccount">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/CreateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccount">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ActivateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccount">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/GetAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccount">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/UpdateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SendAccountActivationEmail">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/SendAccountActivationEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWashOnlyUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/CreateWashOnlyUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateWashOnlyUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ActivateWashOnlyUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/GetAccountUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAccountUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/UpdateAccountUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAccountUsers">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/GetAllAccountUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeActivateAccountUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/DeActivateAccountUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccountUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ActivateAccountUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAccountUser">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/DeleteAccountUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ResetPassword">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ResetPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ForgotPassword">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/ForgotPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Impersonate">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/Impersonate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetStates">
+      <soap:operation soapAction="http://tempuri.org/IOnlineAccountService/GetStates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OnlineAccountService">
+    <wsdl:port name="BasicHttpBinding_IOnlineAccountService" binding="tns:BasicHttpBinding_IOnlineAccountService">
+      <soap:address location="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,270 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.EditUserViewModel>
+
+@{
+    this.MapModel();
+}
+
+<script>
+    (function ($) {
+        $.validator.setDefaults({
+            ignore: ":hidden:not(.minimumResultFile)"
+        });
+    }(jQuery));
+
+    $(function () {
+        $(".accordionContent input[type=radio][name=WashingResultOption]#separate").on("change", function () {
+            if (this.checked)
+            {
+                $(".unusedMinimumResultFile").addClass("minimumResultFile").removeClass("unusedMinimumResultFile");
+            }
+        });
+        $(".accordionContent input[type=radio][name=WashingResultOption]#indicators").on("change", function () {
+            if (this.checked)
+            {
+                $(".minimumResultFile").addClass("unusedMinimumResultFile").removeClass("minimumResultFile");
+            }
+        });
+
+        if ($(".accordionContent input[type=radio][name=WashingResultOption]#indicators:checked").length > 0) {
+            $(".minimumResultFile").addClass("unusedMinimumResultFile").removeClass("minimumResultFile");
+        }
+    });
+</script>
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#Email").change(function () {
+                if ($("#OriginalEmail").val() !== $("#Email").val()) {
+                    $('#ResetPassword').prop('checked', true);
+                }
+                else {
+                    $('#ResetPassword').prop('checked', false);
+                }
+            });
+        });
+    </script>
+
+    <div class="form-holder floatLeft">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@ViewBag.ErrorMessage</div>
+        @using (Html.BeginUmbracoForm<UserSurfaceController>("Edit"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">Update user details</span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin subHeader">
+                            <p>User access details</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.FirstName, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "long deny-html" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.LastName, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "long deny-html" })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.CompanyDepartment, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.CompanyDepartment, new { @class = "long deny-html" })
+                                @Html.ValidationMessageFor(model => model.CompanyDepartment, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.PhoneNumber1, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.PhoneNumber1, new { @class = "long deny-html", @type = "tel" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber1, "", new {@class = "error numberError"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.PhoneNumber2, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.PhoneNumber2, new { @class = "long deny-html", @type = "tel" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber2, "", new {@class = "error numberError"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            @Html.HiddenFor(model => model.OriginalEmail)
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "long deny-html", @type = "email" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.ConfirmEmail, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.ConfirmEmail, new { @class = "long deny-html", @type = "email" })
+                                @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft labelWidth">
+                                <p class="inputLabel ProxiSemiBold">Reset Password</p>
+                            </div>
+                            <div class="floatLeft">
+                                @Html.CheckBoxFor(model => model.ResetPassword, new {@class = "radioCheck"})
+                                @Html.RequiredLabelFor(model => model.ResetPassword, new { @class = "radioCheckLabel" })
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <hr/>
+                        <div class="fieldMargin subHeader">
+                            <p>Wash quote</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            @Html.CheckBoxFor(model => model.CanSeeWashQuote, new { @class = "radioCheck" })
+                            @Html.RequiredLabelFor(model => model.CanSeeWashQuote, new { @class = "radioCheckLabel" })
+                        </div>
+                        <hr/>
+                        <div class="subHeader">
+                            <p>Default Return File Content</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <fieldset>
+                                <legend>@Html.GetDisplayName(model => model.WashingResultOption)</legend>
+                                <div class="labelDescMargin">
+                                    @Html.RequiredTextFor(model => model.WashingResultOption, new { @class = "ProxiSemiBold inlineBlock", @for = "indicators" })
+                                </div>
+                                <div>
+                                    <div class="radio-holder">
+                                        @Html.RadioButtonFor(model => model.WashingResultOption, true, new { @id = "indicators", @class = "radioCheck" })
+                                        @Html.Label("indicators", "submitted file returned with indicators", new { @class = "radioCheckLabel" })
+                                    </div>
+                                    <div class="radio-holder">
+                                        @Html.RadioButtonFor(model => model.WashingResultOption, false, new { @id = "separate", @class = "radioCheck", data_other_option_field = "separateFiles" })
+                                        @Html.Label("separate", "separate files returned for different results", new { @class = "radioCheckLabel" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.WashingResultOption, "", new { @class = "error" })
+                                </div>
+                            </fieldset>
+                            <div class="clear"></div>
+                            <div class="separateFiles hidden">
+                                @Html.HiddenFor(model => model.MinimumResultFile, new { @class = "minimumResultFile" })
+                                <div class="formField">
+                                    <fieldset>
+                                        <legend>separate files returned for different results</legend>
+                                        <div class="radio-holder">
+                                            @Html.CheckBoxFor(model => model.FileOfRegisteredNumbers, new { @class = "radioCheck" })
+                                            @Html.RequiredLabelFor(model => model.FileOfRegisteredNumbers, new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.CheckBoxFor(model => model.FileOfUnregisteredNumbers, new { @class = "radioCheck" })
+                                            @Html.RequiredLabelFor(model => model.FileOfUnregisteredNumbers, new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.CheckBoxFor(model => model.FileOfInvalidNumbers, new { @class = "radioCheck" })
+                                            @Html.RequiredLabelFor(model => model.FileOfInvalidNumbers, new { @class = "radioCheckLabel" })
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.MinimumResultFile, "", new { @class = "error" })
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="industryBlueColor" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="industryBlueColor" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                            <br/>
+                            <p>A notification email will be sent to the email address entered above</p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit">SAVE USER DETAILS</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        <h2 class="ProxiBold industryBlueShade1Color">User Details Updated</h2>
+        <p class="desc">'Wash-only' user account successfully updated.</p>
+        <p class="desc">Go back to <a class="industryBlueShade1Color" href="@ViewBag.AccountDashboardNode">Account Dashboard</a>.</p>
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

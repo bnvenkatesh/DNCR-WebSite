@@ -1,0 +1,136 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.QuickWashViewModel>
+
+
+@{
+    this.MapModel();
+}
+
+<script>
+    (function($) {
+        $.validator.setDefaults({
+            ignore: ""
+        });
+    }(jQuery));
+    $(function() {
+        $(".quickWash input.phoneInput").on("keyup", function () {
+            $(this).closest(".quickWash").find(".registered").hide();
+            $(this).closest(".quickWash").find(".notRegistered").hide();
+            $("#MinimumNumbers-error").hide();
+        });
+        $(".accordionContent").on("click", "button.clearNumbers", function(event) {
+            event.preventDefault();
+            $(".quickWash input.phoneInput").val("").valid();
+            $(".quickWash .registered").hide();
+            $(".quickWash .notRegistered").hide();
+            $("#MinimumNumbers-error").hide();
+        });
+        var validator = $(".quickWash").closest("form").data("validator");
+        if (validator) {
+            validator.settings.onkeyup = false; // disable validation on keyup
+        }
+    });
+</script>
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+<div class="form-holder floatLeft">
+    <div class="formDesc">@ViewBag.PageSummary</div>
+    <div class="formError">@ViewBag.ErrorMessage</div>
+
+    @using (Html.BeginUmbracoForm<WashSurfaceController>("QuickWash"))
+    {
+        @Html.AntiForgeryToken()
+        <ul id="formAccordion" class="accordion globalAccordion">
+            <li>
+                <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                    <span class="title">Enter up to 10 phone numbers to wash</span>
+                </div>
+                <div class="accordionContent">
+                    <div>
+                        <p class="italic">All fields marked with * are mandatory</p>
+                        <div class="errorContainer"></div>
+                    </div>
+                    <br />
+                    @Html.HiddenFor(model => model.MinimumNumbers)
+                    @{
+                        int fieldCount = 10;
+                        for (int i = 0; i < fieldCount; i++)
+                        {
+                            var divClass = "formField quickWash";
+                            if (i > 0)
+                            {
+                                divClass = divClass + " fieldMargin";
+                            }
+                            <div class="@divClass">
+                                <div class="floatLeft">
+                                    @if (i == 0)
+                                    {
+                                        <label class="inputLabel" for="@String.Format("Numbers_{0}__Number", i)">Phone Number 1*<span class='visuallyhidden'> Numbers must be eleven digits beginning with 61 or ten digits or three to seven digits beginning with zero or one, optional + character, brackets, dashes and spaces e.g. 02 1234 5678 or 0412 345 678</span></label>
+                                    }
+                                    else
+                                    {
+                                        <label class="inputLabel" for="@String.Format("Numbers_{0}__Number", i)">Phone Number @(i + 1)<span class='visuallyhidden'> Numbers must be eleven digits beginning with 61 or ten digits or three to seven digits beginning with zero or one, optional + character, brackets, dashes and spaces e.g. 02 1234 5678 or 0412 345 678</span></label>
+                                    }
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.Numbers[i].Number, new {@class = "short phoneInput", @type = "tel"})
+                                </div>
+                                <div class="floatLeft result">
+                                    @if (i == 0)
+                                    {
+                                        @Html.ValidationMessageFor(model => model.Numbers, "", new {@class = "error"})
+                                        @Html.ValidationMessageFor(model => model.MinimumNumbers, "", new {@class = "error"})
+                                    }
+                                    @Html.ValidationMessageFor(model => model.Numbers[i].Number, "", new {@class = "error"})
+                                    @if (Model.Numbers[i].Registered != null)
+                                    {
+                                        if (Model.Numbers[i].Registered.Value)
+                                        {
+                                            <span class="registered">on the register</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="notRegistered">not on the register</span>
+                                        }
+                                    }
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        }
+                    }
+                    <div class="fieldMargin">
+                        <button class="ProxiBold clearNumbers" type="button">Clear all numbers</button>
+                    </div>
+                    <hr/>
+                    <div>
+                        <button class="ProxiBold submit nomargin" type="submit">CHECK ALL NUMBERS</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    }
+</div>
+
+<div class="sidebar floatLeft">
+    @if (ViewBag.Faqs != "")
+    {
+        @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+    }
+
+    @if (ViewBag.Downloads != "")
+    {
+        @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+    }
+
+    @if (ViewBag.RelatedLinks != "")
+    {
+        @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+    }
+    <div class="clear"></div>
+</div>

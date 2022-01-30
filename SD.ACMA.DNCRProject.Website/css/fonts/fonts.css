@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'arimo_regular';
+    src: url('ArimoRegular/arimo-regular.eot');
+    src: url('ArimoRegular/arimo-regular.eot?#iefix') format('embedded-opentype'),
+         url('ArimoRegular/arimo-regular.woff2') format('woff2'),
+         url('ArimoRegular/arimo-regular.woff') format('woff'),
+         url('ArimoRegular/arimo-regular.ttf') format('truetype'),
+         url('ArimoRegular/arimo-regular.svg#arimo_regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: 'arimo_bold';
+    src: url('ArimoBold/arimo-bold.eot');
+    src: url('ArimoBold/arimo-bold.eot?#iefix') format('embedded-opentype'),
+         url('ArimoBold/arimo-bold.woff2') format('woff2'),
+         url('ArimoBold/arimo-bold.woff') format('woff'),
+         url('ArimoBold/arimo-bold.ttf') format('truetype'),
+         url('ArimoBold/arimo-bold.svg#arimo_bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'arimo_semibold';
+    src: url('ArimoBold/arimo-bold.eot');
+    src: url('ArimoBold/arimo-bold.eot?#iefix') format('embedded-opentype'),
+         url('ArimoBold/arimo-bold.woff2') format('woff2'),
+         url('ArimoBold/arimo-bold.woff') format('woff'),
+         url('ArimoBold/arimo-bold.ttf') format('truetype'),
+         url('ArimoBold/arimo-bold.svg#arimo_semibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'arimo_light';
+    src: url('ArimoRegular/arimo-regular.eot');
+    src: url('ArimoRegular/arimo-regular.eot?#iefix') format('embedded-opentype'),
+         url('ArimoRegular/arimo-regular.woff2') format('woff2'),
+         url('ArimoRegular/arimo-regular.woff') format('woff'),
+         url('ArimoRegular/arimo-regular.ttf') format('truetype'),
+         url('ArimoRegular/arimo-regular.svg#arimo_light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'arimo_italic';
+    src: url('ArimoItalic/arimo-italic.eot');
+    src: url('ArimoItalic/arimo-italic.eot?#iefix') format('embedded-opentype'),
+         url('ArimoItalic/arimo-italic.woff2') format('woff2'),
+         url('ArimoItalic/arimo-italic.woff') format('woff'),
+         url('ArimoItalic/arimo-italic.ttf') format('truetype'),
+         url('ArimoItalic/arimo-italic.svg#arimo_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

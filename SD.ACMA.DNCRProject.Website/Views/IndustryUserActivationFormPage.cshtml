@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+@if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["Token"]) || String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["Email"]))
+{
+    Response.Redirect("/");
+}
+else
+{
+    <div class="section sectionSubPage addSectionMinHeight">
+        <div class="subPages">
+            @Html.Action("ActivateWashOnlyUser", "UserSurface", new { token = HttpContext.Current.Request.QueryString["Token"], email = HttpContext.Current.Request.QueryString["Email"] })
+            <div class="clear"></div>
+        </div>
+    </div>
+}

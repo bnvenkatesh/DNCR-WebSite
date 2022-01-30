@@ -1,0 +1,45 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.AccountBalanceAdjustmentViewModel
+
+<script>
+    $(function() {
+        $(".submit.checkRecaptcha").show();
+    });
+</script>
+<div class="formField fieldMargin">
+    <div class="floatLeft">
+        @Html.RequiredLabelFor(model => model.AccountBalance, new {@class = "inputLabel"})
+    </div>
+    <div class="floatLeft">
+        <input class="short readonly" value="@String.Format("${0:n}", Model.AccountBalance)" disabled="disabled"/>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="fieldMargin">
+    <div class="labelDescMargin">
+        @Html.RequiredLabelFor(model => model.RefundAcmaIncrementAccountBalance, new { @class = "ProxiSemiBold" })
+    </div>
+    <div class="formField toolTipContainer">
+        @Html.TextBoxFor(model => model.RefundAcmaIncrementAccountBalance, new { @class = "short hasTooltip deny-html" })
+        <a href="#" class="tooltip afterField">
+            <img src="/images/tooltip.png" alt="tip" />
+            <span>
+                Prefix + or – to the amount for addition or removal of account balance respectively.
+                <br />E.g.:
+                <br />+100: this will add $100 to account balance
+                <br />–100: this will remove $100 from account balance
+            </span>
+        </a>
+        @Html.ValidationMessageFor(model => model.RefundAcmaIncrementAccountBalance, "", new { @class = "error numberError" })
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="fieldMargin">
+    <div class="labelDescMargin">
+        @Html.RequiredLabelFor(model => model.Description, new { @class = "ProxiSemiBold" })
+    </div>
+    <div class="formField">
+        @Html.TextAreaFor(model => model.Description, new { @class = "long deny-html" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error" })
+    </div>
+    <div class="clear"></div>
+</div>

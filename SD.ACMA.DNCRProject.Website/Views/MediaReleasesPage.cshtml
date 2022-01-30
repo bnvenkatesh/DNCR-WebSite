@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+}
+
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages">
+        <div class="post-title">
+            <div class="contentHeadline">
+                <div class="contentTitle ProxiSemiBold">
+                    <h1 class="media">@Model.Content.GetPropertyValue("pageTitle")</h1>
+                </div>
+            </div>
+            <div class="contentDesc">
+                <p>@Model.Content.GetPropertyValue("pageSummary")</p>
+            </div>
+        </div>
+        @if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "MediaReleasePage"))
+        {
+            int currentPage;
+            if (!int.TryParse(HttpContext.Current.Request.QueryString["Page"], out currentPage))
+            {
+                currentPage = 1;
+            }
+            @Umbraco.RenderMacro("SectionList", new { ItemsPerPage = Model.Content.GetPropertyValue("itemsPerPage"), ItemDocType = "MediaReleasePage", ColourClass = "purple", CurrentPage = currentPage })
+        }
+    </div>
+</div>

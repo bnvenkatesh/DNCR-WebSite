@@ -1,0 +1,43 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SectionViewModel>
+
+@{
+    var cssClass = "";
+    if (ViewBag.MobileOnly)
+    {
+        cssClass = "showOnMobile";
+    }
+}
+
+@if (Model.Pager.IsLastPage)
+{
+    @Html.HiddenFor(model => model.Pager.IsLastPage)
+}
+
+@foreach (var sectionItem in Model.SectionItems)
+{
+    <div class="post-item @cssClass">
+        <div class="postTitleTablet ProxiBold">
+            <a class="@Model.ColourClass" href="@sectionItem.Url">@sectionItem.GetPropertyValue("pageTitle")</a>
+        </div>
+        @if (sectionItem.HasValue("thumbnailImage"))
+        {
+            var image = Umbraco.Media(sectionItem.GetPropertyValue("thumbnailImage"));
+            <div class="thumb-holder floatLeft">
+                <a href="@sectionItem.Url">
+                    <img src="@image.Url" alt="" />
+                </a>
+            </div>
+        }
+        <div class="postContent-holder floatLeft">
+            <div class="postTitle ProxiBold">
+                <a class="@Model.ColourClass" href="@sectionItem.Url">@sectionItem.GetPropertyValue("pageTitle")</a>
+            </div>
+            <div class="postDate ProxiBold">
+                <p>@DateTime.Parse(sectionItem.GetPropertyValue("articleDate").ToString()).ToString("d MMMM yyyy")</p>
+            </div>
+            <div class="postDesc">@sectionItem.GetPropertyValue("pageSummary")</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <hr class="@cssClass" />
+}

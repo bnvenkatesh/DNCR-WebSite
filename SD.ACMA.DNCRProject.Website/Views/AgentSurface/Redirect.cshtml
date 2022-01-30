@@ -1,0 +1,11 @@
+﻿@if (ViewBag.RedirectUrl == null)
+{
+    Response.Redirect("/");
+}
+else
+{
+    <div>Please wait...</div>
+    <script>
+        window.location = "@ViewBag.RedirectUrl";
+    </script>
+}

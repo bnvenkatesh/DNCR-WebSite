@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://dncrapp/" elementFormDefault="qualified" targetNamespace="http://dncrapp/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" />
+  <xs:element name="QuickWash">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="quickWashArgs" nillable="true" type="q1:QuickWashRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuickWashResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="QuickWashResult" nillable="true" type="q2:QuickWashResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WashByFileUpload">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="washFileArgs" nillable="true" type="q3:WashFileRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WashByFileUploadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="WashByFileUploadResult" nillable="true" type="q4:WashFileResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PreWash">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="filePreWashArgs" nillable="true" type="q5:PreWashFileOnlineArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PreWashResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="PreWashResult" nillable="true" type="q6:PreWashByFileResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadErrorLog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="downloadErrorLogArgs" nillable="true" type="q7:DownloadErrorLogRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadErrorLogResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="DownloadErrorLogResult" nillable="true" type="q8:DownloadErrorLogResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadWashFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="downloadWashFileArgs" nillable="true" type="q9:DownloadWashFileRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadWashFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="DownloadWashFileResult" nillable="true" type="q10:DownloadWashFileResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WashHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="washingSearchArgs" nillable="true" type="q11:WashingSearchRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WashHistoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" minOccurs="0" name="WashHistoryResult" nillable="true" type="q12:WashHistoryRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,154 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@model SD.ACMA.DNCRProject.Website.Models.WashHistoryViewModel
+
+@{
+    this.MapModel();
+    var currentPage = Model.Pager != null ? Model.Pager.CurrentPage : 1;
+}
+
+<script>
+    $(function () {
+        applyDatePicker();
+        $("#ui-datepicker-div").wrap('<div class="datepicker" />');
+
+        var currentPage = @currentPage;
+
+        $(".loadMore").on("click", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("LoadHistory", "WashSurface")',
+                data: {currentPage: currentPage + 1, from: "@Model.FromDate", to: "@Model.ToDate" },
+                success: function (result) {
+                    $("table#washHistory tbody").append(result);
+                    currentPage++;
+                    if($('#Pager_IsLastPage').length > 0)
+                    {
+                        $(".loadMore").hide();
+                    }
+                }
+            });
+        });
+
+        if($('#Pager_IsLastPage').length > 0)
+        {
+            $(".loadMore").hide();
+        }
+
+        $("#desktopFrom, #desktopTo").on("change", function() {
+            $("#desktopFrom, #desktopTo").valid();
+        });
+        $("#mobileFrom, #mobileTo").on("change", function() {
+            $("#mobileFrom, #mobileTo").valid();
+        });
+    });
+</script>
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="dashboard ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+<div class="contentDesc">
+    <p>@ViewBag.PageSummary</p>
+</div>
+<div class="mobileSearch">
+        @using (Html.BeginUmbracoForm<WashSurfaceController>("History"))
+        {
+            <fieldset>
+                <legend>Dates</legend>
+                <div class="floatInput">
+                    @Html.RequiredLabelFor(model => model.FromDate, new { @for = "mobileFrom" })
+                    @Html.TextBoxFor(model => model.FromDate, new {id = "mobileFrom", type = "date"})
+                </div>
+                <div class="floatInput">
+                    @Html.RequiredLabelFor(model => model.ToDate, new { @for = "mobileTo" })
+                    @Html.TextBoxFor(model => model.ToDate, new {id = "mobileTo", type = "date"})
+                </div>
+            </fieldset>
+            <div class="clear"></div>
+            <button class="ProxiBold">FILTER</button>
+        }
+</div>
+<div class="wash">
+    <div class="washFilterHolder">
+        <div class="searchFormHolder hideOnMobile">
+            @using (Html.BeginUmbracoForm<WashSurfaceController>("History"))
+            {
+                <div class="formField">
+                    <fieldset class="floatLeft">
+                        <legend>Dates</legend>
+                        <div class="floatLeft marginRight">
+                            <div class="floatLeft from longWidth">
+                                @Html.RequiredLabelFor(model => model.FromDate, new {@class = "ProxiSemiBold", @for = "desktopFrom"})
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.FromDate, new {@class = "floatLeft short", id = "desktopFrom", type = "date"})
+                                @Html.ValidationMessageFor(model => model.FromDate, "", new {@class = "spanError"})
+                            </div>
+                        </div>
+                        <div class="floatLeft marginRight">
+                            <div class="floatLeft to longWidth">
+                                @Html.RequiredLabelFor(model => model.ToDate, new { @class = "ProxiSemiBold", @for = "desktopTo" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.ToDate, new { @class = "floatLeft short", id = "desktopTo", type = "date" })
+                                @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "spanError" })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="floatLeft">
+                        <button class="filter ProxiBold">FILTER</button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            }
+        </div>
+        <div class="clear"></div>
+        @if (Model.WashCount == 1)
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.WashCount wash found
+            </div>
+        }
+        else
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.WashCount washes found
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+    <div class="tableHolder">
+        @if(Model.Washes != null && Model.Washes.Count() > 0)
+        {
+            <table id="washHistory" class="responsive">
+                <caption>Account Wash History</caption>
+                <tr>
+                    <th class="addborderLeftTop">Ref No</th>
+                    <th>Date and Time</th>
+                    <th>User</th>
+                    <th>Wash Source</th>
+                    <th class="center">Client Reference</th>
+                    <th class="center">Numbers Washed</th>
+                    <th class="center">Registered Numbers</th>
+                    <th class="center">Unregistered Numbers</th>
+                    <th class="center">Invalid Numbers</th>
+                    <th class="addborderRightTop center">Combined</th>
+                </tr>
+                @Html.Partial("_LoadHistory")
+
+           </table>
+        }
+        <div class="paginationHolder hideOnMobile">
+            @Html.Partial("_Pager")
+        </div>
+        @if (Model.Pager != null && Model.Pager.Pages.Count() > 1)
+        {
+            <div class="loadMore">
+                <a href="#" class="ProxiBold">LOAD MORE</a>
+            </div>
+        }
+    </div>
+</div>

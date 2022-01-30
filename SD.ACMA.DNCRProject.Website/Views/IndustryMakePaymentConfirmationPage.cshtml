@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+@if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString.ToString()))
+{
+    Response.Redirect("/");
+}
+else
+{
+    <div class="section sectionSubPage addSectionMinHeight">
+        <div class="subPages">
+            @Html.Action("MakePaymentConfirmation", "SubscriptionSurface", new {receipt = HttpContext.Current.Request.QueryString.ToString()})
+            <div class="clear"></div>
+        </div>
+    </div> 
+}

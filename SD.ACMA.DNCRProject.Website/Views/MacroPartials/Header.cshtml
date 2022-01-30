@@ -1,0 +1,30 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<header id="header" class="fixed">
+    <div class="relative">
+        <div class="showOnMobile mobileMenu absolute"></div>
+        <div class="skipToContent absolute hideOnTablet"><a href="#contentStart">Skip to content</a></div>
+        <div class="acma-logo-holder alignto">
+            <a href="/">
+                <div class="icon header-logo">
+                    @if (Model.Content.Id == Model.Content.AncestorOrSelf(1).Id)
+                    {
+                        <h1 class="hidden">Do Not Call Register</h1>
+                    }
+                    <img class="headerLogo" src="/images/r10/logo.png" alt="ACMA Do Not Call Register logo" />
+                </div>
+            </a>
+        </div>
+        <div id="searchBar" class="searchHolder absolute">
+            <div class="floatLeft hideOnMobile">
+                @Html.Action("Search", "SearchSurface")
+            </div>
+            <div class="floatRight relative hideOnMobile">
+                <div class="blankText"></div>
+                <button type="button" tabindex="0" class="adjustTextButton btnegaA ProxiSemiBold absolute cssOn" title="Smaller text" aria-label="Smaller text"><span class="icon negative">-A</span></button>
+                <button type="button" tabindex="0" class="adjustTextButton btposiA ProxiSemiBold absolute cssOn" title="Larger text" aria-label="Larger text"><span class="icon positive">+A</span></button>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</header>

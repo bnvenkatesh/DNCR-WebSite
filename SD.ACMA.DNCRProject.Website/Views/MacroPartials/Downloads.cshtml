@@ -1,0 +1,36 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var nodes = new List<dynamic>();
+    foreach (var downloadId in Model.MacroParameters["Items"].ToString().Split(','))
+    {
+        var node = Umbraco.Content(downloadId);
+        if (node.Id != 0)
+        {
+            nodes.Add(node);
+        }
+    }
+}
+@if (nodes.Count > 0)
+{
+    <div class="widget download-widget">
+        <div class="widgetTitle purple ProxiBold">Downloads</div>
+        @foreach (var node in nodes)
+        {
+            if (node.HasValue("media"))
+            {
+                var media = Umbraco.Media(node.GetPropertyValue("media"));
+                var sizeInKb = Int32.Parse(media.UmbracoBytes.ToString())/1024;
+                <hr/>
+                <div>
+                    <span class="download"></span>
+                    <span>
+                        <a href="@media.Url" class="purple">@node.GetPropertyValue("downloadTitle")<br/>
+                        (@media.UmbracoExtension, @String.Format("{0}k", sizeInKb.ToString()), @node.GetPropertyValue("language"))</a>
+                    </span>
+                    <div class="clear"></div>
+                </div>
+            }
+        }
+    </div>
+}

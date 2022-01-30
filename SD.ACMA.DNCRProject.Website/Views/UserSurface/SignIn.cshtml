@@ -1,0 +1,110 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SignInViewModel>
+
+@{
+    this.MapModel();
+}
+
+@if (!String.IsNullOrEmpty(ViewBag.SignInErrorMessage))
+{
+    <script>
+        $(function() {
+            openUserLogin();
+        });
+    </script>
+} else if (Model.IsLocked)
+{
+    <script>
+        $(function () {
+            $("#accountLocked").dialog("open");
+        });
+    </script>
+}
+
+<script>
+    $(function() {
+        $(".forgot .forgotPassword").on("click", function (event) {
+            event.preventDefault();
+            var email = $("#userLogin input#SignInEmailAddress").val();
+            $("#userForgotPassword input#ForgotPasswordEmailAddress").val(email);
+            $("#userLogin").dialog("close");
+            $("#userForgotPassword").dialog("open");
+        });
+        $("#accountLockedButton").on("click", function (event) {
+            event.preventDefault();
+            $("#accountLocked").dialog("close");
+            $("#userForgotPassword").dialog("open");
+        });
+    });
+</script>
+
+<div id="userLogin" class="dialog" title="Sign in to Industry portal">
+    @using (Html.BeginUmbracoForm<UserSurfaceController>("SignIn"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="dialogDesc">
+            <p>Please sign in to your access-seeker account.</p>
+            <p class="addMargin">If you don’t have an account you can <a class="" href="@Model.CreateAccountNodeUrl">create one</a>.
+            </p>
+        </div>
+        <div>
+            <p class="italic">All fields marked with * are mandatory</p>
+            <div class="errorContainer"></div>
+        </div>
+        <fieldset>
+            <legend>Sign in</legend>
+            <div class="formField fieldMargin">
+                <div class="floatLeft">
+                    @Html.RequiredLabelFor(model => model.SignInEmailAddress, new { @class = "inputLabel" })
+                </div>
+                <div class="floatLeft">
+                    @Html.TextBoxFor(model => model.SignInEmailAddress, new { @class = "long deny-html", @type = "email" })
+                    @Html.ValidationMessageFor(model => model.SignInEmailAddress, "", new { @class = "error numberError" })
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="formField fieldMargin">
+                <div class="floatLeft">
+                    @Html.RequiredLabelFor(model => model.Password, new { @class = "inputLabel" })
+                </div>
+                <div class="floatLeft">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "long", type = "password"})
+                    @Html.ValidationMessageFor(model => model.Password, "", new {@class = "error numberError"})
+                </div>
+                <div class="clear"></div>
+            </div>
+        </fieldset>
+        <div class="forgot"><a href="#" class="forgotPassword">Forgot your password?</a></div>
+        <hr />
+        <div class="formError">@Html.Raw(ViewBag.SignInErrorMessage)</div>
+        <div class="formField">
+            <button class="shaded width125" id="btnLogin">SIGN IN</button>
+            <button type="button" id="closeUserLogin" class="width125">CANCEL</button>
+        </div>
+        }
+</div>
+
+<div id="accountLocked" class="dialog" title="Password reset required">
+    <form>
+        <div class="dialogDesc articleContent">
+            @if (Model.IsMigrated)
+            {
+                <p>A recent update to the Do Not Call Register requires that all account holders must reset their password.</p>
+                <p>Select the reset password button below and an email containing reset instructions will be sent to the email address associated with this account.</p>
+                <p>If you do not receive an email or the email address is no longer active please call 1300 785 749 for assistance.</p>
+            }
+            else
+            {
+                <p>This account has been locked and a password reset is required.</p>
+                <p>Select the reset password button below and an email containing reset instructions will be sent to the email address associated with this account.</p>
+                <p>If you do not receive an email or the email address is no longer active please call 1300 785 749 for assistance.</p>
+            }
+        </div>
+        <hr />
+        <div class="formField">
+            <button id="accountLockedButton" class="shaded width180">RESET PASSWORD</button>
+            <button type="button" id="closeAccountLocked" class="width125">CANCEL</button>
+        </div>
+    </form>
+</div>

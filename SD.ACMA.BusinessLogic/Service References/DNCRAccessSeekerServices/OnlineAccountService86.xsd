@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="AccountUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="CanSeeWashQuote" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Department" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashResultFormatFileWithIndicators" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatInvalidNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatRegisteredNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatUnregisteredNumbers" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountUser" nillable="true" type="tns:AccountUser" />
+  <xs:complexType name="CreateWashOnlyUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUser" nillable="true" type="tns:AccountUser" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q1:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateWashOnlyUserRequestArgs" nillable="true" type="tns:CreateWashOnlyUserRequestArgs" />
+  <xs:complexType name="CreateWashOnlyUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateWashOnlyUserRequestResult" nillable="true" type="tns:CreateWashOnlyUserRequestResult" />
+  <xs:complexType name="ActivateWashOnlyUserArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivationToken" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActivateWashOnlyUserArgs" nillable="true" type="tns:ActivateWashOnlyUserArgs" />
+  <xs:complexType name="ActivateWashOnlyUserResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="IsExpired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActivateWashOnlyUserResult" nillable="true" type="tns:ActivateWashOnlyUserResult" />
+  <xs:complexType name="GetAccountUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q2:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAccountUserRequestArgs" nillable="true" type="tns:GetAccountUserRequestArgs" />
+  <xs:complexType name="GetAccountUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserDetails" nillable="true" type="tns:AccountUser" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAccountUserRequestResult" nillable="true" type="tns:GetAccountUserRequestResult" />
+  <xs:complexType name="UpdateAccountUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserDetails" nillable="true" type="tns:AccountUser" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q3:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateAccountUserRequestArgs" nillable="true" type="tns:UpdateAccountUserRequestArgs" />
+  <xs:complexType name="UpdateAccountUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateAccountUserRequestResult" nillable="true" type="tns:UpdateAccountUserRequestResult" />
+  <xs:complexType name="GetAllAccountUsersRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q4:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAllAccountUsersRequestArgs" nillable="true" type="tns:GetAllAccountUsersRequestArgs" />
+  <xs:complexType name="GetAllAccountUsersRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUsers" nillable="true" type="tns:ArrayOfAccountUserInfo" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetAllAccountUsersRequestResult" nillable="true" type="tns:GetAllAccountUsersRequestResult" />
+  <xs:complexType name="ArrayOfAccountUserInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountUserInfo" nillable="true" type="tns:AccountUserInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountUserInfo" nillable="true" type="tns:ArrayOfAccountUserInfo" />
+  <xs:complexType name="AccountUserInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:AccountUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Status" type="q5:AccountUserStatus.AccountUserStatusEnum" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountUserInfo" nillable="true" type="tns:AccountUserInfo" />
+  <xs:complexType name="DeActivateAccountUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeActivateAccountUserId" type="xs:int" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q6:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeActivateAccountUserRequestArgs" nillable="true" type="tns:DeActivateAccountUserRequestArgs" />
+  <xs:complexType name="DeActivateAccountUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeActivateAccountUserRequestResult" nillable="true" type="tns:DeActivateAccountUserRequestResult" />
+  <xs:complexType name="ActivateAccountUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivateAccountUserId" type="xs:int" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q7:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActivateAccountUserRequestArgs" nillable="true" type="tns:ActivateAccountUserRequestArgs" />
+  <xs:complexType name="ActivateAccountUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActivateAccountUserRequestResult" nillable="true" type="tns:ActivateAccountUserRequestResult" />
+  <xs:complexType name="DeleteAccountUserRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DeleteAccountUserId" type="xs:int" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q8:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeleteAccountUserRequestArgs" nillable="true" type="tns:DeleteAccountUserRequestArgs" />
+  <xs:complexType name="DeleteAccountUserRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeleteAccountUserRequestResult" nillable="true" type="tns:DeleteAccountUserRequestResult" />
+  <xs:complexType name="ImpersonateArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="AgentData" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImpersonateArgs" nillable="true" type="tns:ImpersonateArgs" />
+  <xs:complexType name="ImpersonateResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountStatus" nillable="true" type="q9:AccountStatus.AccountStatusEnum" />
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountUserStatus" nillable="true" type="q10:AccountUserStatus.AccountUserStatusEnum" />
+      <xs:element minOccurs="0" name="AgentId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsAdmin" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLocked" type="xs:boolean" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Organisation" nillable="true" type="q11:Organisation.OrganisationEnum" />
+      <xs:element minOccurs="0" name="ResponseMessage" nillable="true" type="xs:string" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Role" nillable="true" type="q12:OrganisationGroup.OrganisationGroupEnum" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImpersonateResult" nillable="true" type="tns:ImpersonateResult" />
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SD.ACMA.Service.EmailInParser</id>
+    <version>$version$</version>
+    <title>SD.ACMA.Service.EmailInParser</title>
+    <authors>Salmat Digital</authors>
+    <owners>ACMA</owners>
+    <description>SD.ACMA.Service.EmailInParser</description>
+  </metadata>
+</package>

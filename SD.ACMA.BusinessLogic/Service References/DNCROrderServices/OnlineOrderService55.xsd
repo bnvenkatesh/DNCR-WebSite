@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="CreateOrderRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="BalanceAmountCanBeUsed" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IncludeBalance" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCreditCardPayment" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SubscritopnVsQuantities" nillable="true" type="tns:ArrayOfSubscritopnVsQuantity" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q1:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateOrderRequestArgs" nillable="true" type="tns:CreateOrderRequestArgs" />
+  <xs:complexType name="ArrayOfSubscritopnVsQuantity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubscritopnVsQuantity" nillable="true" type="tns:SubscritopnVsQuantity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSubscritopnVsQuantity" nillable="true" type="tns:ArrayOfSubscritopnVsQuantity" />
+  <xs:complexType name="SubscritopnVsQuantity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscritopnVsQuantity" nillable="true" type="tns:SubscritopnVsQuantity" />
+  <xs:complexType name="CreateOrderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="AdditionalEmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExpiresTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderBalance" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderOutstanding" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderStatusID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreateOrderRequestResult" nillable="true" type="tns:CreateOrderRequestResult" />
+  <xs:complexType name="SubscriptionRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionRequestArgs" nillable="true" type="tns:SubscriptionRequestArgs" />
+  <xs:complexType name="SubscriptionRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subscriptions" nillable="true" type="tns:ArrayOfSubscription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionRequestResult" nillable="true" type="tns:SubscriptionRequestResult" />
+  <xs:complexType name="ArrayOfSubscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Subscription" nillable="true" type="tns:Subscription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSubscription" nillable="true" type="tns:ArrayOfSubscription" />
+  <xs:complexType name="Subscription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExpirityInDays" type="xs:int" />
+      <xs:element minOccurs="0" name="IsFreeSubscription" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastUpdatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SubscriptionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriptionRequestID" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCredits" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Subscription" nillable="true" type="tns:Subscription" />
+  <xs:complexType name="SubscriptionSummaryRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriptionSummary" nillable="true" type="tns:SubscriptionSummary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionSummaryRequestResult" nillable="true" type="tns:SubscriptionSummaryRequestResult" />
+  <xs:complexType name="SubscriptionSummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvailableWashCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="CreditNotes" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EnquiryRefunds" nillable="true" type="tns:ArrayOfEnquiryRefundEntry" />
+      <xs:element minOccurs="0" name="LastPurchaseDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReservedCreditNotes" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReservedWashCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="SubscriptionExpiryDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriptionStatus" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionSummary" nillable="true" type="tns:SubscriptionSummary" />
+  <xs:complexType name="ArrayOfEnquiryRefundEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EnquiryRefundEntry" nillable="true" type="tns:EnquiryRefundEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEnquiryRefundEntry" nillable="true" type="tns:ArrayOfEnquiryRefundEntry" />
+  <xs:complexType name="EnquiryRefundEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AcmaCreditNotes" type="xs:int" />
+      <xs:element minOccurs="0" name="AcmaWashCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="EnquiryID" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="RefundDecision" type="q2:enquiry_refund_decisions.enquiry_refund_decisionsEnum" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="RefundType" type="q3:enquiry_refund_types.enquiry_refund_typesEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EnquiryRefundEntry" nillable="true" type="tns:EnquiryRefundEntry" />
+  <xs:complexType name="SubscriptionHistoryRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubscriptionHistory" nillable="true" type="tns:ArrayOfSubscriptionHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionHistoryRequestResult" nillable="true" type="tns:SubscriptionHistoryRequestResult" />
+  <xs:complexType name="ArrayOfSubscriptionHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SubscriptionHistory" nillable="true" type="tns:SubscriptionHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSubscriptionHistory" nillable="true" type="tns:ArrayOfSubscriptionHistory" />
+  <xs:complexType name="SubscriptionHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountTransactionID" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AgentUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Created" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Credit" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Debit" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirationDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TransactionType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashCreditBalance" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubscriptionHistory" nillable="true" type="tns:SubscriptionHistory" />
+  <xs:complexType name="OrderRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderID" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderRequestArgs" nillable="true" type="tns:OrderRequestArgs" />
+  <xs:complexType name="OrderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountAdjustment" nillable="true" type="tns:AccountAdjustment" />
+      <xs:element minOccurs="0" name="AccountAdjustmentTypes" nillable="true" type="tns:ArrayOfAccountAdjustmentTypes" />
+      <xs:element minOccurs="0" name="Orders" nillable="true" type="tns:ArrayOfOrder" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionHistory" nillable="true" type="tns:ArrayOfAccountTransaction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderRequestResult" nillable="true" type="tns:OrderRequestResult" />
+  <xs:complexType name="AccountAdjustment">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountAdjustmentType" type="q4:AccountAdjustmentType.AccountAdjustmentTypeEnum" />
+      <xs:element minOccurs="0" name="AccountAdjustmentTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="AdjustmentNote" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AgentUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreditNotes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnquiryID" type="xs:int" />
+      <xs:element minOccurs="0" name="ExpiryDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RefundOrderID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RefundSubscriptionID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReservedAccountBalance" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReservedWashingCredits" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashReferenceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashingCredits" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountAdjustment" nillable="true" type="tns:AccountAdjustment" />
+  <xs:complexType name="ArrayOfAccountAdjustmentTypes">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountAdjustmentTypes" nillable="true" type="tns:AccountAdjustmentTypes" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountAdjustmentTypes" nillable="true" type="tns:ArrayOfAccountAdjustmentTypes" />
+  <xs:complexType name="AccountAdjustmentTypes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountAdjustmentTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="AdjustmentName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountAdjustmentTypes" nillable="true" type="tns:AccountAdjustmentTypes" />
+  <xs:complexType name="ArrayOfOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="AdditionalEmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GST" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="tns:ArrayOfOrderNote" />
+      <xs:element minOccurs="0" name="OrderExpiryDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderLines" nillable="true" type="tns:ArrayOfOrderLine" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="OrderStatus" type="q5:OrderStatus.OrderStatusEnum" />
+      <xs:element minOccurs="0" name="OrderTransactions" nillable="true" type="tns:ArrayOfOrderTransaction" />
+      <xs:element minOccurs="0" name="PaymentActivated" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PaymentOutstanding" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PaymentReceived" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PaymentUnallocated" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Payments" nillable="true" type="tns:ArrayOfPayment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
+  <xs:complexType name="ArrayOfOrderNote">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderNote" nillable="true" type="tns:OrderNote" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderNote" nillable="true" type="tns:ArrayOfOrderNote" />
+  <xs:complexType name="OrderNote">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderNote" nillable="true" type="tns:OrderNote" />
+  <xs:complexType name="ArrayOfOrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderLine" nillable="true" type="tns:OrderLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderLine" nillable="true" type="tns:ArrayOfOrderLine" />
+  <xs:complexType name="OrderLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activated" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpirityInDays" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderLineID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderLineNumber" type="xs:int" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="OrderLineStatus" type="q6:OrderLineStatus.OrderLineStatusEnum" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SubscriptionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashCredits" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderLine" nillable="true" type="tns:OrderLine" />
+  <xs:complexType name="ArrayOfOrderTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderTransaction" nillable="true" type="tns:OrderTransaction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderTransaction" nillable="true" type="tns:ArrayOfOrderTransaction" />
+  <xs:complexType name="OrderTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="OrdeTransactionTypeName" type="q7:OrderTransactionType.OrderTransactionTypeEnum" />
+      <xs:element minOccurs="0" name="PaymentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderTransaction" nillable="true" type="tns:OrderTransaction" />
+  <xs:complexType name="ArrayOfPayment">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Payment" nillable="true" type="tns:Payment" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPayment" nillable="true" type="tns:ArrayOfPayment" />
+  <xs:complexType name="Payment">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreditCardReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditCardTransactionCode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ExternalMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsPaymentSuccess" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="PaidAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PaymentFeedEntryID" type="xs:int" />
+      <xs:element minOccurs="0" name="PaymentID" type="xs:int" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="PaymentMethod" type="q8:PaymentMethod.PaymentMethodEnum" />
+      <xs:element minOccurs="0" name="PaymentMethodID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Payment" nillable="true" type="tns:Payment" />
+  <xs:complexType name="ArrayOfAccountTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountTransaction" nillable="true" type="tns:AccountTransaction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountTransaction" nillable="true" type="tns:ArrayOfAccountTransaction" />
+  <xs:complexType name="AccountTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountTransactionID" type="xs:int" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountTransactionType" type="q9:AccountTransactionType.AccountTransactionTypeEnum" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountDisplay" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedTimeStamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashCredits" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCreditsDisplay" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountTransaction" nillable="true" type="tns:AccountTransaction" />
+  <xs:complexType name="InvoiceRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsOrder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvoiceRequestArgs" nillable="true" type="tns:InvoiceRequestArgs" />
+  <xs:complexType name="PayForOrderRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="AgentUserID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AuthorizeID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditCardReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpectedSettelmentDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExternalMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsCSR" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="ReceiptNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionNo" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="TransactionType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PayForOrderRequestArgs" nillable="true" type="tns:PayForOrderRequestArgs" />
+  <xs:complexType name="PayForOrderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EnquiryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PayForOrderRequestResult" nillable="true" type="tns:PayForOrderRequestResult" />
+  <xs:complexType name="CancelOrderRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="AgentUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="IsCSR" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelOrderRequestArgs" nillable="true" type="tns:CancelOrderRequestArgs" />
+  <xs:complexType name="CancelOrderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelOrderRequestResult" nillable="true" type="tns:CancelOrderRequestResult" />
+  <xs:complexType name="CloseOrderRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="AgentUserID" type="xs:int" />
+      <xs:element minOccurs="0" name="IsCSR" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseOrderRequestArgs" nillable="true" type="tns:CloseOrderRequestArgs" />
+  <xs:complexType name="CloseOrderRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseOrderRequestResult" nillable="true" type="tns:CloseOrderRequestResult" />
+  <xs:complexType name="AccountSummaryDetailResponseResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Entries" nillable="true" type="tns:ArrayOfAccountSummaryDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountSummaryDetailResponseResult" nillable="true" type="tns:AccountSummaryDetailResponseResult" />
+  <xs:complexType name="ArrayOfAccountSummaryDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AccountSummaryDetail" nillable="true" type="tns:AccountSummaryDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccountSummaryDetail" nillable="true" type="tns:ArrayOfAccountSummaryDetail" />
+  <xs:complexType name="AccountSummaryDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentUserDisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CSRComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedTimeStampt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnquiryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Expires" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashCredits" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountSummaryDetail" nillable="true" type="tns:AccountSummaryDetail" />
+  <xs:complexType name="AccountUserHeaderInformationArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountUserHeaderInformationArgs" nillable="true" type="tns:AccountUserHeaderInformationArgs" />
+  <xs:complexType name="AccountUserHeaderInformationResponseResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountStatus" type="q10:AccountStatus.AccountStatusEnum" />
+      <xs:element minOccurs="0" name="AccountUserEmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AccountUserID" type="xs:int" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="AccountUserStatus" type="q11:AccountUserStatus.AccountUserStatusEnum" />
+      <xs:element minOccurs="0" name="BlockedCreditNotes" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BlockedWashingCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="CanSeeWashQuote" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditNotes" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashCredits50Count" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCredits80Count" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCreditsCount" type="xs:int" />
+      <xs:element minOccurs="0" name="WashingCredits" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccountUserHeaderInformationResponseResult" nillable="true" type="tns:AccountUserHeaderInformationResponseResult" />
+</xs:schema>

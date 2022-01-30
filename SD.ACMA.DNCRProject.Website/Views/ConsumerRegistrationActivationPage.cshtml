@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages">
+        @Html.Action("Activate", "RegistrationSurface", new { token = HttpContext.Current.Request.QueryString.ToString() })
+        <div class="clear"></div>
+    </div>
+</div>
+

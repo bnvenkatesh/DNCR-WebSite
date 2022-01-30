@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://dncrapp/" elementFormDefault="qualified" targetNamespace="http://dncrapp/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Registrations/OnlineRegistrationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Registrations/OnlineRegistrationService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration.Bulk" />
+  <xs:element name="Register">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="onlineRegistrationRequestArgs" nillable="true" type="q1:OnlineRegisterRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="RegisterResult" nillable="true" type="q2:OnlineRegistrationRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Confirm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="confirmRegistrationRequestArgs" nillable="true" type="q3:ConfirmOnlineRegistrationRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="ConfirmResult" nillable="true" type="q4:ConfirmOnlineRegistrationResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Check">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="checkOnlineRegistrationRequestArgs" nillable="true" type="q5:CheckOnlineRegisterRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration" minOccurs="0" name="CheckResult" nillable="true" type="q6:OnlineCheckRegistrationRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitBulkRegistrationRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration.Bulk" minOccurs="0" name="bulkRegistrationRequest" nillable="true" type="q7:BulkRegistrationRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubmitBulkRegistrationRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Registration.Bulk" minOccurs="0" name="SubmitBulkRegistrationRequestResult" nillable="true" type="q8:BulkRegistrationRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

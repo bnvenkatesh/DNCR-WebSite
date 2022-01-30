@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="LodgeComplaintRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Calls" nillable="true" type="tns:ArrayOfCallOrFaxDetail" />
+      <xs:element minOccurs="0" name="ComplaintDetails" nillable="true" type="tns:OnlineComplaintRequest" />
+      <xs:element minOccurs="0" name="ContactDetails" nillable="true" type="tns:OnlineContactRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LodgeComplaintRequestArgs" nillable="true" type="tns:LodgeComplaintRequestArgs" />
+  <xs:complexType name="ArrayOfCallOrFaxDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CallOrFaxDetail" nillable="true" type="tns:CallOrFaxDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCallOrFaxDetail" nillable="true" type="tns:ArrayOfCallOrFaxDetail" />
+  <xs:complexType name="CallOrFaxDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AMPM" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AnswerForCallTermination" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Attachment" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="AttachmentFileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CallDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CallDetails" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CallPurposeAdvertise" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeCaller" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeDonation" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeDonationForPolitics" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeOther" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeOtherDetails" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CallPurposePoll" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeScam" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallPurposeVoting" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CallReceiveNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CallWasTerminated" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsFax" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NumberOrTextDisplayed" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestedCallTermination" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Time" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="VoiceCall" type="q1:voice_call.voice_callEnum" />
+      <xs:element minOccurs="0" name="VoiceCallOther" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="WasCallerIDContactable" nillable="true" type="q2:cli_contactable.cli_contactableEnum" />
+      <xs:element minOccurs="0" name="WasCallerIDContactableOther" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="WasCallerIDDisplayed" nillable="true" type="q3:cli_displayed.cli_displayedEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CallOrFaxDetail" nillable="true" type="tns:CallOrFaxDetail" />
+  <xs:complexType name="OnlineComplaintRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalAssist" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AdditionalDetailsConsentOnlineSurvey" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalDetailsConsentWithdrawn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AgentUserId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Anonymous" type="xs:boolean" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="CallType" type="q4:complaint_call_type.complaint_call_typeEnum" />
+      <xs:element minOccurs="0" name="CallTypeOther" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Channel" type="q5:channels.channelsEnum" />
+      <xs:element minOccurs="0" name="ComplaintDetails" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="ComplaintType" type="q6:complaint_types.complaint_typesEnum" />
+      <xs:element minOccurs="0" name="ComplaintTypeOther" nillable="true" type="xs:string" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="ConsentOnlineSurveryCompletion" nillable="true" type="q7:consent.consentEnum" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="ConsentToBeContacted" nillable="true" type="q8:consent.consentEnum" />
+      <xs:element minOccurs="0" name="ConsentWithdrawn" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContactBusiness" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContactOtherParty" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContactServiceProvider" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContactingBusinessDetails" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactingBusinessName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateConsentWithdrawn" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="DesignatedParty" nillable="true" type="q9:calling_party.calling_partyEnum" />
+      <xs:element minOccurs="0" name="DestinationNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaxHeaderHasDestinationNumber" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="FurtherInformation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsBusinessNumber" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsConsumerComplaint" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsNumberOnDNCR" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductOffered" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductProvider" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductProviderDetails" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReceivingCallNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceProviderID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ServiceProviderOther" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubjectACMA" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OnlineComplaintRequest" nillable="true" type="tns:OnlineComplaintRequest" />
+  <xs:complexType name="OnlineContactRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Addressline1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Addressline2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Company" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryISO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="State" nillable="true" type="q10:State.StateEnum" />
+      <xs:element minOccurs="0" name="StateOther" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Suburb" nillable="true" type="xs:string" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Title" nillable="true" type="q11:titles.titlesEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OnlineContactRequest" nillable="true" type="tns:OnlineContactRequest" />
+  <xs:complexType name="LodgeComplaintRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timming" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LodgeComplaintRequestResult" nillable="true" type="tns:LodgeComplaintRequestResult" />
+  <xs:complexType name="AttachMailResponseRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Body" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailAsAttachment" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="From" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsEnquiry" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MatchingToken" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AttachMailResponseRequestArgs" nillable="true" type="tns:AttachMailResponseRequestArgs" />
+  <xs:complexType name="AttachMailResponseRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResultMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AttachMailResponseRequestResult" nillable="true" type="tns:AttachMailResponseRequestResult" />
+</xs:schema>

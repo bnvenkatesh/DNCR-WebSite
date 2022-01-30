@@ -1,0 +1,223 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@using Umbraco.Web.Models
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    var registerNode = Umbraco.Content(Model.Content.GetPropertyValue("registrationNode"));
+    var checkNumbersNode = Umbraco.Content(Model.Content.GetPropertyValue("checkNumbersNode"));
+    var lodgeComplaintNode = Umbraco.Content(Model.Content.GetPropertyValue("consumerLodgeComplaintNode"));
+    var createAccountNode = Umbraco.Content(Model.Content.GetPropertyValue("createAccountNode"));
+    var industryFaqNode = Umbraco.Content(Model.Content.GetPropertyValue("industryFaqNode"));
+    var quickCheckNode = Umbraco.Content(Model.Content.GetPropertyValue("quickCheckNode"));
+    var uploadListForWashingNode = Umbraco.Content(Model.Content.GetPropertyValue("uploadListForWashingNode"));
+    var purchaseSubscriptionNode = Umbraco.Content(Model.Content.GetPropertyValue("purchaseSubscriptionNode"));
+}
+
+<script>
+    $(function () {
+        changeBackground($("ul.bxslider li:first"), 0);
+
+        var accountIdSession = '@SessionHelper.AccountId';
+
+        if (accountIdSession === '') {
+            sessionStorage.clickSpnCloseBelow50 = false;
+            sessionStorage.clickSpnCloseBelow20 = false;
+        }
+    });
+</script>
+
+<div class="r10carousel">
+    <div class="carousel-container">
+        @if (Model.Content.HasValue("carouselItems"))
+        {
+            @Umbraco.RenderMacro("Carousel", new { Items = Model.Content.GetPropertyValue("carouselItems") })
+        }
+    </div>
+    <!-- R10-UPDATE disabled
+    <div class="tabSection relative">
+        <div class="tabsHolder relative">
+            <div class="tabButtons absolute">
+                <div id="forConsumers" class="active" tabindex="0">For Consumers</div>
+                <div id="forIndustry" class="cssOn" tabindex="0">For Industry</div>
+            </div>
+
+            <div id="tabConsumers" class="tabsContent">
+                <div class="row">
+                    <div class="col-2 col-1-tablet floatLeft tabIcons">
+                        <ul class="ul-icons">
+                            <li class="col-3 firstChild">
+                                <a href="@registerNode.Url" class="tabRegisterOnline">Register online</a>
+                            </li>
+                            <li class="col-3">
+                                <a href="@checkNumbersNode.Url" class="tabCheckNumber">Check your number</a>
+                            </li>
+                            <li class="col-3 lastChild ">
+                                <a href="@lodgeComplaintNode.Url" class="tabLodgeComplaint">Lodge a complaint</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-2 col-1-tablet floatLeft removeOnMobile">
+                        <div class="list-your-home">@Model.Content.GetPropertyValue("consumerHeader")</div>
+                        <br/>
+                        <p class="tabBody">@Model.Content.GetPropertyValue("consumerBody")</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="row addMargin">
+                    @if (Model.Content.HasValue("consumerQuickLinks"))
+                    {
+                        <div class="col-2 col-1-mobile floatLeft quickLinks">
+                            <div class="h3 ProxiBold">Quick links</div>
+                            @Umbraco.RenderMacro("HomePageRelatedLinks", new { Items = Model.Content.GetPropertyValue("consumerQuickLinks"), ColourClass = "purple" })
+                        </div>
+                    }
+                    <div class="col-2  col-1-mobile floatRight needHelp">
+                        <div class="floatLeft contactNote">
+                            <div class="h3 ProxiBold">Need help?</div>
+                            <p class="hideOnMobile">@Model.Content.GetPropertyValue("consumerNeedHelpText")</p>
+                        </div>
+                        <div class="floatLeft consumerContact hideOnMobile">
+                            <p class="ProxiBold hideOnTablet">Consumer Contact Centre:</p> <br/>
+                            <div class="contactNumber ProxiLight">
+                                <p><a class="purple" href="tel:@Model.Content.GetPropertyValue("consumerContactCentreNumber").ToString().Replace(" ", "")">@Model.Content.GetPropertyValue("consumerContactCentreNumber")</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="floatLeft consumerContactMobile">
+                            <div class="item">
+                                <p>Call the Consumer</p>
+                                <p>Contact Centre on:</p>
+                            </div>
+                            <div class="item">
+                                <a class="purple" href="tel:@Model.Content.GetPropertyValue("consumerContactCentreNumber").ToString().Replace(" ", "")">@Model.Content.GetPropertyValue("consumerContactCentreNumber")</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="tabButtons absolute hidden">
+                <div tabindex="0">For Industry</div>
+            </div>
+            <div id="tabIndustry" class="tabsContent">
+                <div class="row">
+                    <div class="col-2 col-1-tablet floatLeft tabIcons">
+                        <ul class="ul-icons">
+                            @if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+                            {
+                                <li class="col-3 firstChild">
+                                    <a href="@createAccountNode.Url" class="tabCreateAccount">Create an account</a>
+                                </li>
+                                <li class="col-3">
+                                    <a href="#" class="tabSignIn openSignIn">Sign in</a>
+                                </li>
+                                <li class="col-3 lastChild">
+                                    <a href="@industryFaqNode.Url" class="tabFaq">FAQs for Industry</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="col-3 firstChild">
+                                    <a href="@quickCheckNode.Url" class="tabQuickCheck">Quick check</a>
+                                </li>
+                                <li class="col-3">
+                                    <a href="@uploadListForWashingNode.Url" class="tabUploadList">Upload list for washing</a>
+                                </li>
+                                if (SessionHelper.IsAdmin)
+                                {
+                                    <li class="col-3 lastChild">
+                                        <a href="@purchaseSubscriptionNode.Url" class="tabPurchaseSubscription">Purchase subscription</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="col-3 lastChild">
+                                        <a href="@industryFaqNode.Url" class="tabFaq">FAQs for Industry</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="col-2 col-1-tablet floatLeft removeOnMobile">
+                        <div class="list-your-home">@Model.Content.GetPropertyValue("industryHeader")</div>
+                        <br/>
+                        <p class="tabBody">@Model.Content.GetPropertyValue("industryBody")</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="row addMargin">
+                    @if (Model.Content.HasValue("industryQuickLinks"))
+                    {
+                        <div class="col-2 col-1-mobile floatLeft quickLinks">
+                            <div class="h3 ProxiBold">Quick links</div>
+                            @Umbraco.RenderMacro("HomePageRelatedLinks", new { Items = Model.Content.GetPropertyValue("industryQuickLinks"), ColourClass = "red" })
+                        </div>
+                    }
+                    <div class="col-2  col-1-mobile floatRight needHelp">
+                        <div class="floatLeft contactNote">
+                            <div class="h3 ProxiBold">Need help?</div>
+                            <p class="hideOnMobile">@Model.Content.GetPropertyValue("industryNeedHelpText")</p>
+                        </div>
+                        <div class="floatLeft consumerContact hideOnMobile">
+                            <p class="ProxiBold hideOnTablet">Industry Contact Centre:</p> <br/>
+                            <div class="contactNumber ProxiLight">
+                                <p>
+                                    <a class="red" href="tel:@Model.Content.GetPropertyValue("industryContactCentreNumber").ToString().Replace(" ", "")">@Model.Content.GetPropertyValue("industryContactCentreNumber")</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="floatLeft consumerContactMobile">
+                            <div class="item">
+                                <p>Call the Industry</p>
+                                <p>Contact Centre on:</p>
+                            </div>
+                            <div class="item">
+                                <a class="red" href="tel:@Model.Content.GetPropertyValue("industryContactCentreNumber").ToString().Replace(" ", "")">@Model.Content.GetPropertyValue("industryContactCentreNumber")</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+</div>
+
+
+@Umbraco.RenderMacro("HomePageStaticContent1", new
+{
+    ConsumerLinks = Model.Content.GetPropertyValue("consumerQuickLinks"),
+    IndustryLinks = Model.Content.GetPropertyValue("industryQuickLinks"),
+    ConsumerContactNumber = Model.Content.GetPropertyValue("consumerContactCentreNumber"),
+    IndustryContactNumber = Model.Content.GetPropertyValue("industryContactCentreNumber")
+})
+
+@Umbraco.RenderMacro("HomePageConsumerAlerts")
+
+@Umbraco.RenderMacro("HomePageMediaReleases")
+
+@Umbraco.RenderMacro("HomePageSocialMedia")
+
+@*<div id="unlockUser" class="dialog" title="Unlock user">
+        <form>
+            <div class="dialogDesc">
+                <p>The user account for <span class="ProxiSemiBold">Firstname Lastname</span> was locked due to too many sign-in failures. Do you want to unlock this account?</p>
+            </div>
+            <div class="formField">
+                <input type="checkbox" class="radioCheck" id="resetPass" />
+                <label class="ProxiSemiBold" for="resetPass">Force a password reset and send an email</label>
+            </div>
+            <hr />
+            <div class="formField">
+                <button type="button" class="shaded" style="width:176px;">UNLOCK USER</button>
+                <button type="button" style="width:125px;">CANCEL</button>
+            </div>
+        </form>
+    </div>*@

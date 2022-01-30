@@ -1,0 +1,10 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@if (!String.IsNullOrEmpty(Model.Content.GetPropertyValue("media").ToString()))
+{
+    var media = Umbraco.Media(Model.Content.GetPropertyValue("media"));
+    Response.Redirect(media.Url);
+}
+else
+{
+    Response.Redirect("/");
+}

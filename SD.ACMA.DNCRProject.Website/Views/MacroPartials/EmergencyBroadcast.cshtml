@@ -1,0 +1,44 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var home = Model.Content.AncestorOrSelf("HomePage");
+    var emergencyBroadcasts = home.Siblings().First(x => x.DocumentTypeAlias == "EmergencyBroadcasts");
+    var first = true;
+}
+@foreach (var emergencyBroadcastCategory in emergencyBroadcasts.Children)
+{
+    if (emergencyBroadcastCategory.Name == "Both" ||
+        (SessionHelper.AccountId > 0 && SessionHelper.AccountUserId > 0 && emergencyBroadcastCategory.Name == "Industry") ||
+        ((SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0) && emergencyBroadcastCategory.Name == "Consumers"))
+    {
+        foreach (var broadcast in emergencyBroadcastCategory.Children)
+        {
+            if (DateTime.Parse(broadcast.GetPropertyValue("StartDate").ToString()) < DateTime.Now && DateTime.Parse(broadcast.GetPropertyValue("EndDate").ToString()) > DateTime.Now)
+            {
+                var cookie = Request.Cookies[String.Format("Broadcast{0}", broadcast.Id)];
+                if (cookie == null || cookie.Value != "true")
+                {
+                    string cssClass;
+                    if (first && SessionHelper.AccountId > 0 && SessionHelper.AccountUserId > 0)
+                    {
+                        cssClass = "emergencyMessage emergencyMsgFirstBar";
+                        first = false;
+                    }
+                    else
+                    {
+                        cssClass = "emergencyMessage";
+                    }
+                    <div class="@cssClass" broadcastid="@broadcast.Id">
+                        <div class="title ProxiBold">@broadcast.GetPropertyValue("Header")</div>
+                        <div class="desc">
+                            <p>@broadcast.GetPropertyValue("Message")</p>
+                        </div>
+                        <a class="closeError" tabindex="0" href="#"></a>
+                    </div>
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,131 @@
+﻿@model SD.ACMA.DNCRProject.FinancialReports.Models.CreditNoteReportViewModel
+
+@{
+    ViewBag.Title = "Credit Notes Report";
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+}
+
+<div id="ReportWrapper">
+    <div id="ReportHeader">
+        @if (!Model.IsCurrent)
+        {
+            <h3>Final</h3><br />
+        }
+        <h4>Do Not Call Register</h4>
+        <h4>Credit Notes Report As At @Model.ToDateString</h4>
+    </div>
+
+    <div class="ReportBody">
+        <h4>New Credit Note Transactions</h4>
+
+        <table class="report_creditnote">
+            <tr>
+                <th>Date Received</th>
+                <th>Payment Type</th>
+                <th>Account ID</th>
+                <th>Credit Note Number</th>
+                <th class="number">Credit Note Amount</th>
+                <th class="number">Account Balance</th>
+                <th>Payment Note</th>
+                <th>Order Number</th>
+            </tr>
+            @{
+                if (Model.NewCreditNoteTransactions != null && Model.NewCreditNoteTransactions.Count > 0)
+                {
+                    foreach (var item in Model.NewCreditNoteTransactions)
+                    {
+                        <tr>
+                            <td>@item.DateReceived</td>
+                            <td>@item.PaymentType</td>
+                            <td>@item.AccountID</td>
+                            <td>@item.CreditNoteNumber</td>
+                            <td class="number">@item.CreditNoteAmount</td>
+                            <td class="number">@item.AccountBalance</td>
+                            <td>@item.PaymentNote</td>
+                            <td>@item.OrderNumber</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Credit Notes Summary</h4>
+        <table class="report_creditnote_total">
+            <tr>
+                <td>Credit Notes brought forward</td>
+                <td class="number">@Model.TotalCreditNotesBroughtForward_B</td>
+            </tr>
+            <tr>
+                <td>Credit Notes applied to purchases today</td>
+                <td class="number">@Model.TotalCreditNotesAppliedToPurchasesToday_T</td>
+            </tr>
+            <tr>
+                <td>Credit Notes created today</td>
+                <td class="number">@Model.TotalCreditNotesCreatedToday_N</td>
+            </tr>
+            <tr>
+                <td>Credit Notes refunded today</td>
+                <td class="number">@Model.TotalCreditNotesRefundedToday_R</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Credit Notes</td>
+                <td>@Model.TotalCreditNotes</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody" style="page-break-before: always;">
+        <h4>Credit Note Register</h4>
+
+        <table class="report_creditnote">
+            <tr>
+                <th>Date Received</th>
+                <th>Payment Type</th>
+                <th>Account ID</th>
+                <th>Credit Note Number</th>
+                <th class="number">Credit Note Amount</th>
+                <th class="number">Account Balance</th>
+                <th>Payment Note</th>
+                <th>Order Number</th>
+            </tr>
+            @{
+                if (Model.CreditNoteRegister != null && Model.CreditNoteRegister.Count > 0)
+                {
+                    foreach (var item in Model.CreditNoteRegister)
+                    {
+                        <tr>
+                            <td>@item.DateReceived</td>
+                            <td>@item.PaymentType</td>
+                            <td>@item.AccountID</td>
+                            <td>@item.CreditNoteNumber</td>
+                            <td class="number">@item.CreditNoteAmount</td>
+                            <td class="number">@item.AccountBalance</td>
+                            <td>@item.PaymentNote</td>
+                            <td>@item.OrderNumber</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,29 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <div class="section sectionSubPage addSectionMinHeight">
+        <div class="subPages">
+            @{
+                int currentPage;
+                string from = HttpContext.Current.Request.QueryString["From"] ?? DateTime.Now.AddDays(-30).ToString("dd-MM-yyyy");
+                string to = HttpContext.Current.Request.QueryString["To"] ?? DateTime.Now.ToString("dd-MM-yyyy");
+                if (!int.TryParse(HttpContext.Current.Request.QueryString["Page"], out currentPage))
+                {
+                    currentPage = 1;
+                }
+            }
+            @Html.Action("History", "WashSurface", new { currentPage = currentPage, from = from, to = to })
+            <div class="clear"></div>
+        </div>
+    </div>
+}

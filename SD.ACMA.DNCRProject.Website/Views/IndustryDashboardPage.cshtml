@@ -1,0 +1,221 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    var home = Model.Content.AncestorOrSelf(1);
+    IPublishedContent addUserNode = Umbraco.Content(home.GetPropertyValue("addUserNode"));
+    IPublishedContent editUserNode = Umbraco.Content(home.GetPropertyValue("editUserNode"));
+    IPublishedContent editAccountNode = Umbraco.Content(home.GetPropertyValue("editAccountNode"));
+    IPublishedContent quickCheckNode = Umbraco.Content(home.GetPropertyValue("quickCheckNode"));
+    IPublishedContent uploadListForWashingNode = Umbraco.Content(home.GetPropertyValue("uploadListForWashingNode"));
+    IPublishedContent washHistoryNode = Umbraco.Content(home.GetPropertyValue("washHistoryNode"));
+    IPublishedContent purchaseSubscriptionNode = Umbraco.Content(home.GetPropertyValue("purchaseSubscriptionNode"));
+    IPublishedContent lodgeEnquiryNode = Umbraco.Content(home.GetPropertyValue("industryLodgeEnquiryNode"));
+    IPublishedContent makePaymentNode = Umbraco.Content(home.GetPropertyValue("makePaymentNode"));
+    int paymentLimit = home.GetPropertyValue("creditCardPaymentLimit") != null ? Int32.Parse(home.GetPropertyValue("creditCardPaymentLimit").ToString()) : 30000;
+    bool isAdmin = SessionHelper.IsAdmin;
+
+    <script>
+        $(function () {
+            $("#dashBoardAccordion").accordion({ active: 0 });
+
+            if (sessionStorage.clickSpnCloseBelow50 === "true") {
+                $("#divBelow50").hide();
+            }
+
+            if (sessionStorage.clickSpnCloseBelow20 === "true") {
+                $("#divBelow20").hide();
+            }
+
+            $("#spnCloseBelow50").click(function() {
+                sessionStorage.clickSpnCloseBelow50 = true;
+            });
+
+            $("#spnCloseBelow20").click(function () {
+                sessionStorage.clickSpnCloseBelow20 = true;
+            });
+        });
+    </script>
+
+    <div class="section sectionSubPage dashboardSection addSectionMinHeight">
+        <div class="subPages">
+            <div>
+                <div class="contentHeadline">
+                    <div class="contentTitle red">
+                        <h1 class="dashboard ProxiSemiBold">@CurrentPage.GetPropertyValue("pageTitle")</h1>
+                    </div>
+                </div>
+                <div class="contentDesc">
+                    <p>@CurrentPage.GetPropertyValue("pageSummary")</p>
+                </div>
+            </div>
+
+            @if (SessionHelper.Below20Credit)
+            {
+                <div id="divBelow20" class="errorBox">
+                    <ul>
+                        <li>
+                            <p>
+                                This account has used <strong>80%</strong> of the subscription quota.
+                            </p>
+                            <a id="spnCloseBelow20" class="closeError" href="#"></a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else if (SessionHelper.Below50Credit)
+            {
+                <div id="divBelow50" class="errorBox">
+                    <ul>
+                        <li>
+                            <p>
+                                This account has used <strong>50%</strong> of the subscription quota.
+                            </p>
+                            <a id="spnCloseBelow50" class="closeError" href="#"></a>
+                        </li>
+                    </ul>
+                </div>
+            }
+
+            <div class="dashBoardButtonHolder">
+                <ul>
+                    <li>
+                        <a href="@quickCheckNode.Url" class="dashQuickCheck">Quick check</a>
+                    </li>
+                    <li>
+                        <a href="@uploadListForWashingNode.Url" class="dashUploadList">Upload list for washing</a>
+                    </li>
+                    <li>
+                        <a href="@washHistoryNode.Url" class="dashWashHistory">Wash history</a>
+                    </li>
+                    @if (isAdmin)
+                    {
+                        <li>
+                            <a href="@purchaseSubscriptionNode.Url" class="dashPurchaseSubscription">Purchase subscription</a>
+                        </li>
+                    }
+                    <li>
+                        <a href="@lodgeEnquiryNode.Url" class="dashLodgeEnquiry">Lodge enquiry</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Signout", "UserSurface")" class="dashSignOut">Sign out</a>
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+
+            <div class="dashboard">
+                <ul id="dashBoardAccordion" class="accordion globalAccordion">
+                    <li>
+                        <div class="accordionHeader ProxiBold accordion-filled-up ui-accordion-header-border-top">
+                            Account details
+                        </div>
+                        <div class="accordionContent">
+                            <div>
+                                <div class="floatRight fHistoryButton">
+                                    @if (isAdmin)
+                                    {
+                                        <a class="ProxiBold industryBlueShade1Color industryBlueShade1Border" href="@editAccountNode.Url">EDIT ACCOUNT</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" class="ProxiBold industryBlueShade1Color industryBlueShade1Border" id="changePasswordButton">CHANGE PASSWORD</a>
+                                        @Html.Action("ChangePassword", "UserSurface")
+                                    }
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div id="dashboardAccount" class="tableHolder">
+                                @Html.Action("Dashboard", "AccountSurface")
+                            </div>
+                            <div>
+                                <p class="ProxiSemiBold marginTop30">Your access-seeker ID is @SessionHelper.AccountUserId.</p>
+                                <p class="marginTop16">Please quote <span class="ProxiSemiBold">@SessionHelper.AccountUserId</span> and your username if you have a general enquiry and you are calling the Register Operator on <span class="ProxiSemiBold">1300 785 749.</span></p>
+                            </div>
+                        </div>
+                    </li>
+                    @if (isAdmin)
+                    {
+                        <li>
+                            <div class="accordionHeader ProxiBold accordion-filled-up">
+                                Access-seekers
+                            </div>
+                            <div class="accordionContent">
+                                <div>
+                                    <div id="noUser" class="floatLeft hidden">
+                                        <p>You currently have no Wash Only User accounts.</p>
+                                        <p>You can add as many additional wash only user accounts as you need.</p>
+                                    </div>
+                                    <div id="userPageUpdated" class="floatLeft pageUpdated hidden">Page Updated</div>
+                                    <div class="floatRight fHistoryButton">
+                                        <a class="ProxiBold industryBlueShade1Color industryBlueShade1Border" href="@addUserNode.Url">ADD USER</a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div id="dashboardUser" class="tableHolder">
+                                    @Html.Action("Dashboard", "UserSurface", new { currentPage = 1, editUserNodeUrl = editUserNode.Url })
+                                </div>
+                                @Html.Action("Delete", "UserSurface", new { editUserNodeUrl = editUserNode.Url })
+                                @Html.Action("Activate", "UserSurface", new { editUserNodeUrl = editUserNode.Url })
+                                @Html.Action("Deactivate", "UserSurface", new { editUserNodeUrl = editUserNode.Url })
+                            </div>
+                        </li>
+                        <li>
+                            <div class="accordionHeader ProxiBold accordion-filled-up">
+                                Subscription history
+                            </div>
+                            <div class="accordionContent">
+                                <div>
+                                    <div id="noSubscription" class="floatLeft hidden">
+                                        <p>To wash numbers you need to select a subscription to suit your needs.</p>
+                                        <p>There is a free subscription for 500 numbers.</p>
+                                    </div>
+                                    <div id="subscriptionPageUpdated" class="floatLeft pageUpdated hidden">Page Updated</div>
+                                    <div class="floatRight fHistoryButton">
+                                        <a class="ProxiBold industryBlueShade1Color industryBlueShade1Border" href="@purchaseSubscriptionNode.Url">PURCHASE SUBSCRIPTION</a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div id="dashboardSubscription" class="tableHolder">
+                                    @Html.Action("Dashboard", "SubscriptionSurface", new { currentPage = 1 })
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="accordionHeader ProxiBold accordion-filled-up">
+                                Financial history
+                            </div>
+                            <div class="accordionContent">
+                                <div class="pageUpdatedContainer">
+                                    <div id="financialPageUpdated" class="pageUpdated hidden">Page Updated</div>
+                                </div>
+                                <div id="dashboardFinancial" class="tableHolder">
+                                    @Html.Action("FinancialHistory", "SubscriptionSurface", new { currentPage = 1, paymentLimit = paymentLimit, makePaymentUrl = makePaymentNode.Url })
+                                </div>
+                                @Html.Action("CancelOrder", "SubscriptionSurface", new { paymentLimit = paymentLimit, makePaymentUrl = makePaymentNode.Url })
+                                @Html.Action("CloseOrder", "SubscriptionSurface", new { paymentLimit = paymentLimit, makePaymentUrl = makePaymentNode.Url })
+                            </div>
+                        </li>
+                    }
+                    <li>
+                        <div class="accordionHeader ProxiBold ui-accordion-header-border-bot accordion-filled-up">
+                            Wash History
+                        </div>
+                        <div class="accordionContent">
+                            @Html.Action("Dashboard", "WashSurface", new { currentPage = 1 })
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}

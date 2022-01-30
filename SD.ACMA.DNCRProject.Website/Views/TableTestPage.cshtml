@@ -1,0 +1,78 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ACMA</title>
+
+    <link href="/css/tableTest.css" rel="stylesheet">
+
+    <script src="/scripts/jquery-1.11.2.min.js"></script>
+    <script src="/scripts/tableTest.js"></script>
+</head>
+<body>
+<div class="caption">Inventory</div>
+<div id="table">
+    <div class="header-row row">
+        <span class="cell primary vehicle">Vehicle</span>
+        <span class="cell exterior">Exterior</span>
+        <span class="cell">Interior</span>
+        <span class="cell">Engine</span>
+        <span class="cell">Trans</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru WRX</span>
+        <span class="cell exterior" data-label="Exterior">World Rally Blue</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.5L H4 Turbo</span>
+        <span class="cell" data-label="Trans">5 Speed</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru WRX STI</span>
+        <span class="cell exterior" data-label="Exterior">Crystal Black Silica</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.5L H4 Turbo</span>
+        <span class="cell" data-label="Trans">6 Speed</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru BRZ</span>
+        <span class="cell exterior" data-label="Exterior">Dark Grey Metallic</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.0L H4</span>
+        <span class="cell" data-label="Trans">6 Speed</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru Legacy</span>
+        <span class="cell exterior" data-label="Exterior">Satin White Pearl</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.5L H4</span>
+        <span class="cell" data-label="Trans">Auto</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru Legacy</span>
+        <span class="cell exterior" data-label="Exterior">Twilight Blue Metallic</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.5L H4</span>
+        <span class="cell" data-label="Trans">Auto</span>
+    </div>
+    <div class="row">
+        <input type="radio" name="expand">
+        <span class="cell primary vehicle" data-label="Vehicle">2013 Subaru Forester</span>
+        <span class="cell exterior" data-label="Exterior">Ice Silver Metallic</span>
+        <span class="cell" data-label="Interior">Black</span>
+        <span class="cell" data-label="Engine">2.5L H4 Turbo</span>
+        <span class="cell" data-label="Trans">Auto</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+    PageData["DisableIndexing"] = true;
+}
+<div class="sectionSubPage addSectionMinHeight searchTabletSection">
+    <div class="subPages">
+        <div class="searchHeadings">
+            <div class="contentHeadline">
+                <div class="contentTitle ProxiSemiBold">
+                    <h1>Search results</h1>
+                </div>
+            </div>
+            @{
+                int currentPage;
+                if (!int.TryParse(HttpContext.Current.Request.QueryString["Page"], out currentPage))
+                {
+                    currentPage = 1;
+                }
+            }
+            @Umbraco.RenderMacro("SearchResults", new { ItemsPerPage = Model.Content.GetPropertyValue("itemsPerPage"), Keywords = Request.QueryString["keywords"], CurrentPage = currentPage })
+        </div>
+    </div>
+</div>

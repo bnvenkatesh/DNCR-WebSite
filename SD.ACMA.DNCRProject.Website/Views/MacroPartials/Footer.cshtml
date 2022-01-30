@@ -1,0 +1,34 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<div class="floatLeft">
+    <nav>
+        <ul>
+            @{
+                var home = Model.Content.AncestorOrSelf(1);
+            }
+            @if (home.HasValue("contactUsNode"))
+            {
+                IPublishedContent contactUsNode = Umbraco.Content(home.GetPropertyValue("contactUsNode"));
+                <li><a class="ProxiSemiBold" href="@contactUsNode.Url">Contact Us</a></li>
+            }
+            @if (home.HasValue("privacyPolicyNode"))
+            {
+                IPublishedContent privacyPolicyNode = Umbraco.Content(home.GetPropertyValue("privacyPolicyNode"));
+                <li><a class="ProxiSemiBold" href="@privacyPolicyNode.Url">Privacy Policy</a></li>
+            }
+            <li><a class="ProxiSemiBold" target="_blank" href="http://www.acma.gov.au/">ACMA Website</a></li>
+            <li><a class="ProxiSemiBold" href="/site-map">Sitemap</a></li>
+        </ul>
+    </nav>
+</div>
+<!--NOLOGO <div class="hideOnMobile footerLogoHolder floatRight alignto">
+    <span class="icon"><img src="/images/footer-logo.png" alt="ACMA logo"/></span>
+</div>
+-->
+<div class="clear"></div>
+
+<div class="copyright">
+    <!--NOLOGO <span class="footer-logo icon mobileFooterLogo"></span> -->
+    <p>&copy; Australian Communications and Media Authority</p>
+    <p>The Do Not Call Register is managed by the Australian Communications and Media Authority on behalf of the Australian Government.</p>
+</div>

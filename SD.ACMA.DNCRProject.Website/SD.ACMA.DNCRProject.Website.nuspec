@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SD.ACMA.DNCR.Website</id>
+    <version>$version$</version>
+    <title>ACMA DNCR Website</title>
+    <authors>Salmat Digital</authors>
+    <owners>ACMA</owners>
+    <description>Deploy package for the public website for the ACMA DNCR, including the Consumer and Industry apps</description>
+    <releaseNotes>Initial Build</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+</package>

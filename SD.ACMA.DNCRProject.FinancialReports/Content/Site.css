@@ -1,0 +1,320 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+    body.report {
+        padding-top: 0px;
+        padding-bottom: 20px;
+    }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+div#report_control {
+    margin-top: 30px;
+}
+
+div#ReportWrapper {
+    width: 950px;
+}
+
+    div#ReportWrapper h4 {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    div#ReportWrapper h3 {
+        margin-top: 0;
+    }
+
+div.ReportBody {
+    margin-top: 30px;
+    width: 100%;
+}
+
+    div.ReportBody span {
+        width: 100%;
+    }
+
+    div.ReportBody h4 {
+        text-decoration: underline;
+    }
+
+
+table tr th,
+table tr td {
+    padding-right: 5px;
+}
+
+table tr th {
+    vertical-align: bottom;
+}
+
+table.report tr th:first-child {
+    width: 650px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report tr th:nth-child(2) {
+    width: 150px;
+    font-weight: normal;
+    text-decoration: underline;
+    text-align: right;
+}
+
+table.report tr th:nth-child(3) {
+    width: 150px;
+    font-weight: normal;
+    text-decoration: underline;
+    text-align: right;
+}
+
+table.report tr td:first-child {
+    width: 650px;
+}
+
+table.report tr td:nth-child(2) {
+    width: 150px;
+    text-align: right;
+}
+
+table.report tr td:nth-child(3) {
+    width: 150px;
+    text-align: right;
+}
+
+table.report tr th:first-child table.inner_report tr th:first-child {
+    width: 200px;
+    text-align: left;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report tr th:first-child table.inner_report tr th:nth-child(2) {
+    width: 300px;
+    text-align: left;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report tr th:first-child table.inner_report tr th:nth-child(3) {
+    width: 150px;
+    text-align: left;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report tr td:first-child table.inner_report tr td:first-child {
+    width: 200px;
+    text-align: left;
+}
+
+table.report tr td:first-child table.inner_report tr td:nth-child(2) {
+    width: 300px;
+    text-align: left;
+}
+
+table.report tr td:first-child table.inner_report tr td:nth-child(3) {
+    width: 150px;
+    text-align: left;
+}
+
+table.report_total tr td:first-child {
+    width: 800px;
+    font-weight: bold;
+}
+
+table.report_total tr td:nth-child(2) {
+    width: 150px;
+    text-align: right;
+    font-weight: bold;
+}
+
+table.report_total_grand tr td:first-child {
+    width: 800px;
+    font-weight: bold;    
+}
+
+table.report_total_grand tr td:nth-child(2) {
+    width: 150px;
+    text-align: right;
+    font-weight: bold;
+    border-top: 1px solid #000;    
+    border-bottom: 1px double #000;
+}
+
+    table.report_total_grand tr td:nth-child(2).Reconciled {
+        color: green;
+    }
+
+    table.report_total_grand tr td:nth-child(2).Error {
+        color: red;
+    }
+
+table.report_exception tr th:nth-child(1) {
+    width: 125px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report_exception tr th:nth-child(4),
+table.report_exception tr th:nth-child(2) {
+    width: 100px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+
+table.report_exception tr th:nth-child(6) {
+    width: 100px;
+    font-weight: normal;
+    text-decoration: underline;
+    /*padding-right: 10px;*/
+}
+
+table.report_exception tr th:nth-child(3),
+table.report_exception tr th:nth-child(5),
+table.report_exception tr th:nth-child(7) {
+    width: 150px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report_exception tr th:nth-child(7) {
+    width: 225px;
+}
+
+table.report_exception tr th:nth-child(6),
+table.report_exception tr th:nth-child(5) {
+    text-align: right;
+}
+
+table.report_exception tr td:nth-child(1){
+    width: 125px;
+}
+
+table.report_exception tr td:nth-child(4),
+table.report_exception tr td:nth-child(2) {
+    width: 100px;
+}
+
+table.report_exception tr td:nth-child(6) {
+    width: 100px;
+    padding-right: 10px;
+}
+
+table.report_exception tr td:nth-child(3),
+table.report_exception tr td:nth-child(5) {
+    width: 150px;
+}
+
+table.report_exception tr td:nth-child(7) {
+    width: 225px;
+}
+
+table.report_exception tr td:nth-child(6),
+table.report_exception tr td:nth-child(5) {
+    text-align: right;
+}
+
+table.report_exception_total tr td:first-child {
+    width: 650px;
+}
+
+table.report_exception_total tr td:nth-child(2) {
+    width: 150px;
+    text-align: right;
+}
+
+table.report_creditnote tr th:nth-child(1) {
+    width: 130px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report_creditnote tr th:nth-child(3),
+table.report_creditnote tr th:nth-child(4),
+table.report_creditnote tr th:nth-child(5),
+table.report_creditnote tr th:nth-child(6),
+table.report_creditnote tr th:nth-child(8) {
+    width: 100px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report_creditnote tr th:nth-child(2),
+table.report_creditnote tr th:nth-child(7) {
+    width: 160px;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+table.report_creditnote tr th:nth-child(3),
+table.report_creditnote tr th:nth-child(4),
+table.report_creditnote tr th:nth-child(5),
+table.report_creditnote tr th:nth-child(6) {
+    text-align: right;
+}
+
+table.report_creditnote tr td:nth-child(1) {
+    width: 130px;
+}
+
+table.report_creditnote tr td:nth-child(3),
+table.report_creditnote tr td:nth-child(4),
+table.report_creditnote tr td:nth-child(5),
+table.report_creditnote tr td:nth-child(6),
+table.report_creditnote tr td:nth-child(8) {
+    width: 100px;
+}
+
+table.report_creditnote tr td:nth-child(2),
+table.report_creditnote tr td:nth-child(7) {
+    width: 160px;
+}
+
+table.report_creditnote tr td:nth-child(3),
+table.report_creditnote tr td:nth-child(4),
+table.report_creditnote tr td:nth-child(5),
+table.report_creditnote tr td:nth-child(6) {
+    text-align: right;
+}
+
+table.report_creditnote_total tr td:first-child {
+    width: 650px;
+}
+
+table.report_creditnote_total tr td:nth-child(2) {
+    width: 150px;
+    text-align: right;
+}
+
+.number 
+{
+    text-align: right;
+}
+
+table tr {
+    page-break-inside: avoid;
+}
+
+.hidden {display:none}

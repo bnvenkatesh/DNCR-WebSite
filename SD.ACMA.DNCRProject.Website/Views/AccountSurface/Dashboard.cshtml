@@ -1,0 +1,55 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.DashboardAccountViewModel>
+<table class="responsive">
+    <caption>Account Details</caption>
+    @if (SessionHelper.IsAdmin)
+    {
+        <tr>
+            <th class="addborderLeftTop center">@Html.GetDisplayName(model => model.AccountId)</th>
+            <th class="center">@Html.GetDisplayName(model => model.NumOfUsers)</th>
+            <th class="center">@Html.GetDisplayName(model => model.Status)</th>
+            <th class="center">@Html.GetDisplayName(model => model.DatePurchased)</th>
+            <th class="center">@Html.GetDisplayName(model => model.AvailableCredit)</th>
+            <th class="center">@Html.GetDisplayName(model => model.DateExpires)</th>
+            <th class="center">@Html.GetDisplayName(model => model.ReservedCredit)</th>
+            <th class="center">@Html.GetDisplayName(model => model.AccountBalance)</th>
+            <th class="addborderRightTop center">@Html.GetDisplayName(model => model.ReservedAccountBalance)</th>
+        </tr>
+        <tr>
+            <td class="addborderLeftBot center">@Model.AccountId</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.NumOfUsers)">@Model.NumOfUsers</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.Status)">@Model.Status</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.DatePurchased)">@(Model.DatePurchased == null ? "-" : Model.DatePurchased.Value.ToString("dd MMM yyyy"))</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.AvailableCredit)">@String.Format("{0:n0}", Model.AvailableCredit)</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.DateExpires)">@(Model.DateExpires == null ? "-" : Model.DateExpires.Value.ToString("dd MMM yyyy"))</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.ReservedCredit)">@String.Format("{0:n0}", Model.ReservedCredit)</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.AccountBalance)">$@String.Format("{0:n}", Model.AccountBalance)</td>
+            <td class="addborderRightBot center" data-label="@Html.GetDisplayName(model => model.ReservedAccountBalance)">$@String.Format("{0:n0}", Model.ReservedAccountBalance)</td>
+        </tr>
+    }
+    else
+    {
+
+        <tr>
+            <th class="addborderLeftTop center">@Html.GetDisplayName(model => model.AccessSeekerId)</th>
+            <th class="center">@Html.GetDisplayName(model => model.Status)</th>
+            <th class="center">@Html.GetDisplayName(model => model.DatePurchased)</th>
+            @if (Model.CanSeeWashQuote)
+            {
+                <th class="center">@Html.GetDisplayName(model => model.AvailableCredit)</th>
+            }
+            <th class="addborderRightTop center">@Html.GetDisplayName(model => model.DateExpires)</th>
+        </tr>
+        <tr>
+            <td class="addborderLeftBot center">@Model.AccessSeekerId</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.Status)">@Model.Status</td>
+            <td class="center" data-label="@Html.GetDisplayName(model => model.DatePurchased)">@(Model.DatePurchased == null ? "-" : Model.DatePurchased.Value.ToString("dd MMM yyyy"))</td>
+            @if (Model.CanSeeWashQuote)
+            {
+                <td class="center" data-label="@Html.GetDisplayName(model => model.AvailableCredit)">@String.Format("{0:n0}", Model.AvailableCredit)</td>
+            }
+            <td class="addborderRightBot center" data-label="@Html.GetDisplayName(model => model.DateExpires)">@(Model.DateExpires == null ? "-" : Model.DateExpires.Value.ToString("dd MMM yyyy"))</td>
+        </tr>
+    }
+</table>

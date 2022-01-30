@@ -1,0 +1,334 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.UploadWashingListViewModel>
+
+
+@{
+    this.MapModel();
+}
+
+@if (!String.IsNullOrEmpty(Model.FileToWashCopyPath))
+{
+    <script>
+        $(function() {
+            openNextAccordion(".accordionContent button.next");
+        });
+    </script>
+}
+<script>
+    (function ($) {
+        $.validator.setDefaults({
+            ignore: ":hidden:not(.minimumResultFile)"
+        });
+    }(jQuery));
+
+    $(function () {
+        $("button.next").click(function() {
+            if (!$(this).closest(".accordionContent").find("input, select, textarea").valid()) {
+                invalidateAccordion(this);
+            } else {
+                $(".isUploading").show();
+            }
+        });
+
+        $(".accordion").on("click", ".accordionHeader .editButton", function() {
+            $("input#FileToWashCopyPath").val("");
+        });
+        $(".accordionContent").on("click", "a.reupload", function(event) {
+            event.preventDefault();
+            $(".accordionHeader").removeClass("accordion-filled-up");
+            $(this).closest(".accordion").accordion({ active: 0 });
+            $("input#FileToWashCopyPath").val("");
+        });
+
+        $(".accordionContent input[type=radio][name=WashingResultOption]#separate").on("change", function () {
+            if (this.checked)
+            {
+                $(".unusedMinimumResultFile").addClass("minimumResultFile").removeClass("unusedMinimumResultFile");
+            }
+        });
+        $(".accordionContent input[type=radio][name=WashingResultOption]#indicators").on("change", function () {
+            if (this.checked)
+            {
+                $(".minimumResultFile").addClass("unusedMinimumResultFile").removeClass("minimumResultFile");
+            }
+        });
+
+        if ($(".accordionContent input[type=radio][name=WashingResultOption]#indicators:checked").length > 0) {
+            $(".minimumResultFile").addClass("unusedMinimumResultFile").removeClass("minimumResultFile");
+        }
+
+        $(".accordion").on("click", ".accordionContent button.processing", function (event) {
+            var isValid = true;
+            var valid = $(this).closest(".accordionContent").find("input, select, textarea").valid();
+            if (!valid) {
+                isValid = false;
+            }
+            if ($(".accordionContent .g-recaptcha").length > 0) {
+                if (!$(".accordionContent .g-recaptcha").hasClass("validated")) {
+                    $(".accordionContent span.recaptchaerror").show();
+                    isValid = false;
+                } else {
+                    $(".accordionContent span.recaptchaerror").hide();
+                }
+            }
+            $(this).closest(".accordionContent").find(".errorContainer").empty();
+            if (!isValid) {
+                event.preventDefault();
+                invalidateAccordion(this);
+            } else {
+                $(".isWashing").show();
+                $(this).siblings(".failedMandatory").hide();
+                $(this).prop('disabled', true);
+                //$(this).text("SUBMITTING...");
+                this.form.submit();
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <div class="form-holder floatLeft">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@ViewBag.ErrorMessage</div>
+        @using (Html.BeginUmbracoForm<WashSurfaceController>("UploadList"))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="WashingRequestId" name="WashingRequestId" value="@ViewBag.washingrequestid" />
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">1. Choose file</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin subHeader">
+                            <p>File to wash</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.FileToWash, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.FileToWash, new {type = "file", accept = ".txt,.csv,.zip,.gz,.dat"})
+                                @Html.ValidationMessageFor(model => model.FileToWash, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <hr/>
+                        <fieldset>
+                            <legend>Results to return</legend>
+                            <div class="subHeader">
+                                <p>Results to return</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <fieldset>
+                                    <legend>@Html.GetDisplayName(model => model.WashingResultOption)</legend>
+                                    <div class="labelDescMargin">
+                                        @Html.RequiredTextFor(model => model.WashingResultOption, new { @class = "ProxiSemiBold inlineBlock", @for = "indicators" })
+                                    </div>
+                                    <div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.WashingResultOption, true, new { @id = "indicators", @class = "radioCheck" })
+                                            @Html.Label("indicators", "submitted file returned with indicators", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.WashingResultOption, false, new { @id = "separate", @class = "radioCheck", data_other_option_field = "separateFiles" })
+                                            @Html.Label("separate", "separate files returned for different results", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.WashingResultOption, "", new { @class = "error" })
+                                    </div>
+                                </fieldset>
+                                <div class="clear"></div>
+                                <div class="separateFiles hidden">
+                                    @Html.HiddenFor(model => model.MinimumResultFile, new { @class = "minimumResultFile" })
+                                    <div class="formField">
+                                        <fieldset>
+                                            <legend>separate files returned for different results</legend>
+                                            <div class="radio-holder">
+                                                @Html.CheckBoxFor(model => model.FileOfRegisteredNumbers, new { @class = "radioCheck" })
+                                                @Html.RequiredLabelFor(model => model.FileOfRegisteredNumbers, new { @class = "radioCheckLabel" })
+                                            </div>
+                                            <div class="radio-holder">
+                                                @Html.CheckBoxFor(model => model.FileOfUnregisteredNumbers, new { @class = "radioCheck" })
+                                                @Html.RequiredLabelFor(model => model.FileOfUnregisteredNumbers, new { @class = "radioCheckLabel" })
+                                            </div>
+                                            <div class="radio-holder">
+                                                @Html.CheckBoxFor(model => model.FileOfInvalidNumbers, new { @class = "radioCheck" })
+                                                @Html.RequiredLabelFor(model => model.FileOfInvalidNumbers, new { @class = "radioCheckLabel" })
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.MinimumResultFile, "", new { @class = "error" })
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <div>
+                            <button class="ProxiBold next hideDisabled">NEXT</button>
+                        </div>
+                        <div class="fieldMargin isUploading hidden">
+                            <p><img class="spinner" src="/images/ajax-loader.gif" />Uploading file</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">2. Pre-wash analysis</span>
+                    </div>
+                    <div class="accordionContent">
+                        <input type="hidden" name="FileToWashCopyPath" id="FileToWashCopyPath" value="@Model.FileToWashCopyPath" />
+                        <div class="subHeader">
+                            <p>Analysis of uploaded file</p>
+                        </div>
+                        @if (ViewBag.FileNameAlreadyExists != null && ViewBag.FileNameAlreadyExists)
+                        {
+                            <div class="fieldMargin">
+                                <p>This file is a duplicate and has already been uploaded, please check your file and try again</p>
+                            </div>
+                        }
+                        else
+                        {
+                            if (ViewBag.ShowWashQuote != null && ViewBag.ShowWashQuote)
+                            {
+                                <div class="fieldMargin">
+                                    <p>The count of numbers in the file is @ViewBag.NumberCount.</p>
+                                    @if (ViewBag.AvailableCredit == 1)
+                                    {
+                                        <p>You have @ViewBag.AvailableCredit number left in your subscription that you can use for washing.</p>
+                                    }
+                                    else
+                                    {
+                                        <p>You have @ViewBag.AvailableCredit numbers left in your subscription that you can use for washing.</p>
+                                    }
+                                </div>
+                            }
+                            if (ViewBag.PreWashResult != null && ViewBag.PreWashResult.Count > 0)
+                            {
+                                <br />
+                                <div class="subHeader">
+                                    <p class="error">Errors were found</p>
+                                </div>
+                                <div class="formField fieldMargin groupField">
+                                    @foreach (var item in ViewBag.PreWashResult)
+                                    {
+                                        <p>
+                                            @item
+                                        </p>
+                                    }
+                                    @if (ViewBag.PreWashSuccessful)
+                                    {
+                                        <br/>
+                                        <p>You can:</p>
+                                        <ul>
+                                            <li>Download the <a href="@Url.Action("DownloadError", new {washingRequestId = ViewBag.WashingRequestId})" class="generalGreyShade1">pre-wash analysis report</a> file which will identify the formatting errors and help you to properly format your list before re-resubmitting it for washing;</li>
+                                            <li><a href="#" class="reupload">Upload a corrected file</a>;</li>
+                                            <li>cancel this wash by leaving this page; or</li>
+                                            <li>choose to continue with this wash (note: if you continue with this wash, the incorrectly formatted numbers will be deducted from your current subscription balance).</li>
+                                        </ul>
+                                    }
+                                </div>
+                            }
+                            else if (ViewBag.ShowWashQuote == null || !ViewBag.ShowWashQuote)
+                            {
+                                <div class="fieldMargin">
+                                    <p>No errors found</p>
+                                </div>
+                            
+                            }
+                            if (ViewBag.PreWashSuccessful != null && ViewBag.PreWashSuccessful)
+                            {
+                            <hr />
+                                <div>
+                                    <button class="ProxiBold processing nomargin">PERFORM WASH</button>
+                                </div>
+                                <div class="fieldMargin isWashing hidden">
+                                    <p><img class="spinner" src="/images/ajax-loader.gif"/>Performing wash</p>
+                                </div>
+                            }
+                        }
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new {Items = ViewBag.Faqs})
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new {Items = ViewBag.Downloads})
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new {Items = ViewBag.RelatedLinks})
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        @if (ViewBag.WashSuccessful)
+        {
+            <h2 class="ProxiBold industryBlueShade1Color">Wash completed</h2>
+            <p class="desc">Your wash request has been processed. You are able to download <a class="industryBlueShade1Color" href="@Model.WashHistoryURL">the results</a>.</p>
+        }
+        else if (ViewBag.IsTimeout != null && ViewBag.IsTimeout)
+        {
+            <h2 class="ProxiBold industryBlueShade1Color">Wash in progress</h2>
+            <p class="desc">Your wash request is taking a long time. You can leave this page and find your wash results on the <a class="industryBlueShade1Color" href="@Model.WashHistoryURL">Wash History</a> page once the wash request has been processed. Your wash request will continue in the background.</p>
+        }
+        else
+        {
+            <h2 class="ProxiBold industryBlueShade1Color">Wash unsuccessful</h2>
+            if (ViewBag.WashUnSuccessMessage != null)
+            {
+                    <p class="desc">@ViewBag.WashUnSuccessMessage</p>
+            }
+            else 
+            { 
+                 <p class="desc">There is an error with your wash request. Please try again. If you continue to experience this error, please contact us on 1300 785 749.</p>
+            }
+        }
+        <hr/>
+        <div>
+            <button class="ProxiBold lodgeAnother industryBlueShade2Back industryBlueShade2Border" onclick=" window.location.replace(window.location.href) ">Perform Another Wash</button>
+        </div>
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

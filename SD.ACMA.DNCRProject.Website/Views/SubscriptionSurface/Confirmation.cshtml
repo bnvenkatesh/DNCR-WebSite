@@ -1,0 +1,17 @@
+﻿@{
+    Layout = null;
+}
+@if (ViewBag.IsSuccess)
+{
+    <div class="thankyou-message floatLeft">
+        <h2 class="ProxiBold industryBlueShade1Color">Thank you</h2>
+        <p class="desc">Your payment is now complete and your subscription(s) are now available for use.</p>
+        <p>A <a class="industryBlueShade1Color" href="@Url.Action("GenerateInvoice", new {orderId = ViewBag.OrderId })">Tax Invoice</a> has been emailed to you.</p>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        <p class="desc">Your payment has been unsuccessful, please <a class="industryBlueShade1Color" href="@(ViewBag.MakePaymentURL)?orderId=@ViewBag.OrderId">try again</a> or try an alternative credit card. If you continue to receive errors using your card, please contact your credit card provider.</p>
+    </div>
+}

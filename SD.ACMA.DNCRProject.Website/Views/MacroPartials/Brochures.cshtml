@@ -1,0 +1,51 @@
+@using Umbraco.Web.Models
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    IPublishedContent node = Umbraco.Content(Model.MacroParameters["Item"]);
+    var languages = node.Children.GroupBy(x => x.GetPropertyValue("language"));
+}
+<div class="brochureContainer">
+    @foreach (var language in languages)
+    {
+        var lang = String.Empty;
+        if (language.Key.ToString().IndexOf("English") > -1)
+        {
+            lang = "en";
+        }
+        else if (language.Key.ToString().IndexOf("Italian") > -1)
+        {
+            lang = "it";
+        }
+        else if (language.Key.ToString().IndexOf("Greek") > -1)
+        {
+            lang = "el";
+        }
+        else if (language.Key.ToString().IndexOf("Chinese") > -1)
+        {
+            lang = "zh";
+        }
+        else if (language.Key.ToString().IndexOf("Arabic") > -1)
+        {
+            lang = "ar";
+        }
+        else if (language.Key.ToString().IndexOf("Vietnamese") > -1)
+        {
+            lang = "vi";
+        }
+        <h2 class="brochureLanguage" lang="@lang">@language.Key.ToString()</h2>
+        <ul>
+            @foreach (var brochure in node.Children.Where(x => x.GetPropertyValue("language").ToString() == language.Key.ToString()))
+            {
+                if (brochure.HasValue("media"))
+                {
+                    var media = Umbraco.Media(brochure.GetPropertyValue("media"));
+                    var sizeInKb = Int32.Parse(media.UmbracoBytes.ToString()) / 1024;
+                    <li><span class="download"></span>
+                        <a class="purple" href="@media.Url">@brochure.GetPropertyValue("downloadTitle") (@media.UmbracoExtension, @String.Format("{0}k", sizeInKb.ToString()))</a>
+                    </li>
+                }
+            }
+        </ul>
+    }
+</div>

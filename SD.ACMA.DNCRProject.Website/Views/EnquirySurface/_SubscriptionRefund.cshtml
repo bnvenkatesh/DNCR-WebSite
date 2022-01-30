@@ -1,0 +1,140 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.SubscriptionRefundViewModel
+
+@if (Model.Subscriptions.Count > 0)
+{
+    <script>
+        (function ($) {
+            $.validator.setDefaults({
+                ignore: ":hidden:not(#RefundSubscriptionId)"
+            });
+        }(jQuery));
+        $(function () {
+            $(".submit.checkRecaptcha").show();
+            $('#refundTable tr').click(function () {
+                var that = $(this).find("input[type='radio']");
+                that.prop('checked', true);
+
+                $("input#RefundSubscriptionId").val(that.val());
+                if ($("input#AvailableWash").val() >= that.data("washcredit")) {
+                    $("input#availableWashRefund").val(addCommas(that.data("washcredit")));
+                    $("input[name='RefundReservedWashCredits']").val(that.data("washcredit"));
+                    $("#partialRefund").hide();
+                } else {
+                    $("input#availableWashRefund").val(addCommas($("input#AvailableWash").val()));
+                    $("input[name='RefundReservedWashCredits']").val($("input#AvailableWash").val());
+                    $("#partialRefund").show();
+                }
+
+            });
+        });
+    </script>
+
+    <div class="fieldMargin tableHolder">
+        <table id="refundTable" class="responsive">
+            <caption>Refundable Subscriptions</caption>
+            <tr>
+                <th class="addborderLeftTop center">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().SubscriptionType)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().SubscriptionLimit)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderNo)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderDate)</th>
+                <th class="addborderRightTop center">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().AmountIncGst)</th>
+
+            </tr>
+            @foreach (var subscription in Model.Subscriptions)
+            {
+                <tr>
+                    <td>
+                        <div class="radio-holder">
+                            <input type="radio" class="radioCheck" name="SubscriptionId" value="@subscription.SubscriptionId" data-washcredit="@subscription.SubscriptionLimit" />
+                            @subscription.SubscriptionType
+                        </div>
+                    </td>
+                    <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().SubscriptionLimit)" class="center">@String.Format("{0:n0}", subscription.SubscriptionLimit)</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderNo)" class="center">@subscription.OrderNo</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderDate)" class="center">@subscription.OrderDate.ToString("dd MMM yyyy")</td>
+                    <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().AmountIncGst)" class="center">$@String.Format("{0:n}", subscription.AmountIncGst)</td>
+                </tr>
+            }
+        </table>
+    </div>
+    @Html.HiddenFor(model => model.AvailableWash)
+    @Html.HiddenFor(model => model.RefundOrderId)
+    @Html.HiddenFor(model => model.RefundSubscriptionId)
+    @Html.ValidationMessageFor(model => model.RefundSubscriptionId, "", new { @class = "error" })
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.RefundReservedWashCredits, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            <input id="availableWashRefund" class="short readonly" value="@Model.RefundReservedWashCredits" disabled="disabled"/>
+            @Html.HiddenFor(model => model.RefundReservedWashCredits)
+        </div>
+        <div class="clear"></div>
+        <div id="partialRefund" class="note hidden">
+            <p>There has been washing against this subscription - this subscription may only be eligible for a partial refund. <br />See <a class="industryBlueColor" href="@ViewBag.RefundsInformationUrl" target="_blank">this page</a> for more information.</p>
+        </div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountBSB, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountBSB, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountBSB, "", new {@class = "error numberError"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountNumber, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountNumber, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "error numberError" })
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountName, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountName, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountName, "", new {@class = "error"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.OtherAccountDetails, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.OtherAccountDetails, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.OtherAccountDetails, "", new {@class = "error"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            @Html.RequiredLabelFor(model => model.Description, new { @class = "ProxiSemiBold" })
+        </div>
+        <div class="formField">
+            @Html.TextAreaFor(model => model.Description, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.Description, "", new {@class = "error"})
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <script>
+        $(function () {
+            $(".submit.checkRecaptcha").hide();
+        });
+    </script>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            <p>You are not eligible for a refund. Please contact 1300 785 749</p>
+        </div>
+    </div>
+}

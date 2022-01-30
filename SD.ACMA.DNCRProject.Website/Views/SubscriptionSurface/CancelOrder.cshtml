@@ -1,0 +1,56 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <script>
+    $(function () {
+        $("#dashboardFinancial").on("click", ".cancelAction", function (event) {
+            event.preventDefault();
+            $("#cancelOrder span#orderNumber").text($(this).data("ordernumber"));
+            $("button#cancelOrderButton").data("orderid", $(this).data("orderid"));
+            $("#cancelOrder").dialog("open");
+        });
+        $("#closeCancelOrder").click(function () {
+            $("#cancelOrder").dialog("close");
+        });
+        $("button#cancelOrderButton").click(function (event) {
+            event.preventDefault();
+            var orderId = $(this).data('orderid');
+            var page = 1;
+            if ($("#dashboardFinancial .paginationHolder li a.active").length > 0) {
+                page = $("#dashboardFinancial .paginationHolder li a.active").data("page");
+            }
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("CancelOrder", "SubscriptionSurface")',
+                data: { orderId: orderId, currentPage: page, paymentLimit: @ViewBag.PaymentLimit, makePaymentUrl: "@ViewBag.MakePaymentUrl" },
+                success: function(result) {
+                    $("#dashboardFinancial").html(result);
+                    $("#cancelOrder").dialog("close");
+                }
+            });
+        });
+    });
+    </script>
+    <div id="cancelOrder" class="dialog" title="Cancel Order?">
+        <form>
+            <div class="dialogDesc">
+                <p>
+                    Are you sure you want to cancel order number <span id='orderNumber'>?</span>.
+                </p>
+                <p class="addMargin">
+                    The order will be removed from your account history.
+                </p>
+            </div>
+            <div class="formField">
+                <button id="cancelOrderButton" class="shaded width230">YES, CANCEL THIS ORDER</button>
+                <button type="button" id="closeCancelOrder" class="width200 industryBlueShade1Color industryBlueShade1Border">NO, KEEP THIS ORDER</button>
+            </div>
+        </form>
+    </div>
+}

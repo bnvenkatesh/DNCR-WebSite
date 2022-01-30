@@ -1,0 +1,47 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <script>
+        $(function() {
+            $("#closeDeactivateUser").click(function() {
+                $("#deactivateUser").dialog("close");
+            });
+            $("button#deactivateButton").click(function(event) {
+                event.preventDefault();
+                var userid = $(this).data('userid');
+                var page = 1;
+                if ($("#dashboardUser .paginationHolder li a.active").length > 0) {
+                    page = $("#dashboardUser .paginationHolder li a.active").data("page");
+                }
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("Deactivate", "UserSurface")',
+                    data: { userId: userid, currentPage: page, editUserNodeUrl: "@ViewBag.EditUserNodeUrl" },
+                    success: function(result) {
+                        $("#dashboardUser").html(result);
+                        $("#deactivateUser").dialog("close");
+                    }
+                });
+            });
+        });
+    </script>
+    <div id="deactivateUser" class="dialog" title="Deactivate User?">
+        <form>
+            <div class="dialogDesc">
+                <p>
+                    Are you sure you want to deactivate user "<span id='userEmail'></span>"?
+                </p>
+            </div>
+            <div class="formField">
+                <button id="deactivateButton" class="shaded width186">DEACTIVATE USER</button>
+                <button type="button" id="closeDeactivateUser" class="width125">CANCEL</button>
+            </div>
+        </form>
+    </div>
+}

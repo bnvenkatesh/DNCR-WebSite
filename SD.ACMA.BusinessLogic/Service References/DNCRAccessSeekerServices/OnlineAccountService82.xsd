@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+  <xs:element name="CreateAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="createAccountRequestArgs" nillable="true" type="q1:CreateAccountRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="CreateAccountResult" nillable="true" type="q2:CreateAccountRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="activateAccountRequestArgs" nillable="true" type="q3:ActivateAccountRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="ActivateAccountResult" nillable="true" type="q4:ActivateAccountRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="accountRequestArgs" nillable="true" type="q5:GetAccountRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="GetAccountResult" nillable="true" type="q6:GetAccountRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="updateAccountRequest" nillable="true" type="q7:UpdateAccountRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="UpdateAccountResult" nillable="true" type="q8:UpdateAccountRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendAccountActivationEmail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="sendAccountActivationEmailArgs" nillable="true" type="q9:SendAccountActivationEmailRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendAccountActivationEmailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Accounts" minOccurs="0" name="SendAccountActivationEmailResult" nillable="true" type="q10:SendAccountActivationEmailResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateWashOnlyUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="createWashOnlyUserRequestArgs" nillable="true" type="q11:CreateWashOnlyUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateWashOnlyUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="CreateWashOnlyUserResult" nillable="true" type="q12:CreateWashOnlyUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateWashOnlyUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="activateWashOnlyUserArgs" nillable="true" type="q13:ActivateWashOnlyUserArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateWashOnlyUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="ActivateWashOnlyUserResult" nillable="true" type="q14:ActivateWashOnlyUserResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="getAccountUserAgentRequestArgs" nillable="true" type="q15:GetAccountUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="GetAccountUserResult" nillable="true" type="q16:GetAccountUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAccountUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="updateAccountUserRequest" nillable="true" type="q17:UpdateAccountUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateAccountUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="UpdateAccountUserResult" nillable="true" type="q18:UpdateAccountUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllAccountUsers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="args" nillable="true" type="q19:GetAllAccountUsersRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllAccountUsersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="GetAllAccountUsersResult" nillable="true" type="q20:GetAllAccountUsersRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeActivateAccountUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="deActivateAccountUserRequestArgs" nillable="true" type="q21:DeActivateAccountUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeActivateAccountUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="DeActivateAccountUserResult" nillable="true" type="q22:DeActivateAccountUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateAccountUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="activateAccountUserRequestArgs" nillable="true" type="q23:ActivateAccountUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateAccountUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="ActivateAccountUserResult" nillable="true" type="q24:ActivateAccountUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAccountUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="activateAccountUserRequestArgs" nillable="true" type="q25:DeleteAccountUserRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAccountUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="DeleteAccountUserResult" nillable="true" type="q26:DeleteAccountUserRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Login">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="loginRequestArgs" nillable="true" type="q27:LoginRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="LoginResult" nillable="true" type="q28:LoginRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangePassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="changePasswordRequest" nillable="true" type="q29:ChangePasswordRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangePasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="ChangePasswordResult" nillable="true" type="q30:ChangePasswordRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ResetPassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="confirmPasswordResetRequestArgs" nillable="true" type="q31:ResetPasswordRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ResetPasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="ResetPasswordResult" nillable="true" type="q32:ResetPasswordRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForgotPassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="forgotPasswordRequestArgs" nillable="true" type="q33:ForgotPasswordRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ForgotPasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" minOccurs="0" name="ForgotPasswordResult" nillable="true" type="q34:ForgotPasswordRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Impersonate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="args" nillable="true" type="q35:ImpersonateArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpersonateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.AccountUsers" minOccurs="0" name="ImpersonateResult" nillable="true" type="q36:ImpersonateResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" minOccurs="0" name="args" nillable="true" type="q37:GetStateRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" minOccurs="0" name="GetStatesResult" nillable="true" type="q38:GetStateRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,73 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <script>
+    $(function() {
+        $("#dashboardFinancial").on("click", ".closeAction", function(event) {
+            event.preventDefault();
+            $("#closeOrder span#orderNumber").text($(this).data("ordernumber"));
+            $("button#closeOrderButton").data("orderid", $(this).data("orderid"));
+            $("#closeOrder").dialog("open");
+        });
+        $("#closeCloseOrder").click(function() {
+            $("#closeOrder").dialog("close");
+        });
+        $("button#closeOrderButton").click(function(event) {
+            event.preventDefault();
+            var orderId = $(this).data('orderid');
+            var page = 1;
+            if ($("#dashboardFinancial .paginationHolder li a.active").length > 0) {
+                page = $("#dashboardFinancial .paginationHolder li a.active").data("page");
+            }
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("CloseOrder", "SubscriptionSurface")',
+                data: { orderId: orderId, currentPage: page, paymentLimit: @ViewBag.PaymentLimit, makePaymentUrl: "@ViewBag.MakePaymentUrl" },
+                success: function(result) {
+                    $("#dashboardFinancial").html(result);
+                    $.ajax({
+                        type: 'GET',
+                        cache: false,
+                        url: '@Url.Action("Dashboard", "AccountSurface")',
+                        success: function(result) {
+                            $("#dashboardAccount").html(result);
+                        }
+                    });
+                    $.ajax({
+                        type: 'GET',
+                        cache: false,
+                        data: { currentPage: 1 },
+                        url: '@Url.Action("Dashboard", "SubscriptionSurface")',
+                        success: function (result) {
+                            $("#dashboardSubscription").html(result);
+                        }
+                    });
+                    $("#closeOrder").dialog("close");
+                }
+            });
+        });
+    });
+    </script>
+    <div id="closeOrder" class="dialog" title="Close Order?">
+        <form>
+            <div class="dialogDesc">
+                <p>
+                    Are you sure you want to close order number <span id='orderNumber'>?</span>.
+                </p>
+                <p class="addMargin">
+                    Any unpaid subscriptions will be closed. You will not be able to make any further payments to this order.
+                </p>
+            </div>
+            <div class="formField">
+                <button id="closeOrderButton" class="shaded width230">YES, CLOSE THIS ORDER</button>
+                <button type="button" id="closeCloseOrder" class="width200">NO, KEEP THIS ORDER</button>
+            </div>
+        </form>
+    </div>
+}

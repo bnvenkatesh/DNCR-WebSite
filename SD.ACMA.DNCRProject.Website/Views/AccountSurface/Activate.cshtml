@@ -1,0 +1,111 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.ActivateViewModel>
+
+@{
+    this.MapModel();
+}
+
+<script>
+    $(function() {
+        $("#NewPassword").val("");
+        $("#ConfirmPassword").val("");
+    });
+</script>
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">Activate Account</h1>
+    </div>
+</div>
+
+@if (Model.CannotActivate)
+{
+    <div class="thankyou-message floatLeft">
+        <p class="desc">The account has already been activated. Please login using your email address and password.</p>
+    </div>
+}
+else if (Model.IsInvalid)
+{
+    <div class="thankyou-message floatLeft">
+        <p class="desc">For security reasons, the link sent to you was time-sensitive. As you did not activate it within 7 days it has expired. You will have to request a password reset.</p>
+        <p class="desc">Please note: Your account cannot be created until you have completed all the steps including the activation process as outlined in the email you receive.</p>
+    </div>
+}
+else if (Model.IsExpired)
+{
+    if (Model.IsEmailSent)
+    {
+        <div class="thankyou-message floatLeft">
+            <p class="desc">The activation email has been sent to your email address.</p>
+        </div>
+    }
+    else
+    {
+        <div class="thankyou-message floatLeft">
+            <p class="desc">For security reasons, the link sent to you was time-sensitive. As you did not activate it within 7 days it has expired. You will have to request a password reset.</p>
+            <p class="desc">Please note: Your account cannot be created until you have completed all the steps including the activation process as outlined in the email you receive.</p>
+            <hr/>
+            <div class="formError">@ViewBag.ErrorMessage</div>
+            @using (Html.BeginUmbracoForm<AccountSurfaceController>("Activate"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Email)
+                @Html.HiddenFor(model => model.Token)
+                @Html.Hidden("IsExpired", Model.IsExpired)
+                <button class="ProxiBold resendLink">RESEND ACTIVATION LINK</button>
+            }
+        </div>
+    }
+}
+else
+{
+    <div class="form-holder floatLeft">
+        @using (Html.BeginUmbracoForm<AccountSurfaceController>("Activate"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">Set your password and sign in</span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin">
+                            <p>Enter a new password for your account</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.NewPassword, new {@class = "inputLabel"})
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.NewPassword, new {@class = "long", type = "password"})
+                                @Html.ValidationMessageFor(model => model.NewPassword, "", new {@class = "error numberError"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.ConfirmPassword, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.ConfirmPassword, new {@class = "long", type = "password"})
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <hr/>
+                        <div class="formError">@ViewBag.ErrorMessage</div>
+                        <div>
+                            <button class="ProxiBold submit nomargin">CHANGE PASSWORD</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+}

@@ -1,0 +1,44 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SectionViewModel>
+
+<script>
+    $(function () {
+        var currentPage = @Model.Pager.CurrentPage;
+
+        $(".loadMore").on("click", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("LoadItems", "SectionSurface")',
+                data: {currentNodeId: "@ViewBag.CurrentNodeId",itemsPerPage: "@Model.Pager.ItemsPerPage", itemDocType: "@ViewBag.ItemDocType", colourClass: "@Model.ColourClass", currentPage: currentPage + 1 },
+                success: function (result) {
+                    $(".loadMore").before(result);
+                    currentPage++;
+                    if($('#Pager_IsLastPage').length > 0)
+                    {
+                        $(".loadMore").hide();
+                    }
+                }
+            });
+        });
+
+        if($('#Pager_IsLastPage').length > 0)
+        {
+            $(".loadMore").hide();
+        }
+    });
+</script>
+
+<div class="post-holder">
+    <hr />
+    @Html.Partial("_LoadItems")
+    <div class="paginationHolder hideOnMobile @Model.ColourClass">
+        @Html.Partial("_Pager")
+    </div>
+    @if (Model.Pager.Pages.Count() > 1)
+    {
+        <div class="loadMore">
+            <a href="#" class="purple ProxiBold">LOAD MORE</a>
+        </div>
+    }
+</div>

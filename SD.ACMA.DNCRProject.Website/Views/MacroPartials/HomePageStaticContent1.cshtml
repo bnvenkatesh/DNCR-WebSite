@@ -1,0 +1,69 @@
+﻿@using System.Collections
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using RJP.MultiUrlPicker.Models
+
+@{
+    var home = Model.Content.AncestorOrSelf(1);
+    MultiUrls links = CurrentPage.GetPropertyValue<MultiUrls>("staticLink");
+    var learnMoreLink = links.SingleOrDefault().Url;
+
+    IEnumerable allConsumerLinks = (IEnumerable)JsonConvert.DeserializeObject(Model.MacroParameters["ConsumerLinks"].ToString());
+    IEnumerable allIndustryLinks = (IEnumerable)JsonConvert.DeserializeObject(Model.MacroParameters["IndustryLinks"].ToString());
+
+    var consumerContactNumber = Model.MacroParameters["ConsumerContactNumber"].ToString();
+    var consumerContactNumberCleaned = consumerContactNumber.Replace(" ", "");
+    var industryContactNumber = Model.MacroParameters["IndustryContactNumber"].ToString();
+    var industryContactNumberCleaned = industryContactNumber.Replace(" ", "");
+}
+
+
+<div class="contentItem hp-first-static">
+    <div id="HPStaticContent0" class="section">
+        <div class="labels">
+            <div class="static-panel left floatLeft">
+                <h2>Consumers</h2>
+                <ul>
+                    @foreach (dynamic link in allConsumerLinks)
+                    {
+                        var linkUrl = (bool)link.isInternal ? Umbraco.NiceUrl(link.Value<int>("internal")) : link.link;
+                        var linkTarget = (bool)link.newWindow ? "_blank" : null;
+                        <li><a class="" href="@linkUrl" target="@linkTarget">@link.caption</a></li>
+                    }
+                </ul>
+                <p class="phonenumber">Consumer Contact Centre:</p>
+                <img src="~/images/r10/icon-phone.png" />
+                <a class="phonenumber" href="tel:@consumerContactNumberCleaned">@consumerContactNumber</a>
+            </div>
+            <div class="static-panel right">
+                <h2>Industry</h2>
+                <ul>
+                    @foreach (dynamic link in allIndustryLinks)
+                    {
+                        var linkUrl = (bool)link.isInternal ? Umbraco.NiceUrl(link.Value<int>("internal")) : link.link;
+                        var linkTarget = (bool)link.newWindow ? "_blank" : null;
+                        <li><a class="" href="@linkUrl" target="@linkTarget">@link.caption</a></li>
+                    }
+                </ul>
+                <p class="phonenumber">Industry Contact Centre:</p>
+                <img src="~/images/r10/icon-phone.png" />
+                <a class="phonenumber" href="tel:@industryContactNumberCleaned">@industryContactNumber</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contentItem">
+    <div id="HPStaticContent1" class="section">
+        <div class="labels">
+            <div class="sectionTitle ProxiBold">
+                <span class="icon"><h2>@home.GetPropertyValue("staticTitle")</h2></span>
+            </div>
+            <div class="sectionDesc">@home.GetPropertyValue("staticText")</div>
+        </div>
+        <div class="viewAllHolder">
+            <a class="ProxiBold" href="@learnMoreLink">Learn More</a>
+        </div>
+    </div>
+</div>

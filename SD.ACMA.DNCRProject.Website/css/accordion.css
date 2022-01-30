@@ -1,0 +1,242 @@
+.globalAccordion{ 
+    width: 100%;  
+    margin: 0px auto;  
+	list-style:none;
+}  
+.globalAccordion .accordionHeader{font-size:2.4em; letter-spacing:-0.04em; color:#686868; cursor:pointer; position:relative;}
+.globalAccordion .accordionHeader:focus{
+    background: #1d1d1d url("../images/purple-bg.png") repeat-x !important;
+	color:#fff !important;
+    /*text-decoration:underline;*/
+}
+.globalAccordion .ui-accordion-content {  
+    width: 100%;  
+    background-color: #ebebeb;  
+    color: #252525;  
+    line-height: 16pt;  
+	margin: 2px 0 0 0;  
+    padding: 28px 30px 30px; 
+	
+}  
+.globalAccordion .ui-accordion-content a {  
+    color: #252525;  
+}  
+
+.globalAccordion .ui-accordion-header {  
+    background:#ebebeb;
+    margin: 0px;  
+	padding:13px 15px;
+	margin-top:2px;
+	font-family: "arimo_regular"
+} 
+/*
+.globalAccordion .ui-accordion-header a { 
+    
+    line-height: 42px;  
+    display: block;    
+    width: 100%;  
+    text-indent: 10px;  
+	
+} 
+*/
+
+.globalAccordion .add-border-top-bottom{
+-webkit-border-bottom-right-radius: 4px;
+-webkit-border-bottom-left-radius: 4px;
+-moz-border-radius-bottomright: 4px;
+-moz-border-radius-bottomleft: 4px;
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
+.globalAccordion .ui-accordion-header-border-top {      
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}  
+
+.globalAccordion .ui-accordion-header-border-bot {  
+	
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}  
+
+.globalAccordion .ui-accordion-header-border-bot + .accordionContent{
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+
+.globalAccordion .accordion-filled-up, .globalAccordion .lastActive{
+	background: #1d1d1d url("../images/grey-bg.png") repeat-x;
+	color: #fff !important;  
+}
+
+.complaintAccordion .accordion-filled-up:hover, .complaintAccordion .lastActive:hover{
+    background: #1d1d1d url("../images/purple-bg.png") repeat-x !important;
+    color: #fff !important;  
+}
+
+.globalAccordion .ui-accordion-header-active{
+	background: #1d1d1d url("../images/purple-bg.png") repeat-x !important;
+	color:#fff !important;
+	/*text-decoration:underline;*/
+    font-family: "arimo_bold";
+	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.globalAccordion .accordionContent .subHeader p {font-size:1.9em; letter-spacing:-0.02em; font-family:'arimo_bold'; color:#7c4397 !important;}
+
+span.editButton{ margin:1px 38px 0px 0px}
+span.editButton a{font-size:0.583em; background:#fff; color:#7c4397; letter-spacing:0.05em; padding:7px 0px 3px 0px; text-align:center;border:0; display:block; box-sizing:border-box; width:66px;line-height:1 !important;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px; text-decoration:none; box-sizing:border-box;}
+span.editButton span.arrowLeft{}
+
+span.editButton a:hover, span.editButton a:focus{background:#7c4397; color:#fff;}
+span.editButton span.arrowLeft{background:url("../images/sprites-new.png") no-repeat -364px -100px; width:5px; height:10px;}
+span.editButton a:hover span.arrowLeft{background:url("../images/sprites-new.png") no-repeat -371px -100px; }
+
+
+#formAccordion .accordion-filled-up:after  {content:'';background:url("../images/sprites-new.png") no-repeat -350px -250px ;width:26px; height:26px; display:block; position:absolute; top:13px; right:15px;}
+
+.ui-icon-default-dashboard{background:url("../images/sprites-new.png") no-repeat -500px -100px}
+.ui-icon-active-dashboard{background:url("../images/sprites-new.png") no-repeat -550px -100px}
+#dashBoardAccordion .ui-accordion-header-icon{display:block; width:26px; height:26px; position:absolute; right:15px;}
+/* Nav accordion*/
+
+
+#navAccordion{font-size:1em; color:#fff; background:#1d1d1d; padding-bottom:2px;}
+#navAccordion li.navItem{ box-sizing:border-box; background:#323232; margin-bottom:2px;}
+#navAccordion li.navItem:nth-child(1){ margin-top:0px !important;}
+
+#navAccordion li.activeItem{border-left:2px solid #fb7d37;background:#1d1d1d; margin-bottom:0px; margin-top:-2px; }
+#navAccordion li.inactiveItem{border-left:0; background:#444444; margin-bottom:0px; margin-top:-2px; }
+
+#navAccordion .navItemLabel {cursor:pointer; padding:18px 35px 18px 20px; position:relative; font-size:1.6em;}
+#navAccordion li.activeItem .navItemLabel {padding:18px 35px 18px 20px; }
+
+#navAccordion li.activeItem:hover {border-left:2px solid #fb7d37;}
+
+#navAccordion li.navItem:hover > .navItemLabel, #navAccordion li.navItem  > .navItemLabel:focus { color:#fff;  background:#444444}
+#navAccordion li.activeItem:hover > .navItemLabel {background:#1d1d1d; color:#fb7d37}
+
+#navAccordion li.navItem:hover > .navItemContent {padding-left:20px;}
+
+#navAccordion li.activeItem  a.activeSub, #navAccordion li.activeItem > .navItemLabel{color:#fb7d37; font-family:'arimo_bold';}
+#navAccordion li > .navItemContent a:hover{color:#fff; text-decoration:underline}
+/* R10-UPDATE
+#navAccordion li.activeItem > .navItemContent a.activeSub:hover{color:#fb7d37; text-decoration:none}
+*/
+
+#navAccordion .accordion-header-active{font-family:'arimo_semibold'; color:#fb7d37}
+
+#navAccordion .ui-accordion-header-icon{position:absolute;width:10px; height:10px;  right:20px; top:20px;}
+/*#navAccordion .ui-icon-default{background:url("../images/sprites-new.png") no-repeat -100px -100px; background-size:800px;}
+#navAccordion .ui-icon-active{background:url("../images/sprites-new.png") no-repeat -111px -111px; background-size:800px;}
+#navAccordion li.inactiveItem .ui-icon-active{background:url("../images/sprites-new.png") no-repeat -111px -100px; background-size:800px;}
+#navAccordion li.activeItem .ui-icon-default{background:url("../images/sprites-new.png") no-repeat -100px -111px; background-size:800px;}*/
+#navAccordion .ui-icon-default:before{ content: "+";font-family: Arial; font-size: 20px;}
+#navAccordion .ui-icon-active:before{ content: "-";font-family: Arial;font-size: 40px; font-weight: lighter; line-height: 10px;}
+
+
+#navAccordion  li.activeItem .navItemContent{ padding:0px 20px 20px 20px;}
+#navAccordion .navItemContent{ padding:0px 20px 20px 20px;}
+#navAccordion .navItemContent a:hover{color:#fb7d37; text-decoration:none;}
+#navAccordion .navItemContent ul.ulInsideContent{list-style:none;}
+#navAccordion .navItemContent ul.ulInsideContent li{padding:1px 0px 1px 10px; list-style:none; position:relative;}
+#navAccordion .navItemContent ul.ulInsideContent li.activeSub a{color:#fb7d37 !important}
+#navAccordion .navItemContent ul.ulInsideContent li.activeSub:before{color:#fb7d37 !important}
+#navAccordion .navItemContent ul.ulInsideContent li:before{content:'\2022';
+	line-height: 1em;
+    width: .5em;
+    height: .5em;
+    background:none;
+	font-size:1.6em;
+    position:absolute;
+	left:0px;
+    border-radius: 50%;
+}
+/*
+#navAccordion .navItemContent ul.ulInsideContent li:hover:before{content:'\2022';
+	line-height: 1em;
+    width: .5em;
+    height: .5em;
+    background:none;
+	font-size:1.6em;
+    position:absolute;
+	left:0px;
+    border-radius: 50%;
+	color:#fb7d37;
+}
+*/
+#navAccordion .navItemContent ul.ulInsideContent li a{ font-size:1.4em;}
+
+#navAccordion .navItemContent ul.ulInsideContent li a:hover{font-family:'arimo_italic';}
+#navAccordion .navItemContent ul.ulInsideContent li a.activeSub:hover{font-family:'arimo_bold';}
+
+/*#faqAccordion .ui-icon-default{background:url("../images/sprites-new.png") no-repeat -100px -133px;}
+#faqAccordion .ui-icon-active{background:url("../images/sprites-new.png") no-repeat -111px -122px;}*/
+#faqAccordion .ui-icon-default:before{content: "+";font-family: Arial;font-weight: bold;}
+#faqAccordion .ui-icon-active:before{content: "-";font-family: Arial;font-size: 1.6em;line-height: 10px;}
+/*#faqAccordion li:hover .ui-icon-default{background:url("../images/sprites-new.png") no-repeat -100px -122px;}*/
+#faqAccordion .ui-accordion-header-icon{position:absolute;width:10px; height:10px;  right:15px; top:17px;}
+#faqAccordion .widgetItemLabel {cursor:pointer;  position:relative;}
+#faqAccordion .accordion-header-active{color:#7c4397 !important }
+#faqAccordion .widgetItemLabel:focus{color:#7c4397}
+
+@media (max-width : 1024px) {
+	.globalAccordion .ui-accordion-content{padding:23px 25px 25px;}
+	
+	
+}
+@media (max-width : 767px) {
+	.globalAccordion .accordionHeader{font-size:1.75em}
+	
+
+	#formAccordion .accordion-filled-up:after{top:9px}
+	
+	span.editButton{position:absolute; top:9px; right:8px; width:30px; top:7px;}
+	span.editButton a{display:none;}
+	span.editButton:before{content:""; background:url("../images/sprites-new.png") no-repeat -400px -250px; width:33px; height:28px;display:block;position:absolute;}
+
+	#dashBoardAccordion .ui-accordion-header-icon{top:10px;}
+	}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), 
+only screen and (min--moz-device-pixel-ratio: 1.5), 
+only screen and (min-resolution: 240dpi) {
+
+	.ui-icon-default-dashboard{background:url("../images/sprites-retina.png") no-repeat -500px -100px; background-size:800px;}
+	.ui-icon-active-dashboard{background:url("../images/sprites-retina.png") no-repeat -550px -100px;  background-size:800px;}
+	
+	span.editButton span.arrowLeft{background:url("../images/sprites-retina.png") no-repeat -361px -100px; width:5px; height:10px;  background-size:800px;}
+	span.editButton a:hover span.arrowLeft{background:url("../images/sprites-retina.png") no-repeat -366px -100px;  background-size:800px; }
+	#formAccordion .accordion-filled-up:after  {content:'';background:url("../images/sprites-retina.png") no-repeat -350px -250px; background-size:800px;}
+
+}
+
+@media only screen and (max-width : 767px) and (-webkit-min-device-pixel-ratio: 1.5), 
+only screen and (max-width : 767px) and (min--moz-device-pixel-ratio: 1.5), 
+only screen and (max-width : 767px) and (min-resolution: 240dpi) {
+
+	span.editButton:before{content:""; background:url("../images/sprites-retina.png") no-repeat -400px -250px; background-size:800px;}
+}

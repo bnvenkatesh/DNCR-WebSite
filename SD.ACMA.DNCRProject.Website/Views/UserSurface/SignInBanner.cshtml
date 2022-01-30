@@ -1,0 +1,68 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@model dynamic
+
+@{
+    Layout = null;
+}
+<script>
+    $(function() {
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            url: '@Url.Action("SignOutCheck", "UserSurface")',
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                if (response === 0) {
+                    window.location.replace('@Url.Action("SignOut", "UserSurface")');
+                }
+            }
+        });
+
+        // No activity, sign out and redirect
+        function inActive() {
+            if (@ViewBag.TimeoutPageUrl != "") {
+                window.location.replace('@Url.Action("SignOut", "UserSurface", new { redirectUrl = ViewBag.TimeoutPageUrl })');
+            }
+        }
+
+        // If theres no activity for session timeout (set at 30 minutes in web.config) do something
+        var activityTimeout = setTimeout(inActive, @Session.Timeout * 60 * 1000);
+
+        function resetActive() {
+            clearTimeout(activityTimeout);
+            activityTimeout = setTimeout(inActive, @Session.Timeout * 60 * 1000);
+        }
+
+        // Check for click and keyup
+        $(document).on('click keyup', function () { resetActive() });
+    });
+</script>
+
+<div class="userInfoBar alignto industryBlueBack">
+	<span class="icon userIcon"></span>
+    <span>Hi @SessionHelper.UserEmail</span>
+    <div class="hideOnTabletSpan banner">
+        <span>, you're signed in to</span>
+        <a href="@ViewBag.AccountDashboardURL">
+            <span class="ProxiSemiBold">@SessionHelper.CompanyName</span>
+        </a>
+        @if (ViewBag.CanSeeWashQuote)
+        {
+            <span>&nbsp; | &nbsp;</span>
+            <span>You have</span>
+            if (ViewBag.Credit == 1)
+            {
+                <span class="ProxiSemiBold">@String.Format("{0:n0} wash", ViewBag.Credit)</span>
+            }
+            else
+            {
+                <span class="ProxiSemiBold">@String.Format("{0:n0} washes", ViewBag.Credit)</span>
+            }
+            <span>available</span>
+        }
+    </div>
+    <span class="floatRight signout"><a href="@Url.Action("SignOut", "UserSurface")" class="ProxiBold">SIGN OUT <span class="icon arrowRight"></span></a></span>
+</div>

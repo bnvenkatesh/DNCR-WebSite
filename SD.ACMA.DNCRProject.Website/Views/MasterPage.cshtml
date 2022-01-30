@@ -1,0 +1,110 @@
+﻿@using System.Configuration
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+
+    int currentPage = 0;
+    int.TryParse(HttpContext.Current.Request.QueryString["Page"], out currentPage);
+
+    string pageTitle = string.Format("Do Not Call Register {0} {1}",
+        string.IsNullOrEmpty((string)Model.Content.GetPropertyValue("pageTitle")) ? "" : "- " + Model.Content.GetPropertyValue("pageTitle"),
+        currentPage == 0 ? "" : "- Page " + currentPage);
+
+    if (Model.Content.DocumentTypeAlias == "Sitemap")
+    {
+        pageTitle = "Do Not Call Register - Sitemap";
+    }
+
+    String pageCategory = Model.Content.AncestorOrSelf(2).Name;
+    pageCategory = (pageCategory.Length > 0) ? pageCategory.Replace(' ', '_').ToLower() : "";
+}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @if (PageData["DisableIndexing"] == null || PageData["DisableIndexing"] == false)
+        {
+            <meta name="robots" content="NOODP" />
+        }
+        else
+        {
+            <meta name="robots" content="noindex" />
+        }
+
+        <meta name="DC.Identifier" content="@Request.Url.AbsoluteUri" />
+        <meta name="DC.Creator" content="corporateName=The Australian Communications and Media Authority; address=Red Building, Benjamin Offices, Chan St, Belconnen ACT 2617; contact=+61 1300 792 958" />
+        <meta name="DC.Publisher" content="corporateName=The Australian Communications and Media Authority; address=Red Building, Benjamin Offices, Chan St, Belconnen ACT 2617; contact=+61 1300 792 958" />
+        <meta name="description" content="@(string.IsNullOrEmpty((string)Model.Content.GetPropertyValue("metaDescription")) ? "The Do Not Call Register is a secure database where individuals and organisations can register, check or remove their Australian telephone, mobile and fax numbers to opt out of receiving most unsolicited telemarketing calls and faxes." : Model.Content.GetPropertyValue("metaDescription"))" />
+        <meta name=" dc.subject" content="@(string.IsNullOrEmpty((string)Model.Content.GetPropertyValue("pageTitle")) ? "Do Not Call Register" : Model.Content.GetPropertyValue("pageTitle"))" />
+        <meta name="DC.date" content="@Model.Content.UpdateDate.ToString("yyyy-MM-dd")" />
+        <meta name="DC.Type" content="@(string.IsNullOrEmpty((string)Model.Content.GetPropertyValue("dcType")) ? "Service, Audio, CSV file, Word Document, Web pages, Image, PDF, Spreadsheet, video" : Model.Content.GetPropertyValue("dcType"))" />
+        @*<meta name="DC.Type" content="Service, Audio, CSV file, Word Document, Web pages, Image, PDF, Spreadsheet, video" />*@
+        <meta name="DC.language" content="English" />
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
+        <meta name="version" content="@typeof(SD.ACMA.DNCRProject.Website.Global).Assembly.GetName().Version" />
+        <title>@pageTitle</title>
+
+        @System.Web.Optimization.Styles.Render("~/bundles/css")
+        <link href="/css/fonts/fonts.css" rel="stylesheet">
+
+        <link href="//fonts.googleapis.com/css?family=Maven Pro" rel="stylesheet">
+        
+        <!-- Readspeaker implementation
+        <link rel="stylesheet" type="text/css" href="/ReadSpeaker/ReadSpeakerColorSkin.css" />
+        
+        <script type="text/javascript" src="/ReadSpeaker/ReadSpeakerColorSkin.js"></script>
+        -->
+        @System.Web.Optimization.Scripts.Render("~/bundles/js")
+        <!--[if lt IE 9]>
+            <script src="/scripts/selectivizr-min.js"></script>
+            <script src="/scripts/html5shiv.min.js"></script>
+            <script src="/scripts/respond.min.js"></script>
+            <script src="/scripts/jquery.backgroundSize.js"></script>
+        <![endif]-->
+
+        @if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["GoogleAnalyticsTrackingId"]))
+        {
+            <script>
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                ga('create', '@ConfigurationManager.AppSettings["GoogleAnalyticsTrackingId"]', 'auto');
+                ga('send', 'pageview');
+
+            </script>
+        }
+    <!-- Readspeaker implementation
+    <script src="http://f1-as.readspeaker.com/script/7530/ReadSpeaker.js?pids=embhl" type="text/javascript"></script>
+    -->
+    </head>
+    <body>
+    <div class="container relative category_@pageCategory">
+        @Umbraco.RenderMacro("Header")
+        @Umbraco.RenderMacro("Nav")
+        <section id="sectionContent" class="relative">
+            <div class="content contentPadding transition">
+                <div class="contentContainer">
+                    @Umbraco.RenderMacro("EmergencyBroadcast")
+                    @Html.Action("SignInBanner", "UserSurface")
+                    <div id="contentStart">
+                        @RenderBody()
+                    </div>
+                    @Html.Action("SignIn", "UserSurface")
+                    @Html.Action("ForgotPassword", "UserSurface")
+                </div>
+                <div class="footer relative">
+                    @Umbraco.RenderMacro("Footer")
+                </div>
+            </div>
+            <div class="clear"></div>
+        </section>
+    </div>
+    </body>
+</html>

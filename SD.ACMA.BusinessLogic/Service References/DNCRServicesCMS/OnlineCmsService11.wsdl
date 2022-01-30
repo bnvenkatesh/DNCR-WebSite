@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OnlineCmsService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOnlineCmsService_LodgeComplaint_InputMessage">
+    <wsdl:part name="parameters" element="tns:LodgeComplaint" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_LodgeComplaint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LodgeComplaintResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_LodgeComplaint_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q1:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_LodgeEnquiry_InputMessage">
+    <wsdl:part name="parameters" element="tns:LodgeEnquiry" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_LodgeEnquiry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LodgeEnquiryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_LodgeEnquiry_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q2:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_AttachMailResponse_InputMessage">
+    <wsdl:part name="parameters" element="tns:AttachMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_AttachMailResponse_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AttachMailResponseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_AttachMailResponse_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q3:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetSuburbForPostCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSuburbForPostCode" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetSuburbForPostCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSuburbForPostCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetSuburbForPostCode_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q4:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetCountries_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountries" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetCountries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetCountries_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q5:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetServiceProviders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServiceProviders" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetServiceProviders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServiceProvidersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetServiceProviders_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q6:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_ImpersonateCSR_InputMessage">
+    <wsdl:part name="parameters" element="tns:ImpersonateCSR" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_ImpersonateCSR_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ImpersonateCSRResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_ImpersonateCSR_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q7:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetAccountRefunds_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountRefunds" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetAccountRefunds_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountRefundsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetAccountRefunds_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q8:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetManualAdjustmentWashCreditsLimit" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetManualAdjustmentWashCreditsLimitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q9:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="IOnlineCmsService">
+    <wsdl:operation name="LodgeComplaint">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeComplaint" message="tns:IOnlineCmsService_LodgeComplaint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeComplaintResponse" message="tns:IOnlineCmsService_LodgeComplaint_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeComplaintDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_LodgeComplaint_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LodgeEnquiry">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeEnquiry" message="tns:IOnlineCmsService_LodgeEnquiry_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeEnquiryResponse" message="tns:IOnlineCmsService_LodgeEnquiry_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/LodgeEnquiryDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_LodgeEnquiry_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AttachMailResponse">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/AttachMailResponse" message="tns:IOnlineCmsService_AttachMailResponse_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/AttachMailResponseResponse" message="tns:IOnlineCmsService_AttachMailResponse_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/AttachMailResponseDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_AttachMailResponse_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSuburbForPostCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/GetSuburbForPostCode" message="tns:IOnlineCmsService_GetSuburbForPostCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/GetSuburbForPostCodeResponse" message="tns:IOnlineCmsService_GetSuburbForPostCode_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/GetSuburbForPostCodeDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_GetSuburbForPostCode_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/GetCountries" message="tns:IOnlineCmsService_GetCountries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/GetCountriesResponse" message="tns:IOnlineCmsService_GetCountries_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/GetCountriesDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_GetCountries_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceProviders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/GetServiceProviders" message="tns:IOnlineCmsService_GetServiceProviders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/GetServiceProvidersResponse" message="tns:IOnlineCmsService_GetServiceProviders_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/GetServiceProvidersDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_GetServiceProviders_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ImpersonateCSR">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/ImpersonateCSR" message="tns:IOnlineCmsService_ImpersonateCSR_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/ImpersonateCSRResponse" message="tns:IOnlineCmsService_ImpersonateCSR_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/ImpersonateCSRDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_ImpersonateCSR_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountRefunds">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/GetAccountRefunds" message="tns:IOnlineCmsService_GetAccountRefunds_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/GetAccountRefundsResponse" message="tns:IOnlineCmsService_GetAccountRefunds_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/GetAccountRefundsDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_GetAccountRefunds_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetManualAdjustmentWashCreditsLimit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOnlineCmsService/GetManualAdjustmentWashCreditsLimit" message="tns:IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOnlineCmsService/GetManualAdjustmentWashCreditsLimitResponse" message="tns:IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IOnlineCmsService/GetManualAdjustmentWashCreditsLimitDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineCmsService_GetManualAdjustmentWashCreditsLimit_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOnlineCmsService" type="tns:IOnlineCmsService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LodgeComplaint">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/LodgeComplaint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LodgeEnquiry">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/LodgeEnquiry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AttachMailResponse">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/AttachMailResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSuburbForPostCode">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/GetSuburbForPostCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountries">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/GetCountries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceProviders">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/GetServiceProviders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ImpersonateCSR">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/ImpersonateCSR" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountRefunds">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/GetAccountRefunds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetManualAdjustmentWashCreditsLimit">
+      <soap:operation soapAction="http://tempuri.org/IOnlineCmsService/GetManualAdjustmentWashCreditsLimit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DncrServiceFaultFault">
+        <soap:fault use="literal" name="DncrServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OnlineCmsService">
+    <wsdl:port name="BasicHttpBinding_IOnlineCmsService" binding="tns:BasicHttpBinding_IOnlineCmsService">
+      <soap:address location="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,9 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["token"]))
+{
+    Response.Redirect("/");
+}
+else
+{
+    @Html.Action("LodgeComplaints", "AgentSurface", new { token = HttpContext.Current.Request.QueryString["token"] })
+}

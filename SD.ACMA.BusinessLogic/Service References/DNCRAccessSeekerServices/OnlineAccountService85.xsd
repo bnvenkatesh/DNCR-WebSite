@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.AccessSeeker.Credentials" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="LoginRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginRequestArgs" nillable="true" type="tns:LoginRequestArgs" />
+  <xs:complexType name="LoginRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsAdmin" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLocked" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMigrated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastLogedInDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LoginMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginRequestResult" nillable="true" type="tns:LoginRequestResult" />
+  <xs:complexType name="ChangePasswordRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="NewPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OldPassword" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChangePasswordRequestArgs" nillable="true" type="tns:ChangePasswordRequestArgs" />
+  <xs:complexType name="ChangePasswordRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChangePasswordMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChangePasswordRequestResult" nillable="true" type="tns:ChangePasswordRequestResult" />
+  <xs:complexType name="ResetPasswordRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NewPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResetPasswordToken" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResetPasswordRequestArgs" nillable="true" type="tns:ResetPasswordRequestArgs" />
+  <xs:complexType name="ResetPasswordRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResetPasswordRequestResult" nillable="true" type="tns:ResetPasswordRequestResult" />
+  <xs:complexType name="ForgotPasswordRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForgotPasswordRequestArgs" nillable="true" type="tns:ForgotPasswordRequestArgs" />
+  <xs:complexType name="ForgotPasswordRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForgotPasswordRequestResult" nillable="true" type="tns:ForgotPasswordRequestResult" />
+</xs:schema>

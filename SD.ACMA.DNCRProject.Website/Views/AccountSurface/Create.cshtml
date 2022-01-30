@@ -1,0 +1,633 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.CreateAccountViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    @Html.Partial("_IndustryDropdownTemplate");
+    <script>
+        (function ($) {
+            $.validator.setDefaults({
+                ignore: ":hidden:not(#MinimumIndustries, #MinimumOrganisationType)"
+            });
+        }(jQuery));
+        $(function () {
+            refreshState();
+            $("select#Country").change(function () {
+                refreshState();
+            });
+            bindHiddenState();
+
+            //Populate the confirm accordion
+            $("button.populateConfirm").click(function (event) {
+                event.preventDefault();
+                if ($(this).closest(".accordionContent").find("input, select, textarea").valid()) {
+                    var primaryActivity = $('.accordionContent input[name="Activity"]:checked').val();
+                    $(".accordionContent span.primaryActivity").text(primaryActivity);
+
+                    var industrySectors = $('.accordionContent select[name="Industry"]').val();
+                    $(".accordionContent span.industrySectors").text(industrySectors);
+
+                    var organisationName = $(".accordionContent #OrganisationName").val();
+                    $(".accordionContent span.organisationName").text(organisationName);
+
+                    var abn = "";
+                    var hasAbn = $('.accordionContent input[name="HasABN"]:checked').val() === "True";
+                    if (hasAbn) {
+                        abn = $(".accordionContent #ABN").val();
+                    } else abn = "No ABN submitted";
+                    $(".accordionContent span.abn").text(abn);
+
+                    var phone = $(".accordionContent #OrganisationPhone").val();
+                    $(".accordionContent span.phone").text(phone === "" ? "No phone number provided" : phone);
+
+                    var addressLine1 = $(".accordionContent #AddressLine1").val();
+                    var addressLine2 = $(".accordionContent #AddressLine2").val();
+                    var city = $(".accordionContent #City").val();
+                    var postcode = $(".accordionContent #Postcode").val();
+                    var state = $('.accordionContent .state[name="State"]').val();
+                    var country = $(".accordionContent #Country").val();
+                    var postalAddress = addressLine1;
+                    if (addressLine2 !== "") {
+                        postalAddress = postalAddress + " " + addressLine2;
+                    }
+                    postalAddress = postalAddress + ", " + city;
+                    if (state !== "") {
+                        postalAddress = postalAddress + " " + state;
+                    }
+                    postalAddress = postalAddress + " " + postcode + " " + country;
+                    $(".accordionContent span.postalAddress").text(postalAddress);
+
+                    var adminName = $(".accordionContent #FirstName").val() + " " + $(".accordionContent #LastName").val();
+                    $(".accordionContent span.adminName").text(adminName);
+
+                    var adminPhone = $(".accordionContent #PhoneNumber").val();
+                    $(".accordionContent span.adminPhone").text(adminPhone);
+
+                    var adminEmail = $(".accordionContent #Email").val();
+                    $(".accordionContent span.adminEmail").text(adminEmail);
+
+                    openNextAccordion(this);
+                    $('.nano').nanoScroller({
+                        preventPageScrolling: true
+                    });
+                } else invalidateAccordion(this);
+            });
+
+            $(".accordionContent input.radioCheck").on("change", function () {
+                if (this.checked)
+                {
+                    $(this).valid();
+                }
+            });
+        });
+    </script>
+    <div class="form-holder floatLeft">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@Html.Raw(ViewBag.ErrorMessage)</div>
+        @using (Html.BeginUmbracoForm<AccountSurfaceController>("Create"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">1. Account administrator</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <fieldset>
+                            <legend>Administrator details</legend>
+                            <div class="labelDescMargin subHeader">
+                                <p>Administrator details</p>
+                            </div>
+                            <div class="labelDescMargin">
+                                <p>Every Access Seeker Account has one administrator account, and can have multiple additional wash only accounts.</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.FirstName, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.LastName, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.LastName, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.PhoneNumber, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "error numberError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "long deny-html", @type = "email" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.ConfirmEmail, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.ConfirmEmail, new { @class = "long deny-html", @type = "email" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="industryBlueColor" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="industryBlueColor" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold next validate">NEXT</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">2. Applicant details</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <fieldset>
+                            <legend>Applicant details</legend>
+                            <div class="labelDescMargin subHeader">
+                                <p>Applicant details</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <fieldset>
+                                    <legend>@Html.GetDisplayName(model => model.Activity)</legend>
+                                    <div class="labelDescMargin">
+                                        @Html.RequiredTextFor(model => model.Activity, new { @class = "ProxiSemiBold inlineBlock" })
+                                    </div>
+                                    <div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.Activity, "telephoning", new { id = "phone", @class = "radioCheck" })
+                                            @Html.Label("phone", "telephoning", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.Activity, "sending faxes", new { @id = "fax", @class = "radioCheck" })
+                                            @Html.Label("fax", "sending faxes", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.Activity, "telephoning and sending faxes", new { @id = "phoneFax", @class = "radioCheck" })
+                                            @Html.Label("phoneFax", "telephoning and sending faxes", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Activity, "", new { @class = "error" })
+                                    </div>
+                                </fieldset>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="labelDescMargin">
+                                    @Html.RequiredLabelFor(model => model.Industry, new { @class = "ProxiSemiBold" })
+                                </div>
+                                <div class="industry toolTipContainer">
+                                    @*<input type="hidden" name="Industries.Index" value="@i">*@
+                                    <div class="selectParent selectLong hasTooltip">
+                                        @Html.IndustrySectorDropDownListFor(model => model.Industry, new { @class = "industrydropdown" })
+                                    </div>
+                                    <a href="#" class="tooltip afterField"><img src="/images/tooltip.png" alt="tip" /><span>To assist us in sending specific alerts to you based on your login details</span></a>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "error" })
+                                <div class="clear"></div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <fieldset>
+                            <legend>Organisation details</legend>
+                            <div class="fieldMargin subHeader">
+                                <p>Organisation details</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.OrganisationName, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.OrganisationName, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.OrganisationName, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.OrganisationPhone, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.OrganisationPhone, new { @class = "long deny-html", @type = "tel" })
+                                    @Html.ValidationMessageFor(model => model.OrganisationPhone, "", new {@class = "error numberError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <fieldset>
+                                    <legend>@Html.GetDisplayName(model => model.HasABN)</legend>
+                                    <div class="labelDescMargin">
+                                        @Html.RequiredTextFor(model => model.HasABN, new { @class = "ProxiSemiBold inlineBlock" })
+                                    </div>
+                                    <div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.HasABN, true, new { @id = "hasABN", @class = "radioCheck", data_other_option_field = "abnField" })
+                                            @Html.Label("hasABN", "Yes", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        <div class="radio-holder">
+                                            @Html.RadioButtonFor(model => model.HasABN, false, new { @id = "noABN", @class = "radioCheck" })
+                                            @Html.Label("noABN", "No", new { @class = "radioCheckLabel" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.HasABN, "", new { @class = "error" })
+                                    </div>
+                                </fieldset>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin abnField hidden">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.ABN, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.ABN, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.ABN, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <fieldset>
+                            <legend>Postal address</legend>
+                            <div class="fieldMargin subHeader">
+                                <p>Postal address</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.AddressLine1, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.AddressLine1, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.AddressLine1, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.AddressLine2, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.AddressLine2, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.AddressLine2, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.City, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.City, new { @class = "long deny-html" })
+                                    @Html.ValidationMessageFor(model => model.City, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.Postcode, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.Postcode, new { @class = "short deny-html" })
+                                    @Html.ValidationMessageFor(model => model.Postcode, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.State, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    <div class="selectParent selectShort">
+                                        @Html.StateDropDownListFor(model => model.State, new {@class = "dropdown state"})
+                                    </div>
+                                    @Html.TextBoxFor(model => model.State, new { @class = "long textbox state deny-html" })
+                                    @Html.HiddenFor(model => model.State, new {id = "hiddenState", @class = "state"})
+                                    @Html.ValidationMessageFor(model => model.State, "", new {@class = "error", id = "stateError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.Country, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    <div class="selectParent selectLong">
+                                        @Html.DropDownListFor(model => model.Country, Model.CountryList, "Select")
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Country, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <div>
+                            <button class="ProxiBold next populateConfirm">NEXT</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">3. Confirm and submit</span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin subHeader">
+                            <p>Applicant details</p>
+                        </div>
+                        <div class="fieldMargin">
+                            <p>Primary Activity: <span class="primaryActivity"></span></p>
+                            <p>Industry Sectors: <span class="industrySectors"></span></p>
+                        </div>
+                        <div class="subHeader">
+                            <p>Organisation details</p>
+                        </div>
+                        <div class="fieldMargin">
+                            <p>Organisation name: <span class="organisationName"></span></p>
+                            <p>ABN: <span class="abn"></span></p>
+                            <p>Phone: <span class="phone"></span></p>
+                            <p>Postal address: <span class="postalAddress"></span></p>
+                        </div>
+                        <div class="subHeader">
+                            <p>Administrator details</p>
+                        </div>
+                        <div class="fieldMargin">
+                            <p>Admin name: <span class="adminName"></span></p>
+                            <p>Admin phone: <span class="adminPhone"></span></p>
+                            <p>Admin email: <span class="adminEmail"></span></p>
+                        </div>
+                        <div class="subHeader">
+                            <p>Default washing result file format</p>
+                        </div>
+                        <div class="fieldMargin">
+                            <p>The following options have been pre-selected, you can update them in future via the account dashboard.</p>
+                            <br/>
+                            <p>
+                                Original file with indicators: <strong>YES</strong>
+                            </p>
+                            <p>
+                                File of registered numbers: <strong>NO</strong>
+                            </p>
+                            <p>
+                                File of unregistered numbers: <strong>NO</strong>
+                            </p>
+                            <p>
+                                File of invalid format numbers: <strong>NO</strong>
+                            </p>
+                        </div>
+                        <hr/>
+                        <div class="subHeader">
+                            <p>Terms of use</p>
+                        </div>
+                        <div class="scrollBarHolder fieldMargin">
+                            <div class="nano">
+                                <div class="nano-content">
+                                    <p class="ProxiSemiBold">Do Not Call Register Access seeker terms and conditions</p>
+                                    <br/>
+                                    <p>By registering to create an account with the Do Not Call Register, you agree to be bound by the following <strong>Do Not Call Register Access seeker terms and conditions</strong> (Terms and Conditions). Failure to abide by these Terms and Conditions may result in suspension or deregistration of your account registration or other conditions being placed on your access to the Do Not Call Register.
+                                    </p>
+                                    <br/>
+                                    <p>These Terms and Conditions may change from time to time. While the Australian Communications and Media Authority (ACMA) will endeavour to ensure that changes to the Terms and Conditions are notified on the Do Not Call Register website, by continuing to submit lists or access the Do Not Call Register and associated services, you agree to be bound by the Terms and Conditions as they exist at the time of each access.</p>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Fee-based access</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li>Under subsection 19(2) of the Do Not Call Register Act 2006, if you have not paid the applicable fee, neither ACMA nor the contracted service provider (if any) is obliged to accept a list of numbers from you. This does not limit other rights or remedies that the ACMA may have in relation to the applicable fee.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Administration account</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="2">Before first accessing the Do Not Call Register, you must register with the ACMA to set up an administration account. This administration account can be used, after selecting (and paying, if applicable) for a subscription type (or types) to submit a list of numbers for checking against the Do Not Call Register.</li>
+                                        <br/>
+                                        <li>You must apply for an administration account using the registration procedure published on the “create an account” section of the Do Not Call Register website. The acceptance of these Terms and Conditions is a requirement of the registration procedure.</li>
+                                        <br/>
+                                        <li>Before you are registered with an administration account, or at any time during the registration of your administration account, you may be asked by the ACMA to submit to a credit assessment. If so requested, you must provide such information as is reasonably required to allow the ACMA to complete a credit assessment.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Deregistration and suspension</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="5">The ACMA may suspend your administration account, close (deregister) your administration account, or place additional conditions on your registration, if:</li>
+                                        <ol class="second">
+                                            <li>Your administration account becomes <strong>inactive</strong>. For the purposes of this section an administration account becomes <strong>inactive</strong> if:</li>
+                                            <ol class="third">
+                                                <li>You fail to keep your administration account details accurate and up-to-date; or</li>
+                                                <li>You have not activated a subscription for 12 months; or</li>
+                                                <li>You have not submitted a list for washing for 12 months and one day.</li>
+                                            </ol>
+                                            <li>You have failed to pay for subscription type within the terms of the <span class="italic">Do Not Call Register (Access Fees) Determination 2007</span>.</li>
+                                            <li>You fail a credit assessment conducted by the ACMA.</li>
+                                        </ol>
+                                        <br/>
+                                        <li>The ACMA will take reasonable steps to contact you, should the ACMA decide to deregister, suspend or place additional conditions on your administration account.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Refunds</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="7">When applying for a refund or credit, you agree to follow the “refunds procedure” published on the “subscriptions” section of the Do Not Call Register website. The ACMA will consider applications for refunds or credit notes or list washing reversals. The criteria by which refunds are calculated are published on the “subscriptions” section of the Do Not Call Register website.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Communication of information from the ACMA or contracted service provider</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="8">You agree to the ACMA and the contracted service provider contacting you from time to time with administrative information about your administrative account.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Access to the Do Not Call Register website or the service</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="9">You agree that you will not:</li>
+                                        <ol class="second">
+                                            <li>obtain or attempt to obtain unauthorised access to any part of the system, including using an administration account for which you are not authorised</li>
+                                            <li>change or attempt to change or otherwise interfere with the service or any material, information, or content contained in or displayed on the service</li>
+                                            <li>use or attempt to use the system for any unlawful purpose</li>
+                                            <li>use or attempt to use the service for any purpose for which it was not intended</li>
+                                            <li>impersonate another person or entity</li>
+                                            <li>use or attempt to use the service to send, post or publish defamatory, offensive or intimidatory material</li>
+                                            <li>use or attempt to use the service for the purposes of sending unsolicited commercial emails to ACMA, its employees, delegates, independent contractors (including the contracted service provider) or users of the service</li>
+                                            <li>use or attempt to use the service in a manner that is inconsistent with the Do Not Call Register legislation and legislative instruments, or</li>
+                                            <li>transfer or attempt to transfer any material of any kind to the service which contains a virus, malicious computer code or any harmful component.</li>
+                                        </ol>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Material on the Do Not Call Register website or the washing service</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="10">To the extent permitted by law, neither ACMA nor the contracted service provider gives any warranty in relation to the material contained on the service.</li>
+                                        <br/>
+                                        <li>The material is made available on the understanding that the ACMA and/or the contracted service provider are not engaged in rendering professional advice. It may not be exhaustive of all the information available on a particular issue. You are encouraged to seek your own legal advice as to your obligations.</li>
+                                        <br/>
+                                        <li>Links to other websites are inserted for convenience and do not constitute endorsement of material at those sites or any associated organisation, product or service.</li>
+                                    </ol>
+                                    <br/>
+                                    <p class="ProxiSemiBold">Non-liability of ACMA</p>
+                                    <br/>
+                                    <ol class="first">
+                                        <li value="13">To the fullest extent permitted by law, neither the ACMA nor the contracted service provider are liable to you for any damages, costs or liabilities that may result from:</li>
+                                        <ol class="second">
+                                            <li>service interruptions to the service</li>
+                                            <li>your use of the service</li>
+                                            <li>your obtaining or using lists washed by your use of the service</li>
+                                            <li>failure to receive information about changes to the service.</li>
+                                        </ol>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formField">
+                            @Html.CheckBoxFor(model => model.AcceptTerms, new {@class = "radioCheck"})
+                            @Html.RequiredLabelFor(model => model.AcceptTerms, new { @class = "ProxiSemiBold radioCheckLabel" })
+                            @Html.ValidationMessageFor(model => model.AcceptTerms, "", new {@class = "error"})
+                        </div>
+                        @if (ViewBag.Recaptcha)
+                        {
+                            <hr/>
+                            <div class="subHeader">
+                                <p>Security code</p>
+                            </div>
+                            <div class="fieldMargin toolTipContainer">
+                                <p>This helps with the security of the register.<a href="#" class="tooltip"><img src="/images/tooltip.png" alt="tip"/><span>Security requirements ensure the site is not being accessed by non-humans.</span></a>
+                                </p>
+                                <div class="g-recaptcha" data-sitekey="@ViewBag.Sitekey" data-callback="recaptchaVerified"></div>
+                                <span class="error recaptchaerror hidden">Please verify that you are not a robot</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <label for="alternative-email" class="alternative-email">Alternative Email</label>
+                            @Html.TextBox("alternative-email", "Security check, do not replace this value", new { @class = "alternative-email" })
+                        }
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="industryBlueColor" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="industryBlueColor" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit checkRecaptcha">SUBMIT APPLICATION</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    if (ViewBag.IsDuplicateAccount == null || !ViewBag.IsDuplicateAccount)
+    {
+        <div class="thankyou-message floatLeft">
+            <h2 class="ProxiBold industryBlueShade1Color">Account Created</h2>
+            <p class="desc">Thank you for your application to create an Access Seeker account with the Do Not Call Register.</p>
+            <div class="nextStep industryBlueShade1Color">Activate your account</div>
+            <p>
+                An email of your new account details has been sent to your administrator email address. This email includes instructions on how to activate your account and how to set your account password.
+            </p>
+            <p>
+                If an email does not arrive within 72 hours please call us on 1300 785 749 or <a href="@ViewBag.LodgeEnquiryUrl">lodge an enquiry</a> quoting your <strong>Access Seeker Account ID of @Model.AccessSeekerAccountId</strong>.
+            </p>
+            <br />
+            <br />
+            <div class="nextStep industryBlueShade1Color">Verification</div>
+            <p>
+                The ACMA or the register operator may contact applicants to verify the information provided or to seek further information. You will be called on the administrator telephone number provided in the application. If this is unsuccessful, contact will be attempted via the administrator email address provided. It is very important that you provide current and accurate contact details.
+            </p>
+            <p>
+                <strong>If the ACMA or the register operator cannot contact you, your application may be closed.</strong>
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="thankyou-message floatLeft">
+            <p class="desc">Thank you for your application to create an account with the Do Not Call Register.</p>
+            <p>Most applications are processed within 72 hours. If an email does not arrive within 72 hours please call us on 1300 785 749 or fill in our enquiry form quoting your Access Seeker Account ID: @Model.AccessSeekerAccountId</p>
+        </div>
+    }
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

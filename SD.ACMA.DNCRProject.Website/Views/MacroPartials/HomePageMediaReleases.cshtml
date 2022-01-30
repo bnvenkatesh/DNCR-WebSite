@@ -1,0 +1,66 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var mediaReleaseNode = Model.Content.DescendantOrSelf("RecentMediaReleasesPage");
+}
+
+<div class="contentItem">
+    <div id="mediaReleases" class="section">
+        <div class="section-separator-line"></div>
+        <div class="labels">
+            <div class="sectionTitle media ProxiBold">
+                <span class="icon"><h2>@mediaReleaseNode.GetPropertyValue("pageTitle")</h2></span>
+            </div>
+            <div class="sectionDesc">@mediaReleaseNode.GetPropertyValue("pageSummary")</div>
+        </div>
+        <div class="sectionRow">
+            @{
+                var count = 0;
+            }
+            @foreach (var mediaRelease in mediaReleaseNode.Siblings().Where(x => x.DocumentTypeAlias == "MediaReleasePage").OrderByDescending(x => x.GetPropertyValue("articleDate")).Take(3))
+            {
+                count++;
+                if (count < 3)
+                {
+                    var mobileHide = (count > 1) ? "hideOnMobile" : ""; // R10 only show one item in mobile
+                    <div class="item col-2-tablet floatLeft @mobileHide">
+                        <div>
+                            @if (mediaRelease.HasValue("thumbnailImage"))
+                            {
+                                var image = Umbraco.Media(mediaRelease.GetPropertyValue("thumbnailImage"));
+                                <a href="@mediaRelease.Url"><img src="@image.Url" alt="" /></a>
+                            }
+                            <div class="itemTitle ProxiBold">
+                                <a class="" href="@mediaRelease.Url">
+                                    <h3>@mediaRelease.GetPropertyValue("pageTitle")</h3></a>
+                            </div>
+                            <div class="itemDesc">@mediaRelease.GetPropertyValue("pageSummary")</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="item floatLeft hideOnTablet">
+                        <div class="floatRight">
+                            @if (mediaRelease.HasValue("thumbnailImage"))
+                            {
+                                var image = Umbraco.Media(mediaRelease.GetPropertyValue("thumbnailImage"));
+                                <a href="@mediaRelease.Url"><img src="@image.Url" alt="" /></a>
+                            }
+                            <div class="itemTitle ProxiBold">
+                                <a class="" href="@mediaRelease.Url">
+                                    <h3>@mediaRelease.GetPropertyValue("pageTitle")</h3>
+                                </a>
+                            </div>
+                            <div class="itemDesc">@mediaRelease.GetPropertyValue("pageSummary")</div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="viewAllHolder">
+            <a class="ProxiBold" href="@mediaReleaseNode.Url">View all</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,288 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@using Umbraco.Web.UI.Umbraco.Masterpages
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.CheckRegistrationViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        (function ($) {
+            $.validator.setDefaults({
+                ignore: "input[name='AcceptTerms']:hidden"
+            });
+        }(jQuery));
+        $(function () {
+            //Populate the confirm accordion
+            $("button.populateConfirm").click(function (event) {
+                event.preventDefault();
+                if ($(this).closest(".accordionContent").find("input, select, textarea").valid()) {
+                    var count = 0;
+                    $(".accordionContent ul.numbers").html("");
+                    $(".accordionContent input.phoneInput").each(function () {
+                        if ($(this).val() !== "") {
+                            count++;
+                            $(".accordionContent ul.numbers").append("<li id='phone" + count + "'></li>");
+                            $(".accordionContent ul.numbers li#phone" + count).text($(this).val());
+                        }
+                    });
+                    var email = $(".accordionContent #Email").val();
+                    $(".accordionContent .confirmEmail").text(email);
+                    openNextAccordion(this);
+                }
+                else invalidateAccordion(this);
+            });
+            $(".accordionContent a.correction").click(function (event) {
+                event.preventDefault();
+                $(".accordionHeader").removeClass("accordion-filled-up");
+                $(this).closest(".accordion").accordion({ active: 0 });
+            });
+
+            $(".accordionContent").on("change", ".phoneNumber input.phoneInput", function () {
+                $("#MinimumNumbers-error").hide();
+            });
+
+            $(".accordionContent input.radioCheck").on("change", function () {
+                if (this.checked)
+                {
+                    $(this).valid();
+                }
+            });
+        });
+    </script>
+    <div class="form-holder floatLeft">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@ViewBag.ErrorMessage</div>
+        @using (Html.BeginUmbracoForm<RegistrationSurfaceController>("Check"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">1. Start</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <fieldset>
+                            <legend>Your numbers</legend>
+                            <div class="labelDescMargin subHeader">
+                                <p>Your numbers</p>
+                            </div>
+                            <div class="labelDescMargin">
+                                <p>
+                                    You can check up to 20 numbers by this online form or by this <a class="purple" href="@ViewBag.OfflineForm" target="_blank">offline form (@ViewBag.OfflineFormFormat, @String.Format("{0}k", ViewBag.OfflineFormSize.ToString()))</a>.
+                                    <br/>Please include the two-digit area code for home or fax numbers.
+                                </p>
+                            </div>
+                            @Html.HiddenFor(model => model.MinimumNumbers)
+                            @{
+                                int fieldCount = 5;
+                                if (Model.Numbers != null && Model.Numbers.Count > 5)
+                                {
+                                    fieldCount = Model.Numbers.Count;
+                                }
+                                for (int i = 0; i < fieldCount; i++)
+                                {
+                                    <div class="formField fieldMargin phoneNumber">
+                                        <div class="floatLeft">
+                                            @if (i == 0)
+                                            {
+                                                <label class="inputLabel" for="@String.Format("Numbers_{0}__Number", i)">Phone 1<span class='visuallyhidden'> Numbers must be 10 digits beginning with 0. Numbers starting with 18 must be 7 or 10 digits. Numbers starting with 13 must be 6, 8 or 10 digits. E.g. 0212345678 or 0412345678</span>*</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="inputLabel" for="@String.Format("Numbers_{0}__Number", i)">Phone @(i + 1)<span class='visuallyhidden'> Numbers must be 10 digits beginning with 0. Numbers starting with 18 must be 7 or 10 digits. Numbers starting with 13 must be 6, 8 or 10 digits. E.g. 0212345678 or 0412345678</span></label>
+                                            }
+                                        </div>
+                                        <div class="floatLeft">
+                                            @Html.TextBoxFor(model => model.Numbers[i].Number, new { @class = "long phoneInput deny-html", @type = "tel" })
+                                            @Html.ValidationMessageFor(model => model.Numbers[i].Number, "", new {@class = "error numberError"})
+                                            @if (i == 0)
+                                            {
+                                                @Html.ValidationMessageFor(model => model.Numbers, "", new {@class = "error"})
+                                                @Html.ValidationMessageFor(model => model.MinimumNumbers, "", new {@class = "error"})
+                                            }
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                }
+                                if (Model.Numbers == null || Model.Numbers.Count < 20)
+                                {
+                                    <div class="hideDisabled">
+                                        <button type="button" class="addMore" data-add-more-numbers="5">Add more numbers</button>
+                                    </div>
+                                }
+                            }
+                        </fieldset>
+
+                        <hr/>
+                        <fieldset>
+                            <legend>Your email address</legend>
+                            <div class="subHeader">
+                                <p>Your email address</p>
+                            </div>
+                            <div class="labelDescMargin">
+                                <p>For security and privacy reasons, your email address must be the same as the one you used to register.</p>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "long deny-html", @type = "email" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField fieldMargin">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.ConfirmEmail, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.ConfirmEmail, new { @class = "long deny-html", @type = "email" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new {@class = "error"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <div>
+                            <button class="ProxiBold purple next populateConfirm">NEXT</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top "><span class="title">2. Confirm and submit</span></div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin">
+                            <p>Please check the details listed below. If the details are correct, select the confirm button below. An email will be sent to the email address you used to register. If your email address has changed, phone 1300 792 958.</p>
+                        </div>
+                        <div class="fieldMargin">
+                            <div class="subHeader">
+                                <p>Numbers</p>
+                            </div>
+                            <div class="formField labelDescMargin">
+                                <ul class="numbers"></ul>
+                            </div>
+                            <div class="subHeader">
+                                <p>Email address</p>
+                            </div>
+                            <div class="labelDescMargin">
+                                <p class="confirmEmail"></p>
+                            </div>
+                        </div>
+                        <div class="labelDescMargin">
+                            <p>
+                                If any of these details are incorrect <a href="#" class="purple correction">you can make corrections</a> before submitting.
+                                <br/>An email will be sent to <span class="confirmEmail"></span> with the details of your registration check.
+                            </p>
+                        </div>
+                        <hr/>
+                        <div class="subHeader">
+                            <p>Statement by account holder</p>
+                        </div>
+                        <div class="formField fieldMargin groupField">
+                            <p>
+                                I am the account holder or authorised officer for the numbers listed above.
+                                <br/>I understand that providing false or misleading information is a serious criminal offence.
+                            </p>
+                            @Html.CheckBoxFor(model => model.AcceptTerms, new {@class = "radioCheck"})
+                            @Html.RequiredLabelFor(model => model.AcceptTerms, new {@class = "ProxiSemiBold radioCheckLabel"})
+                            @Html.ValidationMessageFor(model => model.AcceptTerms, "", new {@class = "error"})
+                        </div>
+                        @if (ViewBag.Recaptcha)
+                        {
+                            <hr/>
+                            <div class="subHeader">
+                                <p>Security code</p>
+                            </div>
+                            <div class="labelDescMargin toolTipContainer">
+                                <p>
+                                    This helps with the security of the register.<a href="#" class="tooltip"><img src="/images/tooltip.png" alt="tip" /><span>Security requirements ensure the site is not being accessed by non-humans.</span></a>
+                                </p>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="@ViewBag.Sitekey" data-callback="recaptchaVerified"></div>
+                            <span class="error recaptchaerror hidden">Please verify that you are not a robot</span>
+                        }
+                        else
+                        {
+                            <label for="alternative-email" class="alternative-email">Alternative Email</label>
+                            @Html.TextBox("alternative-email", "Security check, do not replace this value", new {@class = "alternative-email"})
+                        }
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="purple" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="purple" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit checkRecaptcha">CONFIRM AND SUBMIT</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        <h2 class="ProxiBold consumerGreenShade2Color">Thank you</h2>
+        <p class="desc">An email has been sent to @Model.Email with the results of your registration check.</p>
+        <p>If the email does not arrive shortly, please check your junk/spam folder. If you cannot locate the email please fill in our enquiry form or call us on 1300 792 958.</p>
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

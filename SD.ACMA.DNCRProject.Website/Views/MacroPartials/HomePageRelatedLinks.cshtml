@@ -1,0 +1,13 @@
+﻿@using System.Collections
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<ul class="ul-links">
+    @foreach (dynamic link in (IEnumerable)JsonConvert.DeserializeObject(Model.MacroParameters["Items"].ToString()))
+    {
+        var linkUrl = (bool)link.isInternal ? Umbraco.NiceUrl(link.Value<int>("internal")) : link.link;
+        var linkTarget = (bool)link.newWindow ? "_blank" : null;
+        <li class="col-2 col-1-mobile"><a class="@Model.MacroParameters["ColourClass"].ToString()" href="@linkUrl" target="@linkTarget">@link.caption</a></li>
+    }
+</ul>

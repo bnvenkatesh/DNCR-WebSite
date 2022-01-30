@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.BasePagerViewModel>
+
+@if (Model.Pager.Pages.Count() > 1)
+{
+    <ul>
+        @if (!Model.Pager.IsFirstPage)
+        {
+            <li><a class="prevButton" href="#" data-page="@(Model.Pager.CurrentPage - 1)">PREVIOUS</a></li>
+        }
+        @foreach (var number in Model.Pager.Pages)
+        {
+            var distanceFromCurrent = number - Model.Pager.CurrentPage;
+
+            if (number == Model.Pager.CurrentPage)
+            {
+                <li><a data-page="@Model.Pager.CurrentPage" class="active">@number</a></li>
+            }
+
+            else if ((distanceFromCurrent > -3) && (distanceFromCurrent < 3))
+            {
+                <li><a href="#" data-page="@number">@number</a></li>
+            }
+        }
+        @if (!Model.Pager.IsLastPage)
+        {
+            <li><a class="nextButton" href="#" data-page="@(Model.Pager.CurrentPage + 1)">NEXT</a></li>
+        }
+    </ul>
+    <div class="clear"></div>
+}

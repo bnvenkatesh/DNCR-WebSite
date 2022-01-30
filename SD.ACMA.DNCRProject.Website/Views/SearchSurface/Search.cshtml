@@ -1,0 +1,14 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SearchViewModel>
+
+@using (Html.BeginUmbracoForm<SearchSurfaceController>("Search", null, new { @class = "relative" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(model => model.Keywords, new {@class = "searchHeaderLabel ProxiSemiBold"})
+    <div class="searchInputHolder">
+        @Html.TextBoxFor(model => model.Keywords, new { @onclick = "this.value = ''", @class = "ProxiSemiBold searchText", @type="search", @placeholder="Search" })
+    </div>
+    <button class="searchButton btMagni absolute"><img title="Search" src="/images/r10/icon-magnify.png" alt="Search" /></button>
+    <button type="button" class="searchButtonTablet btMagni absolute"><img title="Search" src="/images/r10/icon-magnify.png" alt="Search" /></button>
+    <!-- <button type="button" class="searchButtonMobile btMagni absolute"><img title="Search" src="/images/magni.png" alt="Search" /></button> -->
+}

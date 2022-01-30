@@ -1,0 +1,83 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.BalanceRefundViewModel
+
+@if (Model.RefundReservedAccountBalance > 0)
+{
+    <script>
+        $(function() {
+            $(".submit.checkRecaptcha").show();
+        });
+    </script>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.RefundReservedAccountBalance, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            <input class="short readonly" value="@String.Format("${0:n}", Model.RefundReservedAccountBalance)" disabled="disabled" />
+            @Html.HiddenFor(model => model.RefundReservedAccountBalance)
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountBSB, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountBSB, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountBSB, "", new {@class = "error numberError"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountNumber, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountNumber, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "error numberError" })
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.AccountName, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.AccountName, new { @class = "short deny-html" })
+            @Html.ValidationMessageFor(model => model.AccountName, "", new {@class = "error"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="formField fieldMargin">
+        <div class="floatLeft">
+            @Html.RequiredLabelFor(model => model.OtherAccountDetails, new { @class = "inputLabel" })
+        </div>
+        <div class="floatLeft">
+            @Html.TextBoxFor(model => model.OtherAccountDetails, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.OtherAccountDetails, "", new {@class = "error"})
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            @Html.RequiredLabelFor(model => model.AdditionalInformation, new { @class = "ProxiSemiBold" })
+        </div>
+        <div class="formField">
+            @Html.TextAreaFor(model => model.AdditionalInformation, new { @class = "long deny-html" })
+            @Html.ValidationMessageFor(model => model.AdditionalInformation, "", new { @class = "error" })
+        </div>
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <script>
+        $(function() {
+            $(".submit.checkRecaptcha").hide();
+        });
+    </script>
+    <div class="fieldMargin">
+        <div class="labelDescMargin">
+            <p>You are not eligible for a refund. Please contact 1300 785 749</p>
+        </div>
+    </div>
+}

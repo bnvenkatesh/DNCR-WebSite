@@ -1,0 +1,484 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.BulkRegistrationViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        function populateConfirm() {
+            var email = $(".accordionContent #Email").val();
+            $(".accordionContent p.confirmEmail").text("Email address: " + email);
+
+            var phoneNumberFile = $(".accordionContent #PhoneFileUpload:visible").val();
+            if (phoneNumberFile == null || phoneNumberFile === "") {
+                $(".accordionContent p.confirmPhoneNumberFile").hide();
+            } else {
+                $(".accordionContent p.confirmPhoneNumberFile").show();
+                $(".accordionContent p.confirmPhoneNumberFile").text("Phone numbers: " + phoneNumberFile);
+            }
+
+            var faxNumberFile = $(".accordionContent #FaxFileUpload:visible").val();
+            if (faxNumberFile == null || faxNumberFile === "") {
+                $(".accordionContent p.confirmFaxNumberFile").hide();
+            } else {
+                $(".accordionContent p.confirmFaxNumberFile").show();
+                $(".accordionContent p.confirmFaxNumberFile").text("Fax numbers: " + faxNumberFile);
+            }
+
+            var phoneFaxNumberFile = $(".accordionContent #PhoneFaxFileUpload:visible").val();
+            if (phoneFaxNumberFile == null || phoneFaxNumberFile === "") {
+                $(".accordionContent p.confirmPhoneFaxNumberFile").hide();
+            } else {
+                $(".accordionContent p.confirmPhoneFaxNumberFile").show();
+                $(".accordionContent p.confirmPhoneFaxNumberFile").text("Phone and fax numbers: " + phoneFaxNumberFile);
+            }
+
+            var transactionType = $("input[name=TransactionType]:checked").val();
+            if (transactionType == null || transactionType === "") {
+                $(".accordionContent p.confirmTransactionType").hide();
+            } else {
+                $(".accordionContent p.confirmTransactionType").show();
+                $(".accordionContent p.confirmTransactionType").text("Transaction type: " + transactionType);
+            }
+        }
+
+        $(function () {
+            refreshState();
+            $("select#Country").change(function () {
+                refreshState();
+            });
+            bindHiddenState();
+
+            $("[data-bulk-transaction-type]").bulktransactiontype();
+
+            $("button.filecheck").click(function (event) {
+                event.preventDefault();
+                if ($(this).closest(".accordionContent").find("input, select, textarea").valid()) {
+                    var type = $(".accordionContent .formField input[type='radio'][name='TransactionType']:checked").val();
+                    if (type !== "Register numbers") {
+                        populateConfirm();
+                        openNextAccordion(this);
+                    } else {
+                        var phoneFile = $(".accordionContent .formField input#PhoneFileUpload").val();
+                        var faxFile = $(".accordionContent .formField input#FaxFileUpload").val();
+                        if (phoneFile === "" && faxFile === "") {
+                            $(this).closest(".accordionContent").find("span.fileerror").show();
+                            invalidateAccordion(this);
+                        } else {
+                            $(this).closest(".accordionContent").find("span.fileerror").hide();
+                            populateConfirm();
+                            openNextAccordion(this);
+                        }
+                    }
+                } else invalidateAccordion(this);
+            });
+
+            $(".accordionContent .bulkchange input[type=file]").on("change", function () {
+                $(".bulkchange .fileerror").hide();
+            });
+            $(".accordionContent input.radioCheck").on("change", function () {
+                if (this.checked)
+                {
+                    $(this).valid();
+                }
+            });
+
+            $("input[name=TransactionType]").prop('checked', false);
+        });
+    </script>
+    <div class="form-holder floatLeft bulk-create-form">
+        <div class="formDesc">@ViewBag.PageSummary</div>
+        <div class="formError">@ViewBag.ErrorMessage</div>
+        @using (Html.BeginUmbracoForm<RegistrationSurfaceController>("BulkCreate"))
+        {
+            @Html.AntiForgeryToken()
+            <ul id="formAccordion" class="accordion globalAccordion">
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">1. Your details</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="formField">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.FirstName, new {@class = "inputLabel"})
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.FirstName, new { @class = "long deny-html" })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.LastName, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.LastName, new { @class = "long deny-html" })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.OrganisationName, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.OrganisationName, new {@class = "long"})
+                                @Html.ValidationMessageFor(model => model.OrganisationName, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.AddressLine1, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.AddressLine1, new {@class = "long"})
+                                @Html.ValidationMessageFor(model => model.AddressLine1, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.AddressLine2, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.AddressLine2, new {@class = "long"})
+                                @Html.ValidationMessageFor(model => model.AddressLine2, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.City, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.City, new {@class = "long"})
+                                @Html.ValidationMessageFor(model => model.City, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.Postcode, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.Postcode, new {@class = "short"})
+                                @Html.ValidationMessageFor(model => model.Postcode, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.State, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                <div class="selectParent selectShort">
+                                    @Html.StateDropDownListFor(model => model.State, new {@class = "dropdown"})
+                                </div>
+                                @Html.TextBoxFor(model => model.State, new {@class = "long textbox"})
+                                @Html.HiddenFor(model => model.State, new {@id = "hiddenState"})
+                                @Html.ValidationMessageFor(model => model.State, "", new {@class = "error", id = "stateError"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.Country, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                <div class="selectParent selectLong">
+                                    @Html.DropDownListFor(model => model.Country, Model.CountryList, "Select")
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Country, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.ValidationPDF, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.ValidationPDF, new {type = "file", accept = ".pdf"})
+                                @Html.ValidationMessageFor(model => model.ValidationPDF, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="labelDescMargin">
+                            <p>You must provide evidence that you are an account holder, authorised officer or nominee.</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.Email, new {@class = "long", @type = "email"})
+                                @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <div class="floatLeft">
+                                @Html.RequiredLabelFor(model => model.ConfirmEmail, new { @class = "inputLabel" })
+                            </div>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(model => model.ConfirmEmail, new {@class = "long", @type = "email"})
+                                @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new {@class = "error"})
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="purple" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="purple" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold purple next validate">NEXT</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                        <span class="title">2. Numbers to register, remove or check</span>
+                        <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+                    </div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin subHeader">
+                            <p>Transaction type</p>
+                        </div>
+                        <div class="formField fieldMargin">
+                            <fieldset>
+                                <legend>@Html.GetDisplayName(model => model.TransactionType)</legend>
+                                <div class="labelDescMargin">
+                                    @Html.RequiredTextFor(model => model.TransactionType, new { @class = "ProxiSemiBold inlineBlock" })
+                                </div>
+                                <div>
+                                    <div class="radio-holder">
+                                        @Html.RadioButtonFor(model => model.TransactionType, "Register numbers", new { @id = "register", @class = "radioCheck", data_bulk_transaction_type = "register", data_header_text = "Numbers to register" })
+                                        @Html.Label("register", "Register numbers")
+                                    </div>
+                                    <div class="radio-holder">
+                                        @Html.RadioButtonFor(model => model.TransactionType, "Deregister numbers", new { @id = "deregister", @class = "radioCheck", data_bulk_transaction_type = "deregister", data_header_text = "Numbers to deregister" })
+                                        @Html.Label("deregister", "Deregister numbers")
+                                    </div>
+                                    <div class="radio-holder">
+                                        @Html.RadioButtonFor(model => model.TransactionType, "Check numbers", new { @id = "check", @class = "radioCheck", data_bulk_transaction_type = "check", data_header_text = "Numbers to check" })
+                                        @Html.Label("check", "Check numbers")
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "error" })
+                                </div>
+                            </fieldset>
+                            <div class="clear"></div>
+                        </div>
+                        <hr/>
+                        <fieldset>
+                            <legend>Files to upload</legend>
+                            <div class="subHeader">
+                                <p>Files to upload</p>
+                            </div>
+                            <div class="register bulkchange labelDescMargin">
+                                <p>(At least one file must be uploaded)*</p>
+                            </div>
+                            <div class="formField deregister check bulkchange hidden">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.PhoneFaxFileUpload, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.PhoneFaxFileUpload, new {type = "file", accept = ".txt,.csv"})
+                                    @Html.ValidationMessageFor(model => model.PhoneFaxFileUpload, "", new {@class = "error numberError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField register bulkchange">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.PhoneFileUpload, new { @class = "inputLabel" })
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.PhoneFileUpload, new {type = "file", accept = ".txt,.csv"})
+                                    @Html.ValidationMessageFor(model => model.PhoneFileUpload, "", new {@class = "error numberError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="formField register bulkchange">
+                                <div class="floatLeft">
+                                    @Html.RequiredLabelFor(model => model.FaxFileUpload, new {@class = "inputLabel"})
+                                </div>
+                                <div class="floatLeft">
+                                    @Html.TextBoxFor(model => model.FaxFileUpload, new {type = "file", accept = ".txt,.csv"})
+                                    @Html.ValidationMessageFor(model => model.FaxFileUpload, "", new {@class = "error numberError"})
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <span class="error fileerror hidden"><span>You must at least upload 1 file</span></span>
+                            <div class="formField labelDescMargin">
+                                <p>Files must be in comma separated value (CSV) format, and</p>
+                                <ul>
+                                    <li>contain telephone numbers that are between 3 and 7, or exactly 10 digits long and include the area code, but not country codes</li>
+                                    <li>contain numbers that commence with a zero (0) or a one (1)</li>
+                                    <li>numbers can contain brackets, hyphens, dashes and spaces</li>
+                                    <li>commas (,) are not allowed because they are used as delimiters</li>
+                                    <li>contain only a single column of numbers and not include other data or data fields, for example, names and addresses, blank cells or hidden characters (both commonly entered by pasting in copied data)</li>
+                                    <li>be no larger than 10MB, compressed</li>
+                                </ul>
+                            </div>
+                        </fieldset>
+                        <hr/>
+                        <div>
+                            <button class="ProxiBold purple next filecheck">NEXT</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordionHeader ProxiBold ui-accordion-header-border-top"><span class="title">3. Confirm and submit</span></div>
+                    <div class="accordionContent">
+                        <div>
+                            <p class="italic">All fields marked with * are mandatory</p>
+                            <div class="errorContainer"></div>
+                        </div>
+                        <br />
+                        <div class="labelDescMargin subHeader">
+                            <p>Summary</p>
+                        </div>
+                        <div class="labelDescMargin">
+                            <p class="confirmEmail"></p>
+                            <p class="confirmPhoneNumberFile"></p>
+                            <p class="confirmFaxNumberFile"></p>
+                            <p class="confirmPhoneFaxNumberFile"></p>
+                            <p class="confirmTransactionType"></p>
+                        </div>
+                        <hr/>
+                        <div class="labelDescMargin subHeader">
+                            <p>Statement by account holder</p>
+                        </div>
+                        <div class="formField fieldMargin groupField">
+                            <p>I am the account holder, authorised officer or nominee for the numbers submitted.</p>
+                            <p>The numbers submitted are used or maintained:</p>
+                            <ul>
+                                <li>primarily for domestic purposes or</li>
+                                <li>exclusively for transmitting and/or receiving faxes or</li>
+                                <li>exclusively for use by a government body</li>
+                            </ul>
+                            <p>I understand that providing false or misleading information is a serious criminal offence.</p>
+                            @Html.CheckBoxFor(model => model.AcceptTerms, new {@class = "radioCheck"})
+                            @Html.RequiredLabelFor(model => model.AcceptTerms, new { @class = "ProxiSemiBold radioCheckLabel" })
+                            @Html.ValidationMessageFor(model => model.AcceptTerms, "", new {@class = "error"})
+                        </div>
+                        @if (ViewBag.Recaptcha)
+                        {
+                            <hr/>
+                            <div class="subHeader">
+                                <p>Security code</p>
+                            </div>
+                            <div class="labelDescMargin">
+                                <p>This helps with the security of the register.</p>
+                            </div>
+                            <div class="g-recaptcha" data-sitekey="@ViewBag.Sitekey" data-callback="recaptchaVerified"></div>
+                            <span class="error recaptchaerror hidden">Please verify that you are not a robot</span>
+                        }
+                        else
+                        {
+                            <label for="alternative-email" class="alternative-email">Alternative Email</label>
+                            @Html.TextBox("alternative-email", "Security check, do not replace this value", new { @class = "alternative-email" })
+                        }
+                        <hr/>
+                        <div class="note">
+                            <p>
+                                The Privacy Act 1988 (Cth) imposes obligations on the ACMA and the register operator in relation to the collection, security, quality, access, use and disclosure of personal information. These obligations are detailed in the <a class="purple" href="@ViewBag.AustralianPrivacyUrl" target="_blank">Australian Privacy Principles</a>. For more information about the collection of data in this form, please see the Do Not Call Register <a class="purple" href="@ViewBag.DataCollectionNode" target="_blank">data collection notice</a>.
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ProxiBold submit checkRecaptcha">SUBMIT NUMBERS</button>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        @if (Model.HasErrorsInFax || Model.HasErrorsInPhone)
+        {
+            <p class="desc">There are problems in the file/s that you have uploaded. Select the below links to download the file outlining the errors.</p>
+            if (!string.IsNullOrEmpty(Model.FaxErrorFileLocation))
+            {
+                <p>
+                    @Html.ActionLink("Download Fax Errors", "DownloadErrorFile", new { @fileLocation = Model.FaxErrorFileLocation, @fileName = Model.FaxErrorFileName })
+                </p>
+            }
+
+            if (!string.IsNullOrEmpty(Model.PhoneErrorFileLocation))
+            {
+                <p>
+                    @Html.ActionLink("Download Phone Errors", "DownloadErrorFile", new { @fileLocation = Model.PhoneErrorFileLocation, @fileName = Model.PhoneErrorFileName })
+                </p>
+            }
+        }
+        else
+        {
+            <h2 class="ProxiBold consumerGreenShade2Color">Thank you for your application to register, deregister or check the status of numbers on the Do Not Call Register.</h2>
+            <p class="desc">We will review the number list and validation documents you have provided and email you within 1 business day confirming your registration or deregistration of these numbers or providing details of the status of each of the numbers submitted.</p>
+            <p>If you have not received a response within 1 business day, please call on 1300 792 958</p>
+            <p>You can register numbers on the Do Not Call Register at <a href="http://www.donotcall.gov.au">www.donotcall.gov.au</a>, or by calling us on 1300 792 958.</p>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

@@ -1,0 +1,58 @@
+﻿@using Umbraco.Web.Models
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+}
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages" id="readspeaker">
+        <div class="contentHeadline">
+            <div class="articleTitle red ProxiSemiBold">
+                <h1>@Model.Content.GetPropertyValue("pageTitle")</h1>
+            </div>
+        </div>
+        <div id="article">
+            <div class="article-holder floatLeft">
+                <div class="articleDesc">@Model.Content.GetPropertyValue("pageSummary")</div>
+                <div class="articleContent">
+                    @Model.Content.GetPropertyValue("pageContent")
+                    @{
+                        var category = Umbraco.Content(Model.Content.GetPropertyValue("faqCategory"));
+                    }
+                    @foreach (var faq in category.Children)
+                    {
+                        IPublishedContent node = @Umbraco.Content(faq.Id);
+                        <div class="faqItem" id="@node.UrlName">
+                            <h2 class="question">@node.GetPropertyValue("question")</h2>
+                            @if (String.IsNullOrEmpty(node.GetPropertyValue("answer").ToString()))
+                            {
+                                <p>@node.GetPropertyValue("shortAnswer")</p>
+                            }
+                            else
+                            {
+                                @node.GetPropertyValue("answer")
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="sidebar floatLeft">
+                @if (Model.Content.HasValue("faqs"))
+                {
+                    @Umbraco.RenderMacro("FAQs", new { Items = Model.Content.GetPropertyValue("faqs") })
+                }
+
+                @if (Model.Content.HasValue("downloads"))
+                {
+                    @Umbraco.RenderMacro("Downloads", new { Items = Model.Content.GetPropertyValue("downloads") })
+                }
+
+                @if (Model.Content.HasValue("relatedLinks"))
+                {
+                    @Umbraco.RenderMacro("RelatedLinks", new { Items = Model.Content.GetPropertyValue("relatedLinks") })
+                }
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

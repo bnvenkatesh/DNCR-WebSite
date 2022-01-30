@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{73DED3E2-BE03-4AC4-8E09-1746CE117435}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SD.ACMA.BusinessLogic</RootNamespace>
+    <AssemblyName>SD.ACMA.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'devint|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\devint\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SIT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\SIT\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\UAT\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Label="SlowCheetah">
+    <SlowCheetahToolsPath>$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\packages\SlowCheetah.2.5.14\tools\))</SlowCheetahToolsPath>
+    <SlowCheetah_EnableImportFromNuGet Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='' ">true</SlowCheetah_EnableImportFromNuGet>
+    <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\Properties\SlowCheetah\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
+    <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="evohtmltopdf, Version=6.9.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Shared\ACMA\TFS\ACMA\trunk\SD.ADMC.DNCRProject\SD.ACMA.BusinessLogic\ExternalLibrary\evohtmltopdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.6.8.0\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>..\packages\Google.Apis.1.9.0\lib\net40\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth">
+      <HintPath>..\packages\Google.Apis.Auth.1.9.0\lib\net40\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices">
+      <HintPath>..\packages\Google.Apis.Auth.1.9.0\lib\net40\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core">
+      <HintPath>..\packages\Google.Apis.Core.1.9.0\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>..\packages\Google.Apis.1.9.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.9.0.1310\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.YouTube.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Hammock">
+      <HintPath>..\packages\TweetSharp-Unofficial.2.3.1.2\lib\4.0\Hammock.dll</HintPath>
+    </Reference>
+    <Reference Include="Hammock.ClientProfile">
+      <HintPath>..\TweetSharp_DLL\TweetSharp.DLL-master\Hammock.ClientProfile.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.Core.Data.Repository.PetaPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DAL\SD.Core.Data.Repository.PetaPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TweetSharp">
+      <HintPath>..\packages\TweetSharp-Unofficial.2.3.1.2\lib\4.0\TweetSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="wnvhtmlconvert, Version=7.0.0.0, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalLibrary\wnvhtmlconvert.dll</HintPath>
+    </Reference>
+    <Reference Include="Zlib.Portable">
+      <HintPath>..\packages\Zlib.Portable.1.10.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Avanade\BaseDNCRWebServiceWrapper.cs" />
+    <Compile Include="Avanade\DNCRConsumerWebServiceWrapper.cs" />
+    <Compile Include="Avanade\DNCRIndustryWebServiceWrapper.cs" />
+    <Compile Include="FinancialReport\FinancialReportService.cs" />
+    <Compile Include="Helpers\ErrorMessageHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\PDFConverter.cs" />
+    <Compile Include="WcfLogging\ExtendedClientMessageInspector.cs" />
+    <Compile Include="PaymentGateway\CreditCardPaymentService.cs" />
+    <Compile Include="PaymentGateway\PaymentGatewayService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DNCRAccessSeekerServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DNCROrderServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DNCRServicesCMS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DNCRServicesRegistration\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DNCRWashingService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SocialMedia\SocialMediaHandler.cs" />
+    <Compile Include="WcfLogging\ExtendedErrorHandler.cs" />
+    <Compile Include="WcfLogging\ExtendedServiceBehavior.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
+    <None Include="app.Debug.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="app.devint.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="app.Prod.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="app.Release.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="app.SIT.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="app.UAT.config">
+      <DependentUpon>app.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="ExternalLibrary\evointernal.dat" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService1.wsdl" />
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService81.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService82.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService83.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService84.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService85.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService86.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService87.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ActivateAccountRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ActivateAccountUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ActivateWashOnlyUserResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ChangePasswordRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.CreateAccountRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.CreateWashOnlyUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.DeActivateAccountUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.DeleteAccountUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ForgotPasswordRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.GetAccountRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.GetAccountUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.GetAllAccountUsersRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.GetStateRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ImpersonateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.LoginRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.ResetPasswordRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.SendAccountActivationEmailResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.UpdateAccountRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRAccessSeekerServices\SD.ACMA.BusinessLogic.DNCRAccessSeekerServices.UpdateAccountUserRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService1.wsdl" />
+    <None Include="Service References\DNCROrderServices\OnlineOrderService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\OnlineOrderService55.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.AccountSummaryDetailResponseResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.AccountUserHeaderInformationResponseResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.CancelOrderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.CloseOrderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.CreateOrderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.OrderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.PayForOrderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.SubscriptionHistoryRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.SubscriptionRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCROrderServices\SD.ACMA.BusinessLogic.DNCROrderServices.SubscriptionSummaryRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService1.wsdl" />
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService11.wsdl" />
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService510.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService511.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService512.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService513.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService514.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService515.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService55.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService56.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService57.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService58.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService59.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.AccountRefundsRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.AttachMailResponseRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.GetCountryRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.GetManualAdjustmentWashCreditsLimitResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.GetServiceProviderRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.ImpersonationRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.LodgeComplaintRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.LodgeEnquiryRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesCMS\SD.ACMA.BusinessLogic.DNCRServicesCMS.SuburbsInPostCodeRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService2.wsdl" />
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService21.wsdl" />
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService71.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService72.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService73.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService74.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService75.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService76.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\SD.ACMA.BusinessLogic.DNCRServicesRegistration.BulkRegistrationRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\SD.ACMA.BusinessLogic.DNCRServicesRegistration.ConfirmOnlineRegistrationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\SD.ACMA.BusinessLogic.DNCRServicesRegistration.OnlineCheckRegistrationRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRServicesRegistration\SD.ACMA.BusinessLogic.DNCRServicesRegistration.OnlineRegistrationRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService2.wsdl" />
+    <None Include="Service References\DNCRWashingService\OnlineWashingService21.wsdl" />
+    <None Include="Service References\DNCRWashingService\OnlineWashingService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService71.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService72.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService73.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService74.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService75.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\OnlineWashingService76.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.DownloadErrorLogResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.DownloadWashFileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.PreWashByFileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.QuickWashResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.WashFileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DNCRWashingService\SD.ACMA.BusinessLogic.DNCRWashingService.WashHistoryRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SD.ACMA.DatabaseIntermediary\SD.ACMA.DatabaseIntermediary.csproj">
+      <Project>{8a483780-6fab-4e0a-8dde-e9590244d95a}</Project>
+      <Name>SD.ACMA.DatabaseIntermediary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SD.ACMA.DNCR.Infrastructure\SD.ACMA.DNCR.Infrastructure.csproj">
+      <Project>{16a62f2e-2ce7-4587-b70b-f9760800acd4}</Project>
+      <Name>SD.ACMA.DNCR.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SD.ACMA.InterfaceTier\SD.ACMA.InterfaceTier.csproj">
+      <Project>{f945bd62-7e47-49ab-94f7-54c28df4ce86}</Project>
+      <Name>SD.ACMA.InterfaceTier</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SD.ACMA.POCO\SD.ACMA.POCO.csproj">
+      <Project>{b5146aa5-f09e-4b52-8997-9fd79ab2e0a7}</Project>
+      <Name>SD.ACMA.POCO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DNCRAccessSeekerServices\" />
+    <WCFMetadataStorage Include="Service References\DNCROrderServices\" />
+    <WCFMetadataStorage Include="Service References\DNCRServicesCMS\" />
+    <WCFMetadataStorage Include="Service References\DNCRServicesRegistration\" />
+    <WCFMetadataStorage Include="Service References\DNCRWashingService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesRegistration\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesRegistration\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesRegistration\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Avanade\Mocks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRAccessSeekerServices\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRAccessSeekerServices\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRAccessSeekerServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesCMS\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesCMS\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRServicesCMS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCROrderServices\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCROrderServices\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCROrderServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRWashingService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRWashingService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DNCRWashingService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExternalLibrary\evohtmltopdf.dll" />
+    <Content Include="ExternalLibrary\evohtmltopdf.xml" />
+    <Content Include="ExternalLibrary\wnvhtmlconvert.dll" />
+    <Content Include="ExternalLibrary\wnvhtmlconvert.xml" />
+    <None Include="Service References\DNCRServicesRegistration\OnlineRegistrationService1.disco" />
+    <None Include="Service References\DNCRWashingService\OnlineWashingService1.disco" />
+    <None Include="Service References\DNCRAccessSeekerServices\OnlineAccountService1.disco" />
+    <None Include="Service References\DNCROrderServices\OnlineOrderService1.disco" />
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService11.disco" />
+    <None Include="Service References\DNCRServicesCMS\OnlineCmsService1.disco" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

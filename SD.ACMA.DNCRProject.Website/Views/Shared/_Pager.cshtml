@@ -1,0 +1,46 @@
+﻿@using SD.ACMA.DNCRProject.Website.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.BasePagerViewModel>
+
+@if (Model.Pager != null && Model.Pager.Pages.Count() > 1)
+{
+    var queryString = "";
+    if (Model.GetType() == typeof(SearchResultsViewModel))
+    {
+        var newModel = (SearchResultsViewModel)Model;
+        queryString = String.Format("&keywords={0}", newModel.SearchTerm);
+    }
+    if (Model.GetType() == typeof(WashHistoryViewModel))
+    {
+        var from = HttpContext.Current.Request.QueryString["From"];
+        var to = HttpContext.Current.Request.QueryString["To"];
+        if (!String.IsNullOrEmpty(from) && !String.IsNullOrEmpty(to))
+        {
+            queryString = String.Format("&from={0}&to={1}", from, to);
+        }
+    }
+    <ul>
+        @if (!Model.Pager.IsFirstPage)
+        {
+            <li><a class="prevButton" href="@String.Format("?page={0}{1}", Model.Pager.CurrentPage - 1, queryString)">PREVIOUS</a></li>
+        }
+        @foreach (var number in Model.Pager.Pages)
+        {
+            var distanceFromCurrent = number - Model.Pager.CurrentPage;
+
+            if (number == Model.Pager.CurrentPage)
+            {
+                <li><a class="active">@number</a></li>
+            }
+
+            else if ((distanceFromCurrent > -3) && (distanceFromCurrent < 3))
+            {
+                <li><a href="@String.Format("?page={0}{1}", number, queryString)">@number</a></li>
+            }
+        }
+        @if (!Model.Pager.IsLastPage)
+        {
+            <li><a class="nextButton" href="@String.Format("?page={0}{1}", Model.Pager.CurrentPage + 1, queryString)">NEXT</a></li>
+        }
+    </ul>
+    <div class="clear"></div>
+}

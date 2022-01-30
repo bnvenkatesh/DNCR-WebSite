@@ -1,0 +1,53 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <script>
+        $(function() {
+            $("#closeActivateUser").click(function() {
+                $("#activateUser").dialog("close");
+            });
+            $("button#activateButton").click(function(event) {
+                event.preventDefault();
+                var userid = $(this).data('userid');
+                var page = 1;
+                if ($("#dashboardUser .paginationHolder li a.active").length > 0) {
+                    page = $("#dashboardUser .paginationHolder li a.active").data("page");
+                }
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("Activate", "UserSurface")',
+                    data: { userId: userid, currentPage: page, editUserNodeUrl: "@ViewBag.EditUserNodeUrl" },
+                    success: function(result) {
+                        $("#dashboardUser").html(result);
+                        $("#activateUser").dialog("close");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        if (xhr.status === 403) {
+                            $(".activationLink").show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <div id="activateUser" class="dialog" title="Activate User?">
+        <form>
+            <div class="dialogDesc">
+                <p>
+                    Are you sure you want to activate user "<span id='userEmail'></span>"?
+                </p>
+            </div>
+            <div class="formField">
+                <button id="activateButton" class="shaded width175">ACTIVATE USER</button>
+                <button type="button" id="closeActivateUser" class="width125">CANCEL</button>
+            </div>
+            <div class="labelDescMargin activationLink hidden"><span class="error">The initial activation must be done via the activation email. Please contact <span id='userEmail'></span></span></div>
+        </form>
+    </div>
+}

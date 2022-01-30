@@ -1,0 +1,89 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.DashboardFinancialViewModel
+
+@if (Model.Financials.Any())
+{
+    <script>
+        $(function() {
+            $("#dashboardFinancial .paginationHolder li a").on("click", function(event) {
+                event.preventDefault();
+                var page = $(this).data('page');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("FinancialHistory", "SubscriptionSurface")',
+                    data: { currentPage: page, paymentLimit: @ViewBag.PaymentLimit, makePaymentUrl: "@ViewBag.MakePaymentUrl" },
+                    success: function(result) {
+                        $("#dashboardFinancial").html(result);
+                    }
+                });
+            });
+            $("#financialPageUpdated").show().delay(1000).fadeOut();
+        });
+    </script>
+
+    <table class="responsive">
+        <caption>Account Financial History</caption>
+        <tr>
+            <th class="addborderLeftTop">@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderNumber)</th>
+            <th>@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderDate)</th>
+            <th>@Html.GetDisplayName(model => model.Financials.FirstOrDefault().Status)</th>
+            <th>@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderExpires)</th>
+            <th class="right">@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderAmount)</th>
+            <th class="right">@Html.GetDisplayName(model => model.Financials.FirstOrDefault().Outstanding)</th>
+            <th class="addborderRightTop right">Actions</th>
+        </tr>
+        @foreach (var financial in Model.Financials)
+        {
+            <tr>
+                <td class="ProxiSemiBold">@financial.OrderNumber</td>
+                <td data-label="@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderDate)">@financial.OrderDate.ToString("dd MMM yyyy")</td>
+                <td data-label="@Html.GetDisplayName(model => model.Financials.FirstOrDefault().Status)">@financial.Status</td>
+                <td data-label="@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderExpires)">@financial.OrderExpires</td>
+                <td class="right" data-label="@Html.GetDisplayName(model => model.Financials.FirstOrDefault().OrderAmount)">$@String.Format("{0:n}", financial.OrderAmount)</td>
+                <td class="right" data-label="@Html.GetDisplayName(model => model.Financials.FirstOrDefault().Outstanding)">$@String.Format("{0:n}", financial.Outstanding)</td>
+                <td class="addborderRightBot right" data-label="Actions">
+                    @if (financial.CanDownload)
+                    {
+                        <a href="@Url.Action("GenerateInvoice", new {orderId = financial.OrderId})"><span class="icon downloadBT" title="Download" aria-label="Download">Download</span></a>
+                    }
+                    else
+                    {
+                        <span class="icon downloadBT disable"></span>
+                    }
+                    @if (financial.CanPay)
+                    {
+                        var url = ViewBag.MakePaymentUrl + "?orderId=" + financial.OrderId;
+                        <a href="@url"><span class="icon pay" title="Pay" aria-label="Pay">Pay</span></a>
+                    }
+                    else
+                    {
+                        <span class="icon pay disable"></span>
+                    }
+                    @if (financial.CanCancel)
+                    {
+                        <a href="#" class="cancelAction" data-orderid="@financial.OrderId" data-ordernumber="@financial.OrderNumber"><span class="icon closeTable" title="Cancel" aria-label="Cancel">Cancel</span></a>
+                    }
+                    else if (financial.CanClose)
+                    {
+                        <a href="#" class="closeAction" data-orderid="@financial.OrderId" data-ordernumber="@financial.OrderNumber"><span class="icon closeTable" title="Close" aria-label="Close">Close</span></a>
+                    }
+                    else
+                    {
+                        <span class="icon closeTable disable"></span>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="paginationHolder">
+        @Html.Partial("_DashboardPager")
+    </div>
+}
+else
+{
+    <script>
+        $(function () {
+            $("#dashboardFinancial").closest("li").hide();
+        });
+    </script>
+}

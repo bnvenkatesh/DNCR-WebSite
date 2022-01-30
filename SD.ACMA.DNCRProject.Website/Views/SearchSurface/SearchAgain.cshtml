@@ -1,0 +1,14 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SearchViewModel>
+
+@using (Html.BeginUmbracoForm<SearchSurfaceController>("Search", null, new { @class = "hideOnMobile" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="formField floatLeft">
+        <div class="floatLeft">@Html.TextBoxFor(model => model.Keywords, new { @class = "floatLeft long", @type = "search" })</div>
+        <div class="floatLeft">
+            <button class="filter ProxiBold purple">SEARCH</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+}

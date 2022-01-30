@@ -1,0 +1,476 @@
+﻿@model SD.ACMA.DNCRProject.FinancialReports.Models.PaymentReconReportViewModel
+
+@{
+    ViewBag.Title = "Payments Reconciliation Report";
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+}
+
+<div id="ReportWrapper">
+<div id="ReportHeader">
+    @if (!Model.IsCurrent)
+    {
+        <h3>Final</h3><br />
+    }
+    <h4>Do Not Call Register</h4>
+    <h4>Subscription Payments</h4>
+    <h4>Reconciliation of Receipts and Subscription Activations</h4>
+    <h4>Report Period: @Model.FromDateString to @Model.ToDateString</h4>
+    <h4>Report Date: @Model.ToDateString</h4>
+</div>
+
+    <div class="ReportBody">
+        <h4>Receipts from Bank Statement</h4>
+        <table class="report">
+            <tr>
+                <td>Credit Card (Settlements)</td>
+                <td>&nbsp;</td>
+                <td class="number">@Model.CreditCardSettlements_SUM_A</td>
+            </tr>
+            <tr>
+                <td>Bank Transfer + BPAY</td>
+                <td>&nbsp;</td>
+                <td class="number">@Model.TotalCashReceipts_EFT_BPAY_SUM_P1_P2</td>
+            </tr>
+            <tr>
+                <td>Unknown Payments</td>
+                <td>&nbsp;</td>
+                <td class="number">@Model.TotalCashReceipts_UNKNOWN_SUM_P3</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Receipts</td>
+                <td class="number" colspan="2">@Model.TotalReceipts_Sub1</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Less: Exceptions and Deferred Credit Card Payments</h4>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Unmatched Payments</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionUnmatchedPayments_U1 != null && Model.ExceptionUnmatchedPayments_U1.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionUnmatchedPayments_U1)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}", item.PaymentDate, item.PaymentReference))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Transfers to Credit Notes</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionTransferToCreditNotes_U2 != null && Model.ExceptionTransferToCreditNotes_U2.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionTransferToCreditNotes_U2)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Underpayments</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionUnderpayments_U3 != null && Model.ExceptionUnderpayments_U3.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionUnderpayments_U3)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Reversed Dishonoured Payments</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionReversedDishonouredPayments_U4 != null && Model.ExceptionReversedDishonouredPayments_U4.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionReversedDishonouredPayments_U4)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID == 0 ? "" : item.AccountID.ToString()))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Erroneous Payments</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionErroneousPayments_U5 != null && Model.ExceptionErroneousPayments_U5.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionErroneousPayments_U5)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}", item.PaymentDate, item.PaymentReference))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Credit Card Payments Previously Deferred Received</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ExceptionCreditCardDeferredReceivedPayments_F != null && Model.ExceptionCreditCardDeferredReceivedPayments_F.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionCreditCardDeferredReceivedPayments_F)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+            <tr>
+
+                <td>Current Period Timing difference (under receipt); over receipt</td>
+                <td class="number">@Model.CurrentPeriodTimingDifference</td>
+            </tr>
+        </table>
+
+        <br />
+
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Deductions</td>
+                <td class="number">@Model.TotalDeductions_Sub2</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Add: Cleared Previous Exceptions & New Credit Card Deferrals</h4>
+
+        <table class="report_total">
+            <tr>
+                <td>New Credit Card Deferrals</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.NewCreditCardDeferralPayments_C != null && Model.NewCreditCardDeferralPayments_C.Count > 0)
+                {
+                    foreach (var item in Model.NewCreditCardDeferralPayments_C)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Dishonoured Payments</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.DishonouredPayments_D1 != null && Model.DishonouredPayments_D1.Count > 0)
+                {
+                    foreach (var item in Model.DishonouredPayments_D1)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Credit Notes Applied To Sales</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.CreditNotesAppliedToSalesPayments_D2 != null && Model.CreditNotesAppliedToSalesPayments_D2.Count > 0)
+                {
+                    foreach (var item in Model.CreditNotesAppliedToSalesPayments_D2)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total">
+            <tr>
+                <td>Cleared Previous Exceptions</td>
+            </tr>
+        </table>
+        <table class="report">
+            @{
+                if (Model.ClearedPreviousExceptionPayments_D3 != null && Model.ClearedPreviousExceptionPayments_D3.Count > 0)
+                {
+                    foreach (var item in Model.ClearedPreviousExceptionPayments_D3)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID == 0 ? "" : item.AccountID.ToString()))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+
+        <br />
+
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Additions</td>
+                <td class="number">@Model.TotalAdditions_Sub3</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Matched Receipts</td>
+                <td class="number">@Model.TotalMatchedReceipts_Z</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Subscription Activations per Account</h4>
+        <table class="report">
+            @{
+                if (Model.AllActivatedSubscriptions_S1to5 != null && Model.AllActivatedSubscriptions_S1to5.Count > 0)
+                {
+                    foreach (var item in Model.AllActivatedSubscriptions_S1to5)
+                    {
+                        <tr>
+                            <td>@(item.Description)</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+        <br />
+
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Activated Subscriptions</td>
+                <td class="number">@Model.TotalActivatedSubscriptionsPayments_S</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <table class="report_total_grand">
+            <tr>
+                <td>Total Matched Receipts = Total Subscriptions</td>
+                @{
+                    if(Model.FromDateString == "NOT SET")
+                    {
+                        <td class="Reconciled">Pre-transition data</td>
+                    }
+                    else
+                    {
+                        if (Model.TotalReconciled == 0)
+                        {
+                        <td class="Reconciled">Reconciled</td>
+                        }
+                        else
+                        {
+                        <td class="Error">Error</td>
+                        }
+                    }
+                }
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Credit Card Timing Reconciliation</h4>
+        <table class="report">
+            <tr>
+                <td>Carried Forward Credit Card Timing difference previous period</td>
+                <td class="number">@Model.CreditCardTimingDifferenceBroughtForward</td>
+            </tr>
+            <tr>
+                <td>Current Period Timing difference</td>
+                <td class="number">@Model.CurrentPeriodTimingDifference</td>
+            </tr>
+        </table>
+        <table class="report_total_grand">
+            <tr>
+                <td>Closing Credit Card Timing differences</td>
+                <td class="number">@Model.ClosingCreditCardTimingDifference</td>
+            </tr>
+        </table>
+        <br />
+    </div>
+
+    <div class="ReportBody">
+        <h4>Refunded Payments</h4>
+
+        <table class="report">
+            @{
+                if (Model.RefundedPayments != null && Model.RefundedPayments.Count > 0)
+                {
+                    foreach (var item in Model.RefundedPayments)
+                    {
+                        <tr>
+                            <td>@(string.Format("{0}; {1}; {2}", item.PaymentDate, item.PaymentReference, item.AccountID))</td>
+                            <td class="number">@item.Amount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>

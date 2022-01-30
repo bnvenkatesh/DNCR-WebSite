@@ -1,0 +1,128 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.WashHistoryViewModel>
+
+@{
+    var cssClass = "";
+    var className = "active";
+    if (ViewBag.MobileOnly == true)
+    {
+        cssClass = "showAccordionOnMobile";
+        className = "";
+    }
+}
+
+@if (Model.Washes != null)
+{
+    foreach (var item in Model.Washes)
+    {
+        <tr class="@className @cssClass">
+            <td class="ProxiSemiBold addborderRadTop">@item.ReferenceNumber</td>
+            <td data-label="Date and Time">@item.DateOfWash.ToString("dd/MM/yyyy h:mm:ss tt")</td>
+            <td data-label="User">@item.Username</td>
+            <td class="wbr" data-label="Wash Source">@item.WashSource</td>
+            <td data-label="Client Reference" class="center">@item.ClientReference</td>
+            <td data-label="Numbers" class="center">@item.Numbers</td>
+            <td data-label="Registered" class="center">
+                @if (!String.IsNullOrEmpty(item.RegisteredFile))
+                {
+                    if (item.CanDownload && item.Registered > 0)
+                    {
+                        if (System.IO.File.Exists(String.Format(@"{0}\{1}\{2}\{3}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.RegisteredFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new {year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.RegisteredFile, isRTA = false})">@item.Registered</a>
+                        }
+                        else if (System.IO.File.Exists(String.Format(@"{0}\RTA\{1}\{2}\{3}\{4}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.DateOfWash.Day, item.RegisteredFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.RegisteredFile, isRTA = true})">@item.Registered</a>
+                        }
+                        else
+                        {
+                            @item.Registered
+                        }
+                    }
+                    else
+                    {
+                        @item.Registered
+                    }
+                }
+            </td>
+            <td data-label="Unregistered" class="center">
+                @if (!String.IsNullOrEmpty(item.UnregisteredFile))
+                {
+                    if (item.CanDownload && item.Unregistered > 0)
+                    {
+                        if (System.IO.File.Exists(String.Format(@"{0}\{1}\{2}\{3}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.UnregisteredFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.UnregisteredFile, isRTA = false })">@item.Unregistered</a>
+                        }
+                        else if (System.IO.File.Exists(String.Format(@"{0}\RTA\{1}\{2}\{3}\{4}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.DateOfWash.Day, item.UnregisteredFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.UnregisteredFile, isRTA = true })">@item.Unregistered</a>
+                        }
+                        else
+                        {
+                            @item.Unregistered
+                        }
+                    }
+                    else
+                    {
+                        @item.Unregistered
+                    }
+                }
+            </td>
+            <td data-label="Invalid" class="center">
+                @if (!String.IsNullOrEmpty(item.InvalidFile))
+                {
+                    if (item.CanDownload && item.Invalid > 0)
+                    {
+                        if (System.IO.File.Exists(String.Format(@"{0}\{1}\{2}\{3}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.InvalidFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.InvalidFile, isRTA = false })">@item.Invalid</a>
+                        }
+                        else if (System.IO.File.Exists(String.Format(@"{0}\RTA\{1}\{2}\{3}\{4}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.DateOfWash.Day, item.InvalidFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.InvalidFile, isRTA = true })">@item.Invalid</a>
+                        }
+                        else
+                        {
+                            @item.Invalid
+                        }
+                    }
+                    else
+                    {
+                        @item.Invalid
+                    }
+                }
+            </td>
+            <td data-label="Combined" class="center">
+                @if (!String.IsNullOrEmpty(item.CombinedFile))
+                {
+                    if (item.CanDownload && item.Combined > 0)
+                    {
+                        if (System.IO.File.Exists(String.Format(@"{0}\{1}\{2}\{3}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.CombinedFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.CombinedFile, isRTA = false })">@item.Combined</a>
+                        }
+                        else if (System.IO.File.Exists(String.Format(@"{0}\RTA\{1}\{2}\{3}\{4}", System.Configuration.ConfigurationManager.AppSettings["WashHistoryFileLocation"], item.DateOfWash.Year, item.DateOfWash.Month, item.DateOfWash.Day, item.CombinedFile)))
+                        {
+                            <a class="downloadable" href="@Url.Action("DownloadHistory", new { year = item.DateOfWash.Year, month = item.DateOfWash.Month, day = item.DateOfWash.Day, filename = item.CombinedFile, isRTA = true })">@item.Combined</a>
+                        }
+                        else
+                        {
+                            @item.Combined
+                        }
+                    }
+                    else
+                    {
+                        @item.Combined
+                    }
+                }
+            </td>
+        </tr>
+        className = "";
+    }
+
+    if (Model.Pager.IsLastPage)
+    {
+         @Html.HiddenFor(model => model.Pager.IsLastPage)
+    }
+}

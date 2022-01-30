@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" />
+  <xs:element name="CreateOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="orderRequestArgs" nillable="true" type="q1:CreateOrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="CreateOrderResult" nillable="true" type="q2:CreateOrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAvailableSubscriptions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="subscriptionRequestArgs" nillable="true" type="q3:SubscriptionRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAvailableSubscriptionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetAvailableSubscriptionsResult" nillable="true" type="q4:SubscriptionRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscriptionSummarydetailsByAccountID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="subscriptionRequestArgs" nillable="true" type="q5:SubscriptionRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscriptionSummarydetailsByAccountIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetSubscriptionSummarydetailsByAccountIDResult" nillable="true" type="q6:SubscriptionSummaryRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscriptionHistorydetailsByAccountID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="subscriptionRequestArgs" nillable="true" type="q7:SubscriptionRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSubscriptionHistorydetailsByAccountIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetSubscriptionHistorydetailsByAccountIDResult" nillable="true" type="q8:SubscriptionHistoryRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFinantialHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="orderRequestArgs" nillable="true" type="q9:OrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFinantialHistoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetFinantialHistoryResult" nillable="true" type="q10:OrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateInvoice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="invoiceRequestArgs" nillable="true" type="q11:InvoiceRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GenerateInvoiceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GenerateInvoiceResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayForOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="payForOrderArgs" nillable="true" type="q12:PayForOrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayForOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="PayForOrderResult" nillable="true" type="q13:PayForOrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecordPayForOrderFail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="recordPayForOrderFail" nillable="true" type="q14:PayForOrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RecordPayForOrderFailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="RecordPayForOrderFailResult" nillable="true" type="q15:PayForOrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="cancelOrderRequestArgs" nillable="true" type="q16:CancelOrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="CancelOrderResult" nillable="true" type="q17:CancelOrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="closeOrderRequestArgs" nillable="true" type="q18:CloseOrderRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="CloseOrderResult" nillable="true" type="q19:CloseOrderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountSummaryDetailByAccountID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="subscriptionRequestArgs" nillable="true" type="q20:SubscriptionRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountSummaryDetailByAccountIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetAccountSummaryDetailByAccountIDResult" nillable="true" type="q21:AccountSummaryDetailResponseResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountUserHeaderInformationByAccountUserID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="accountUserHeaderInformationArgs" nillable="true" type="q22:AccountUserHeaderInformationArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountUserHeaderInformationByAccountUserIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Subscriptions" minOccurs="0" name="GetAccountUserHeaderInformationByAccountUserIDResult" nillable="true" type="q23:AccountUserHeaderInformationResponseResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

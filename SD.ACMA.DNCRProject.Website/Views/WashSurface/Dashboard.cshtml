@@ -1,0 +1,63 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.WashHistoryViewModel
+
+<script>
+    $(function () {
+        applyDatePicker();
+        $("#ui-datepicker-div").wrap('<div class="datepicker" />');
+
+        $("button.filter").on("click", function (event) {
+            event.preventDefault();
+            if ($("#FromDate, #ToDate").valid()) {
+                var fromDate = $("#FromDate").val();
+                var toDate = $("#ToDate").val();
+                $("#dashboardWash").html("<div class='tableHolder'><p><img class='spinner' src='/images/ajax-loader.gif'/>Please wait</p></div>");
+                $(this).blur();
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("LoadDashboardHistory", "WashSurface")',
+                    data: { currentPage: 1, from: fromDate, to: toDate },
+                    success: function (result) {
+                        $("#dashboardWash").html(result);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<div class="washFilterHolder">
+    <div class="searchFormHolder">
+        <form>
+            <div class="formField">
+                <fieldset class="floatLeft marginBottom">
+                    <legend>Dates</legend>
+                    <div class="floatLeft marginRight">
+                        <div class="floatLeft from longWidth">
+                            @Html.RequiredLabelFor(model => model.FromDate, new { @class = "ProxiSemiBold"})
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.FromDate, new { @class = "floatLeft short", type = "date" })
+                            @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "spanError" })
+                        </div>
+                    </div>
+                    <div class="floatLeft marginRight">
+                        <div class="floatLeft to longWidth">
+                            @Html.RequiredLabelFor(model => model.ToDate, new { @class = "ProxiSemiBold" })
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.ToDate, new { @class = "floatLeft short", type = "date" })
+                            @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "spanError" })
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="floatLeft">
+                    <button class="filter ProxiBold">FILTER</button>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </form>
+    </div>
+    <div class="clear"></div>
+</div>
+@Html.Partial("_LoadDashboardHistory")

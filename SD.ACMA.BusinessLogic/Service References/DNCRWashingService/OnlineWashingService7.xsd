@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="QuickWashRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientReference" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Numbers" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q2:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QuickWashRequestArgs" nillable="true" type="tns:QuickWashRequestArgs" />
+  <xs:complexType name="QuickWashResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HasInValidNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasSufficientWashingCredits" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasValidSubscription" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Numbers" nillable="true" type="tns:ArrayOfWashNumber" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QuickWashResult" nillable="true" type="tns:QuickWashResult" />
+  <xs:complexType name="ArrayOfWashNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WashNumber" nillable="true" type="tns:WashNumber" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWashNumber" nillable="true" type="tns:ArrayOfWashNumber" />
+  <xs:complexType name="WashNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Flag" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashNumber" nillable="true" type="tns:WashNumber" />
+  <xs:complexType name="WashFileRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="User" nillable="true" type="q3:OnlineUserContext" />
+      <xs:element minOccurs="0" name="WashResultFormatFileWithIndicators" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatInvalidNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatRegisteredNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashResultFormatUnregisteredNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashFileRequestArgs" nillable="true" type="tns:WashFileRequestArgs" />
+  <xs:complexType name="WashFileResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllInOneFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasSufficientWashingCredits" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasValidSubscription" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InvalidNumbersFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OriginalFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisteredNumbersFile" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Status" type="q4:WashingStatus.WashingStatusEnum" />
+      <xs:element minOccurs="0" name="UnregisteredNumbersFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WashCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashFileResult" nillable="true" type="tns:WashFileResult" />
+  <xs:complexType name="PreWashFileOnlineArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelativeInputFilePath" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="UserContext" nillable="true" type="q5:OnlineUserContext" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PreWashFileOnlineArgs" nillable="true" type="tns:PreWashFileOnlineArgs" />
+  <xs:complexType name="PreWashByFileResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountWashingCreditsBalance" type="xs:int" />
+      <xs:element minOccurs="0" name="FileNameAlreadyExists" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasInValidNumbers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasSufficientWashingCredits" type="xs:boolean" />
+      <xs:element minOccurs="0" name="HasValidSubscription" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsFileFormatNotValid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsFileNameNotValid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsFileSizeExceedLimit" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RelativeInputFilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequiredWashingCredits" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowWashQuote" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PreWashByFileResult" nillable="true" type="tns:PreWashByFileResult" />
+  <xs:complexType name="DownloadErrorLogRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="User" nillable="true" type="q6:OnlineUserContext" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloadErrorLogRequestArgs" nillable="true" type="tns:DownloadErrorLogRequestArgs" />
+  <xs:complexType name="DownloadErrorLogResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Content" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloadErrorLogResult" nillable="true" type="tns:DownloadErrorLogResult" />
+  <xs:complexType name="DownloadWashFileRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="User" nillable="true" type="q7:OnlineUserContext" />
+      <xs:element minOccurs="0" name="WashFileType" type="tns:WashFileType" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloadWashFileRequestArgs" nillable="true" type="tns:DownloadWashFileRequestArgs" />
+  <xs:simpleType name="WashFileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Original" />
+      <xs:enumeration value="AllInOne" />
+      <xs:enumeration value="Registered" />
+      <xs:enumeration value="UnRegistered" />
+      <xs:enumeration value="Invalid" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="WashFileType" nillable="true" type="tns:WashFileType" />
+  <xs:complexType name="DownloadWashFileResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Content" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsExpired" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloadWashFileResult" nillable="true" type="tns:DownloadWashFileResult" />
+  <xs:complexType name="WashingSearchRequestArgs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Channel" nillable="true" type="q8:WashingChannel.WashingChannelEnum" />
+      <xs:element minOccurs="0" name="EndDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ExcludeWashWithOneNumber" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StartDateTime" nillable="true" type="xs:dateTime" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" minOccurs="0" name="User" nillable="true" type="q9:OnlineUserContext" />
+      <xs:element minOccurs="0" name="WashReferenceId" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashingSearchRequestArgs" nillable="true" type="tns:WashingSearchRequestArgs" />
+  <xs:complexType name="WashHistoryRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Results" nillable="true" type="tns:ArrayOfWashingSearchResult" />
+      <xs:element minOccurs="0" name="WashHistoryMaxResults" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashHistoryRequestResult" nillable="true" type="tns:WashHistoryRequestResult" />
+  <xs:complexType name="ArrayOfWashingSearchResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WashingSearchResult" nillable="true" type="tns:WashingSearchResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWashingSearchResult" nillable="true" type="tns:ArrayOfWashingSearchResult" />
+  <xs:complexType name="WashingSearchResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountUserId" type="xs:int" />
+      <xs:element minOccurs="0" name="AccountUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AgentUserId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="AgentUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AllInOneFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AllInOneNumbersCount" type="xs:int" />
+      <xs:element minOccurs="0" name="CanDownload" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ClientReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasRefunded" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InvalidNumbersCount" type="xs:int" />
+      <xs:element minOccurs="0" name="InvalidNumbersFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumbersWashed" type="xs:int" />
+      <xs:element minOccurs="0" name="OriginalFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisteredNumbersCount" type="xs:int" />
+      <xs:element minOccurs="0" name="RegisteredNumbersFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UnregisteredNumbersCount" type="xs:int" />
+      <xs:element minOccurs="0" name="UnregisteredNumbersFile" nillable="true" type="xs:string" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="WashingChannel" type="q10:WashingChannel.WashingChannelEnum" />
+      <xs:element minOccurs="0" name="WashingRequestId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WashingSearchResult" nillable="true" type="tns:WashingSearchResult" />
+</xs:schema>

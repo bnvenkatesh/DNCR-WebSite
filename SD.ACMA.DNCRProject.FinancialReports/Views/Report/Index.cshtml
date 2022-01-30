@@ -1,0 +1,166 @@
+﻿@model SD.ACMA.DNCRProject.FinancialReports.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        @Html.Raw(TempData["ErrorMessage"])
+    </div>
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        @Html.Raw(TempData["Message"])
+    </div>
+}
+
+<div id="report_control">
+    <h3>@(Model.IsCurrent ? "Current" : "Previous") Report Period</h3>
+    <h3>From <strong>@Model.FromDateString</strong> to <strong>@Model.ToDateString</strong></h3>
+    <br />
+    <div class="row">
+        <div class="col-md-8">
+            <button type="button" class="btn btn-primary" onclick="downloadReports()">
+                Download PDF
+            </button>
+            @*@Html.ActionLink("Download PDF", "DownloadPDF", new { @fromDate = Model.FromDate, @toDate = Model.ToDate }, new { @class = "btn btn-primary", @role = "button" })*@
+            @if (Model.IsCurrent)
+            {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#markFinalModal">
+                    Mark Final
+                </button>
+            }
+</div>
+        <div class="col-md-4 text-right">
+            @Html.ActionLink("Run Current", "RunCurrent", null, new { @class = "btn btn-primary", @role = "button" })
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#historicalReports" aria-expanded="false" aria-controls="historicalReports">
+                View Historical Reports
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Mark Final Confirmation Modal -->
+<div id="markFinalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Mark Final</h4>
+            </div>
+            <div class="modal-body">
+                <p>Current Report Period: <strong>@Model.FromDateString</strong> to <strong>@Model.ToDateString</strong>.</p>
+                <p>Please click on the <strong>Confirm</strong> button below to mark this report as final</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                @Html.ActionLink("Confirm", "MarkFinal", new { @fromDate = Model.FromDate, @toDate = Model.ToDate }, new { @class = "btn btn-primary", @role = "button", id="btnMarkFinalConfirm" })
+                <span class="hidden" id="spinner"><img src='/Content/ajax-loader.gif'/> Please wait</span>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="clearfix">
+    &nbsp;
+</div>
+
+<div id="historicalReports" class="collapse">
+    <div class="well">
+        <table id="historicalReportTable" class="table">
+            <thead>
+                <tr>
+                    <th>Report Period</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Marked Final By</th>
+                    <th>Status</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.HistoricalFinancialReports)
+                {
+                    <tr>
+                        <td>@item.ReportPeriodID</td>
+                        <td>@item.FromDateString</td>
+                        <td>@item.ToDateString</td>
+                        <td>@item.MarkedFinalBy</td>
+                        <td>@item.Status</td>
+                        <td>@Html.ActionLink("Run", "RunReport", new { @fromDate = item.FromDate, @toDate = item.ToDate }, new { @class = "btn btn-default btn-sm", @role = "button" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="clearfix">
+    &nbsp;
+</div>
+
+<div id="nav_reports">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#payments" aria-controls="payments" role="tab" data-toggle="tab" onclick="delayResize('ifrmPayments')">Payments Reconciliation Report</a></li>
+        <li role="presentation"><a href="#exceptions" aria-controls="exceptions" role="tab" data-toggle="tab" onclick="delayResize('ifrmExceptions')">Exceptions Report</a></li>
+        <li role="presentation"><a href="#creditnotes" aria-controls="creditnotes" role="tab" data-toggle="tab" onclick="delayResize('ifrmCreditNotes')">Credit Notes Report</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="payments" style="padding-top: 30px;">
+            <iframe id="ifrmPayments" width="1140" onload="iframeLoaded('ifrmPayments')" frameborder="0" src="@Url.Action("PaymentsReconciliationReport", "Report", new { fromDate = Model.FromDate, toDate = Model.ToDate, isCurrent = Model.IsCurrent }, Request.Url.Scheme)"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="exceptions" style="padding-top: 30px;">
+            <iframe id="ifrmExceptions" width="1140" onload="iframeLoaded('ifrmExceptions')" frameborder="0" src="@Url.Action("ExceptionsReport", "Report", new { fromDate = Model.FromDate, toDate = Model.ToDate, isCurrent = Model.IsCurrent }, Request.Url.Scheme)"></iframe>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="creditnotes" style="padding-top: 30px;">
+            <iframe id="ifrmCreditNotes" width="1140" onload="iframeLoaded('ifrmCreditNotes')" frameborder="0" src="@Url.Action("CreditNotesReport", "Report", new { fromDate = Model.FromDate, toDate = Model.ToDate, isCurrent = Model.IsCurrent }, Request.Url.Scheme)"></iframe>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        function delayResize(id) {
+            setTimeout(function () { iframeLoaded(id); }, 1)
+        }
+
+        function iframeLoaded(id) {
+            var F = document.getElementById(id);
+
+            if (F.contentDocument) {
+                F.height = F.contentDocument.documentElement.scrollHeight + 100; //FF 3.0.11, Opera 9.63, and Chrome
+            } else {
+                F.height = F.contentWindow.document.body.scrollHeight + 100; //IE6, IE7 and Chrome
+            }
+
+            //document.getElementById(id).height = document.getElementById(id).contentWindow.document.body.scrollHeight + 100 + "px";
+        }
+
+        $(document).ready(function () {
+            $('#historicalReportTable').dataTable({
+                "order": [[0, "desc"]]
+            });
+        });
+
+        function downloadReports() {
+            window.open('@Html.Raw(Url.Action("DownloadReports", "Report", new { @reportType = SD.ACMA.DNCR.Infrastructure.Enums.FinancialReportType.Exceptions, @fromDate = Model.FromDate, @toDate = Model.ToDate, @isCurrent = Model.IsCurrent }, Request.Url.Scheme))');
+        }
+
+        $(document).ready(function () {
+            $("#btnMarkFinalConfirm").on("click", function () {
+                $("#btnMarkFinalConfirm").hide();
+                $("#btnCancel").hide();
+                $("span.hidden#spinner").removeClass("hidden");
+            });
+        });
+    </script>
+}

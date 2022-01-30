@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SD.ACMA.DNCRProject.SocialMediaWindowsService</id>
+    <version>$version$</version>
+    <title>SD.ACMA.DNCRProject.SocialMediaWindowsService</title>
+    <authors>SAlmat Digital</authors>
+    <owners>ACMA</owners>
+    <description>SD.ACMA.DNCRProject.SocialMediaWindowsService</description>
+  </metadata>
+</package>

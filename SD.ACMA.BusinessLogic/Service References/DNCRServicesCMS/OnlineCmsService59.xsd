@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+  <xs:element name="LodgeComplaint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" minOccurs="0" name="lodgecomplaintRequestArgs" nillable="true" type="q1:LodgeComplaintRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LodgeComplaintResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" minOccurs="0" name="LodgeComplaintResult" nillable="true" type="q2:LodgeComplaintRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LodgeEnquiry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" minOccurs="0" name="lodgeEnquiryRequestArgs" nillable="true" type="q3:LodgeEnquiryRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LodgeEnquiryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" minOccurs="0" name="LodgeEnquiryResult" nillable="true" type="q4:LodgeEnquiryRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AttachMailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" minOccurs="0" name="attachMailResponseRequestArgs" nillable="true" type="q5:AttachMailResponseRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AttachMailResponseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" minOccurs="0" name="AttachMailResponseResult" nillable="true" type="q6:AttachMailResponseRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSuburbForPostCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="suburbsInPostCodeArgs" nillable="true" type="q7:SuburbsInPostCodeRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSuburbForPostCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="GetSuburbForPostCodeResult" nillable="true" type="q8:SuburbsInPostCodeRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountries">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" minOccurs="0" name="GetCountriesResult" nillable="true" type="q9:GetCountryRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetServiceProviders">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetServiceProvidersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="GetServiceProvidersResult" nillable="true" type="q10:GetServiceProviderRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpersonateCSR">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="impersonateRequestArgs" nillable="true" type="q11:ImpersonateRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ImpersonateCSRResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="ImpersonateCSRResult" nillable="true" type="q12:ImpersonationRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountRefunds">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="accountRefundsArgs" nillable="true" type="q13:AccountRefundsRequestArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountRefundsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="GetAccountRefundsResult" nillable="true" type="q14:AccountRefundsRequestResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetManualAdjustmentWashCreditsLimit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="getManualAdjustmentLimitArgs" nillable="true" type="q15:GetManualAdjustmentWashCreditsLimitArgs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetManualAdjustmentWashCreditsLimitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms" minOccurs="0" name="GetManualAdjustmentWashCreditsLimitResult" nillable="true" type="q16:GetManualAdjustmentWashCreditsLimitResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

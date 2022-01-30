@@ -1,0 +1,53 @@
+﻿<script id="industry-dropdown-template" type="text/x-handlebars-template">
+    <div class="formField industry">
+        <input type="hidden" name="Industries.Index" value="{{industryDropdownIndex}}">
+        <div class="selectParent selectLong">
+            <select name="Industries[{{industryDropdownIndex}}]" id="Industries_{{industryDropdownIndex}}_" class="industrydropdown">
+                <option value="">Select</option>
+                <option value="All">All</option>
+                <option value="Alcohol and Tobacco">Alcohol and Tobacco</option>
+                <option value="Charities">Charities</option>
+                <option value="Clothing and Footwear">Clothing and Footwear</option>
+                <option value="Communication">Communication</option>
+                <option value="Community and Voluntary Groups">Community and Voluntary Groups</option>
+                <option value="Education">Education</option>
+                <option value="Food and Non-Alcoholic Beverages">Food and Non-Alcoholic Beverages</option>
+                <option value="Government: Commonwealth, State, Local">Government: Commonwealth, State, Local</option>
+                <option value="Health and Pharmaceutical Products">Health and Pharmaceutical Products</option>
+                <optgroup label="Household Equipment and Services">
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Insulation and Roofing">Insulation and Roofing</option>
+                    <option value="Maintenance and Repair">Maintenance and Repair</option>
+                    <option value="Pest Control">Pest Control</option>
+                    <option value="Other Household Equipment and Services">Other Household Equipment and Services</option>
+                </optgroup>
+                <optgroup label="Housing">
+                    <option value="Improvements">Improvements</option>
+                    <option value="Led/Halogen Lights">Led/Halogen Lights</option>
+                    <option value="Real Estate Services">Real Estate Services</option>
+                    <option value="Solar Installation">Solar Installation</option>
+                    <option value="Utilities (Gas, Water, Electricity)">Utilities (Gas, Water, Electricity)</option>
+                    <option value="Other Housing">Other Housing</option>
+                </optgroup>
+                <option value="Individual">Individual</option>
+                <optgroup label="Insurance and Financial Services">
+                    <option value="Bank/Other Lender">Bank/Other Lender</option>
+                    <option value="Financial Advice/Investment">Financial Advice/Investment</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Other Insurance and Financial Services">Other Insurance and Financial Services</option>
+                </optgroup>
+                <option value="Political Groups and Persons">Political Groups and Persons</option>
+                <optgroup label="Recreation and Culture">
+                    <option value="Computing Equipment and Services">Computing Equipment and Services</option>
+                    <option value="Holiday Travel and Accommodation">Holiday Travel and Accommodation</option>
+                    <option value="Newspapers, Books and Magazines">Newspapers, Books and Magazines</option>
+                    <option value="Sport and Fitness">Sport and Fitness</option>
+                    <option value="Other Recreation and Culture">Other Recreation and Culture</option>
+                </optgroup>
+                <option value="Telecommunication Equipment and Services">Telecommunication Equipment and Services</option>
+                <option value="Transport">Transport</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+</script>

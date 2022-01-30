@@ -1,0 +1,202 @@
+﻿@model SD.ACMA.DNCRProject.FinancialReports.Models.ExceptionReportViewModel
+
+@{
+    ViewBag.Title = "Exceptions Report";
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+}
+
+<div id="ReportWrapper">
+    <div id="ReportHeader">
+        @if (!Model.IsCurrent)
+        {
+            <h3>Final</h3><br />
+        }
+        <h4>Do Not Call Register</h4>
+        <h4>Outstanding Exceptions Report As At @Model.ToDateString</h4>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Unmatched Amounts</h4>
+
+        <table class="report_exception">
+            <tr>
+                <th>Date Received</th>
+                <th>Payment Type</th>
+                <th>Reference</th>
+                <th>Order Number</th>
+                <th>Exception Amount</th>
+                <th>Cleared</th>
+                <th>Payment Status</th>
+            </tr>
+            @{
+                if (Model.ExceptionUnmatchedAmounts != null && Model.ExceptionUnmatchedAmounts.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionUnmatchedAmounts)
+                    {
+                        <tr>
+                            <td>@item.DateReceived</td>
+                            <td>@item.PaymentType</td>
+                            <td>@item.Reference</td>
+                            <td>@item.OrderNumber</td>
+                            <td class="number">@item.ExceptionAmount</td>
+                            <td class="number">@item.Cleared</td>
+                            <td>@item.PaymentStatus</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Exceptions Transferred to / from Credit Notes</h4>
+
+        <table class="report_exception">
+            <tr>
+                <th>Date Received</th>
+                <th>Payment Type</th>
+                <th>Account ID</th>
+                <th>Order Number</th>
+                <th>Exception Amount</th>
+                <th>Cleared</th>
+                <th>Payment Status</th>
+            </tr>
+            @{
+                if (Model.ExceptionTransferredFromToCreditNotes != null && Model.ExceptionTransferredFromToCreditNotes.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionTransferredFromToCreditNotes)
+                    {
+                        <tr>
+                            <td>@item.DateReceived</td>
+                            <td>@item.PaymentType</td>
+                            <td>@item.AccountID</td>
+                            <td>@item.OrderNumber</td>
+                            <td class="number">@item.ExceptionAmount</td>
+                            <td class="number">@item.Cleared</td>
+                            <td>@item.PaymentStatus</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Deferred Credit Card Receipts</h4>
+
+        <table class="report_exception">
+            <tr>
+                <th>Payment Date</th>
+                <th>Payment Type</th>
+                <th>Account ID</th>
+                <th>Payment Reference</th>
+                <th>Exception Amount</th>
+                <th>Cleared</th>
+                <th>Payment Status</th>
+            </tr>
+            @{
+                if (Model.ExceptionDeferredCreditCardReceipts != null && Model.ExceptionDeferredCreditCardReceipts.Count > 0)
+                {
+                    foreach (var item in Model.ExceptionDeferredCreditCardReceipts)
+                    {
+                        <tr>
+                            <td>@item.DateReceived</td>
+                            <td>@item.PaymentType</td>
+                            <td>@item.AccountID</td>
+                            <td>@item.Reference</td>
+                            <td class="number">@item.ExceptionAmount</td>
+                            <td class="number">@item.Cleared</td>
+                            <td>@item.PaymentStatus</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">No record found</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Cumulatives</h4>
+
+        <table class="report_exception_total">
+            <tr>
+                <td>Outstanding exception brought forward</td>
+                <td class="number">@Model.TotalOutstandingExceptionBroughtForward_Sub4</td>
+            </tr>
+            <tr>
+                <td>Exceptions Transferred from Credit Note</td>
+                <td class="number">@Model.TotalExceptionsTransferredFromCreditNotes</td>
+            </tr>
+            <tr>
+                <td>Exceptions Transferred to Credit Note</td>
+                <td class="number">@Model.TotalExceptionsTransferredToCreditNotes</td>
+            </tr>
+            <tr>
+                <td>New Exceptions</td>
+                <td class="number">@Model.TotalNewExceptions_Sub6</td>
+            </tr>
+            <tr>
+                <td>Exceptions Cleared</td>
+                <td class="number">@Model.TotalExceptionsCleared_Sub7</td>
+            </tr>
+        </table>        
+    </div>
+
+    <div class="ReportBody">        
+        <table class="report_total_grand">
+            <tr>
+                <td>Outstanding exception as at @Model.ToDateString</td>
+                <td class="number">@Model.TotalOutstandingExceptions</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <h4>Credit Notes Summary</h4>
+        <table class="report_exception_total">
+            <tr>
+                <td>Credit Notes Brought Forward</td>
+                <td class="number">@Model.TotalCreditNotesBroughtForward_B</td>
+            </tr>
+            <tr>
+                <td>Credit Notes Applied to Sales</td>
+                <td class="number">@Model.TotalCreditNotesAppliedToPurchasesToday_T</td>
+            </tr>
+            <tr>
+                <td>Credit Notes Refunded</td>
+                <td class="number">@Model.TotalCreditNotesRefundedToday_R</td>
+            </tr>
+            <tr>
+                <td>New Credit Notes</td>
+                <td class="number">@Model.TotalCreditNotesCreatedToday_N</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ReportBody">
+        <table class="report_total_grand">
+            <tr>
+                <td>Credit Notes Outstanding as at @Model.ToDateString</td>
+                <td class="number">@Model.TotalCreditNotes</td>
+            </tr>
+        </table>
+    </div>
+</div>
+

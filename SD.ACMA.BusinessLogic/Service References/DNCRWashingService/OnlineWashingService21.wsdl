@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://dncrapp/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dncrapp/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://dncrapp/Imports">
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd2" namespace="http://dncrapp/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Washing" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOnlineWashingService_QuickWash_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuickWash" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_QuickWash_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuickWashResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_QuickWash_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q1:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashByFileUpload_InputMessage">
+    <wsdl:part name="parameters" element="tns:WashByFileUpload" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashByFileUpload_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WashByFileUploadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashByFileUpload_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q2:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_PreWash_InputMessage">
+    <wsdl:part name="parameters" element="tns:PreWash" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_PreWash_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PreWashResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_PreWash_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q3:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadErrorLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadErrorLog" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadErrorLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadErrorLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadErrorLog_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q4:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadWashFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadWashFile" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadWashFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadWashFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_DownloadWashFile_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q5:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:WashHistory" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WashHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOnlineWashingService_WashHistory_DncrServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" name="detail" element="q6:DncrServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="IOnlineWashingService">
+    <wsdl:operation name="QuickWash">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/QuickWash" message="tns:IOnlineWashingService_QuickWash_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/QuickWashResponse" message="tns:IOnlineWashingService_QuickWash_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/QuickWashDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_QuickWash_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WashByFileUpload">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/WashByFileUpload" message="tns:IOnlineWashingService_WashByFileUpload_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/WashByFileUploadResponse" message="tns:IOnlineWashingService_WashByFileUpload_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/WashByFileUploadDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_WashByFileUpload_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PreWash">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/PreWash" message="tns:IOnlineWashingService_PreWash_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/PreWashResponse" message="tns:IOnlineWashingService_PreWash_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/PreWashDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_PreWash_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadErrorLog">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadErrorLog" message="tns:IOnlineWashingService_DownloadErrorLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadErrorLogResponse" message="tns:IOnlineWashingService_DownloadErrorLog_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadErrorLogDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_DownloadErrorLog_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadWashFile">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadWashFile" message="tns:IOnlineWashingService_DownloadWashFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadWashFileResponse" message="tns:IOnlineWashingService_DownloadWashFile_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/DownloadWashFileDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_DownloadWashFile_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WashHistory">
+      <wsdl:input wsaw:Action="http://dncrapp/IOnlineWashingService/WashHistory" message="tns:IOnlineWashingService_WashHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://dncrapp/IOnlineWashingService/WashHistoryResponse" message="tns:IOnlineWashingService_WashHistory_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://dncrapp/IOnlineWashingService/WashHistoryDncrServiceFaultFault" name="DncrServiceFaultFault" message="tns:IOnlineWashingService_WashHistory_DncrServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

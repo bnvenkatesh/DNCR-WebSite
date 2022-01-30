@@ -1,0 +1,58 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.DashboardSubscriptionViewModel
+
+@if (Model.Subscriptions.Any())
+{
+    <script>
+        $(function() {
+            $("#dashboardSubscription .paginationHolder li a").on("click", function(event) {
+                event.preventDefault();
+                var page = $(this).data('page');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("Dashboard", "SubscriptionSurface")',
+                    data: { currentPage: page },
+                    success: function(result) {
+                        $("#dashboardSubscription").html(result);
+                    }
+                });
+            });
+            $("#subscriptionPageUpdated").show().delay(1000).fadeOut();
+        });
+    </script>
+
+    <table class="responsive">
+        <caption>Subscription History</caption>
+        <tr>
+            <th class="addborderLeftTop">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Date)</th>
+            <th>@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Transaction)</th>
+            <th>@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderNumber)</th>
+            <th>@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Description)</th>
+            <th class="right">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Amount)</th>
+            <th class="addborderRightTop right">@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().WashBalance)</th>
+        </tr>
+        @foreach (var subscription in Model.Subscriptions)
+        {
+            <tr>
+                <td class="addborderLeftBot">@subscription.Date</td>
+                <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Transaction)">@subscription.Transaction</td>
+                <td data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().OrderNumber)">@subscription.OrderNumber</td>
+                <td class="breakword" data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Description)">@subscription.Description</td>
+                <td class="right" data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().Amount)">@subscription.Amount</td>
+                <td class="addborderRightBot right" data-label="@Html.GetDisplayName(model => model.Subscriptions.FirstOrDefault().WashBalance)">@subscription.WashBalance</td>
+            </tr>
+        }
+    </table>
+    <div class="paginationHolder">
+        @Html.Partial("_DashboardPager")
+    </div>
+}
+else
+{
+    <script>
+        $(function () {
+            $("#noSubscription").show();
+            $("#dashboardSubscription").hide();
+        });
+    </script>
+}

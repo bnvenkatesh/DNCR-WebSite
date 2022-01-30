@@ -1,0 +1,65 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var consumerAlertNode = Model.Content.DescendantOrSelf("RecentConsumerAlertsPage");
+}
+
+<div class="contentItem">
+    <div id="consumerAlerts" class="section">
+        <div class="section-separator-line"></div>
+        <div class="labels">
+            <div class="sectionTitle consumer ProxiBold">
+                <span class="icon"><h2>@consumerAlertNode.GetPropertyValue("pageTitle")</h2></span>
+            </div>
+            <div class="sectionDesc">@consumerAlertNode.GetPropertyValue("pageSummary")</div>
+        </div>
+        <div class="sectionRow">
+            @{
+                var count = 0;
+            }
+            @foreach (var consumerAlert in consumerAlertNode.Siblings().Where(x => x.DocumentTypeAlias == "ConsumerAlertPage").OrderByDescending(x => x.GetPropertyValue("articleDate")).Take(3))
+            {
+                count++;
+                if (count < 3)
+                {
+                    var mobileHide = (count > 1) ? "hideOnMobile" : ""; // R10 only show one item in mobile
+                    <div class="item col-2-tablet floatLeft @mobileHide">
+                        <div>
+                            @if (consumerAlert.HasValue("thumbnailImage"))
+                            {
+                                var image = Umbraco.Media(consumerAlert.GetPropertyValue("thumbnailImage"));
+                                <a href="@consumerAlert.Url"><img src="@image.Url" alt="" /></a>
+                            }
+                            <div class="itemTitle ProxiBold">
+                                <a class="" href="@consumerAlert.Url">
+                                    <h3>@consumerAlert.GetPropertyValue("pageTitle")</h3>
+                                </a>
+                            </div>
+                            <div class="itemDesc">@consumerAlert.GetPropertyValue("pageSummary")</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="item floatLeft hideOnTablet">
+                        <div class="floatRight">
+                            @if (consumerAlert.HasValue("thumbnailImage"))
+                            {
+                                var image = Umbraco.Media(consumerAlert.GetPropertyValue("thumbnailImage"));
+                                <a href="@consumerAlert.Url"><img src="@image.Url" alt="" /></a>
+                            }
+                            <div class="itemTitle ProxiBold">
+                                <a class="purple" href="@consumerAlert.Url"><h3>@consumerAlert.GetPropertyValue("pageTitle")</h3></a>
+                            </div>
+                            <div class="itemDesc">@consumerAlert.GetPropertyValue("pageSummary")</div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="viewAllHolder">
+            <a class="ProxiBold" href="@consumerAlertNode.Url">View all</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+alter table FinancialReport drop column CreditCardTimingDifference
+go

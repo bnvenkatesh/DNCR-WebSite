@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SD.ACMA.DNCR.FinancialReports</id>
+    <version>$version$</version>
+    <title>ACMA DNCR Financial Reports</title>
+    <authors>Salmat Digital</authors>
+    <owners>ACMA</owners>
+    <description>Deploy package for the CSR Financial Reports Website for the ACMA DNCR</description>
+    <releaseNotes>Initial Build</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+</package>

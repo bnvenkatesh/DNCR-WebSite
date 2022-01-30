@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Core" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="DncrServiceFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CorrelationToken" type="ser:guid" />
+      <xs:element minOccurs="0" name="ExceptionTypeFullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reasons" nillable="true" type="tns:ArrayOfDncrServiceFaultReason" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DncrServiceFault" nillable="true" type="tns:DncrServiceFault" />
+  <xs:complexType name="ArrayOfDncrServiceFaultReason">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DncrServiceFaultReason" nillable="true" type="tns:DncrServiceFaultReason" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDncrServiceFaultReason" nillable="true" type="tns:ArrayOfDncrServiceFaultReason" />
+  <xs:complexType name="DncrServiceFaultReason">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PropertyName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DncrServiceFaultReason" nillable="true" type="tns:DncrServiceFaultReason" />
+</xs:schema>

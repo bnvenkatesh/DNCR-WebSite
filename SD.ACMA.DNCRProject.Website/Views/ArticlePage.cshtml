@@ -1,0 +1,91 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "MasterPage.cshtml";
+}
+
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages" id="readspeaker">
+        <div class="contentHeadline">
+            <div class="articleTitle red">
+                <h1 class="ProxiSemiBold">@Model.Content.GetPropertyValue("pageTitle")</h1>
+            </div>
+            @if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentMediaReleasesPage") || Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentConsumerAlertsPage"))
+            {
+                <div class="articleMeta ProxiSemiBold">
+                    @if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentMediaReleasesPage"))
+                    {
+                        <span>Media Release</span>
+                    }
+                    else if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentConsumerAlertsPage"))
+                    {
+                        <span>Consumer Alert</span>
+                    }
+                    <span>&nbsp; | &nbsp;</span>
+                    <span>@DateTime.Parse(Model.Content.GetPropertyValue("articleDate").ToString()).ToString("d MMMM yyyy")</span>
+                </div>
+            }
+        </div>
+        <div id="article">
+            <div class="article-holder floatLeft">
+                <div class="articleDesc">@Model.Content.GetPropertyValue("pageSummary")</div>
+                <div class="articleContent">
+                    @Model.Content.GetPropertyValue("pageContent")
+                    @if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentMediaReleasesPage"))
+                    {
+                        @Model.Content.Siblings().First(x => x.DocumentTypeAlias == "RecentMediaReleasesPage").GetPropertyValue("mediaReleaseContactDetails")
+                    }
+                    @if (Model.Content.Siblings().Any(x => x.DocumentTypeAlias == "RecentConsumerAlertsPage"))
+                    {
+                        @Model.Content.Siblings().First(x => x.DocumentTypeAlias == "RecentConsumerAlertsPage").GetPropertyValue("consumerAlertContactDetails")
+                    }
+                    @if (Model.Content.DocumentTypeAlias == "FormIntroPage")
+                    {
+                        var formPage = Model.Content.Children.Where(x => x.DocumentTypeAlias == "FormPage").ToList();
+                        if (formPage.Any())
+                        {
+                            <a class="ProxiBold purple gotoForm" href="@formPage.First().Url">@formPage.First().Name</a>
+                            if (Model.Content.GetPropertyValue("tooltipText") != null && !String.IsNullOrEmpty(Model.Content.GetPropertyValue("tooltipText").ToString()))
+                            {
+                                <a href="#" class="tooltip">
+                                    <img src="/images/tooltip.png" alt="tip"/>
+                                    <span class="widerTooltip">@Model.Content.GetPropertyValue("tooltipText")</span>
+                                </a>
+                            }
+                        }
+                    }
+                    @if (Model.Content.DocumentTypeAlias == "TimeoutPage")
+                    {
+                        <a class="ProxiBold purple gotoForm openSignIn" href="#">Sign In</a>
+                    }
+                </div>
+            </div>
+            <div class="sidebar floatLeft">
+                @if (Model.Content.HasValue("faqs"))
+                {
+                    @Umbraco.RenderMacro("FAQs", new {Items = Model.Content.GetPropertyValue("faqs")})
+                }
+
+                @if (Model.Content.HasValue("downloads"))
+                {
+                    @Umbraco.RenderMacro("Downloads", new {Items = Model.Content.GetPropertyValue("downloads")})
+                }
+
+                @if (Model.Content.HasValue("relatedLinks"))
+                {
+                    @Umbraco.RenderMacro("RelatedLinks", new {Items = Model.Content.GetPropertyValue("relatedLinks")})
+                }
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+@if (Model.Content.DocumentTypeAlias != "TimeoutPage")
+{
+    <div class="articlefooter alignto">
+        <span class="ProxiSemiBold">PAGE UPDATED</span>
+        <span class="div">|</span>
+        <span>@Model.Content.UpdateDate.ToString("d MMM yyyy")</span>
+    </div>
+}

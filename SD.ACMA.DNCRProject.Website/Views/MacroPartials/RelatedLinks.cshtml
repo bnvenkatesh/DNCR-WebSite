@@ -1,0 +1,27 @@
+@using System.Collections
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<div class="widget relatedlinks-widget">
+    <div class="widgetTitle purple ProxiBold">Related Links</div>
+    <hr />
+    <div class="widgetContent">
+        @{
+            var links = (IList) JsonConvert.DeserializeObject(Model.MacroParameters["Items"].ToString());
+            var count = 0;
+        }
+        @foreach (dynamic link in links)
+        {
+            count++;
+            var linkUrl = (bool) link.isInternal ? Umbraco.NiceUrl(link.Value<int>("internal")) : link.link;
+            var linkTarget = (bool) link.newWindow ? "_blank" : null;
+            <a class="purple" href="@linkUrl" target="@linkTarget">@link.caption</a>
+            if (count < links.Count)
+            {
+                <br/>
+                <br/>
+            }
+        }
+    </div>
+</div>

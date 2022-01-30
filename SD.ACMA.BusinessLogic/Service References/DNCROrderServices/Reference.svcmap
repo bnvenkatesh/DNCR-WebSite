@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="90f04469-208b-439b-abb6-89fbbcf9a32b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OnlineOrderService5.xsd" MetadataType="Schema" ID="90afad6e-c6b0-475d-ab42-6c4b103b433d" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OnlineOrderService1.wsdl" MetadataType="Wsdl" ID="59fd37e3-22a5-46ef-b087-f1756fc3e0c4" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?wsdl" />
+    <MetadataFile FileName="OnlineOrderService51.xsd" MetadataType="Schema" ID="4da7163e-14d3-4119-8f0a-eb1d826f44eb" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd4" />
+    <MetadataFile FileName="OnlineOrderService52.xsd" MetadataType="Schema" ID="6a614bfb-b869-42e1-aa6f-3c2d11f99505" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OnlineOrderService1.disco" MetadataType="Disco" ID="ffd74c4f-f09d-418e-b5d8-5aa693cc4a3f" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?disco" />
+    <MetadataFile FileName="OnlineOrderService53.xsd" MetadataType="Schema" ID="97a12892-72f8-4ee3-ab5c-b710f95e7c6b" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OnlineOrderService54.xsd" MetadataType="Schema" ID="7550f2d1-0893-4ef2-a917-acef0255d4bc" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd5" />
+    <MetadataFile FileName="OnlineOrderService55.xsd" MetadataType="Schema" ID="036508a1-3a0d-4fd7-82fb-a318f73af314" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Subscriptions/OnlineOrderService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

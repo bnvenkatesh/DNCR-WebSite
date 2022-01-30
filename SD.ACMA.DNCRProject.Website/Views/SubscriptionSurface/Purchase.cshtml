@@ -1,0 +1,512 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SubscriptionViewModel>
+
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (!Model.IsSubmitted)
+{
+    <script>
+    (function($) {
+        $.validator.setDefaults({
+            ignore: ":hidden:not(#MinimumSubscriptionModels)"
+        });
+    }(jQuery));
+
+    function refreshCalculation() {
+        var totalFee = $(".totalFeeDecimal").attr("numeric-value");
+        if ($("input#UseAccountBalance:checked").length > 0) {
+            var accountBalance = @ViewBag.AccountBalance;
+            if (totalFee > accountBalance) {
+                $(".accountBalanceUsed").text("$" + formatCurrency(accountBalance));
+                $("#AccountBalanceToUse").val(accountBalance);
+                $(".paymentDue").text("$" + formatCurrency(totalFee - accountBalance));
+                $("#PaymentDue").val(totalFee - accountBalance);
+                $(".needPayment").show();
+                if ((totalFee - accountBalance) > (@ViewBag.PaymentLimit)) {
+                    $(".cclimit").show();
+                    $("input#cc").prop('checked', false);
+                    $("input#cc").prop("disabled", true).addClass("readonly");
+                    $(".ccterms").hide();
+                } else {
+                    $(".cclimit").hide();
+                    $("input#cc").prop("disabled", false).removeClass("readonly");
+                }
+            } else {
+                $(".accountBalanceUsed").text("$" + formatCurrency(totalFee));
+                $("#AccountBalanceToUse").val(totalFee);
+                $(".paymentDue").text("$0.00");
+                $("#PaymentDue").val(0);
+                $(".needPayment").hide();
+            }
+            $(".applyBalanceTable").show();
+        } else {
+            $(".accountBalanceUsed").text("$0.00");
+            $("#AccountBalanceToUse").val(0);
+            $(".paymentDue").text("$" + formatCurrency(totalFee));
+            $("#PaymentDue").val(totalFee);
+            if (totalFee === "0") {
+                $(".needPayment").hide();
+            } else $(".needPayment").show();
+            if (totalFee > (@ViewBag.PaymentLimit)) {
+                $(".cclimit").show();
+                $("input#cc").prop('checked', false);
+                $("input#cc").prop("disabled", true).addClass("readonly");
+                $(".ccterms").hide();
+            } else {
+                $(".cclimit").hide();
+                $("input#cc").prop("disabled", false).removeClass("readonly");
+            }
+        }
+    }
+
+        $(function() {
+
+            $(window).load(function(){
+                $(".subscription select").trigger("change");
+            });
+
+        $(".subscription select").on("change", function() {
+            //disabling Type A
+            var showTrial = true;
+            $(".subscription select:not(.trial)").each(function() {
+                if ($(this).val() > 0) {
+                    showTrial = false;
+                }
+            });
+            if (!showTrial) {
+                $(".subscription select.trial").val(0);
+                $(".subscription select.trial").prop("disabled", true).addClass("readonly");
+            } else $(".subscription select.trial").prop("disabled", false).removeClass("readonly");
+
+            var totalLimit = 0;
+            var totalFee = 0;
+            $(".subscription select").each(function() {
+                totalLimit += $(this).val() * $(this).siblings(".limit").val();
+                totalFee += $(this).val() * $(this).siblings(".fee").val();
+            });
+            $(".totalLimit").text(addCommas(totalLimit));
+            $(".totalFee").text("$" + addCommas(totalFee));
+            $(".totalFeeDecimal, .paymentDue").text("$" + formatCurrency(totalFee));
+            $(".totalFeeDecimal").attr("numeric-value", totalFee);
+
+            refreshCalculation();
+            $("#MinimumSubscriptionModels-error").hide();
+        });
+
+        $("input#UseAccountBalance").on('change', function() {
+            refreshCalculation();
+        });
+
+        $("button.populateConfirm").click(function(event) {
+            event.preventDefault();
+            if ($(this).closest(".accordionContent").find("input, select, textarea").valid()) {
+                $("tr.orderItem").remove();
+                $(".subscription select").each(function() {
+                    if ($(this).val() > 0) {
+                        var type = $(this).siblings(".type").val();
+                        var limit = $(this).siblings(".limit").val();
+                        var fee = parseFloat($(this).siblings(".fee").val());
+                        for (var i = 0; i < $(this).val(); i++) {
+                            $("tr.orderTotal").before("<tr class='orderItem'><td>Subscription Type " + type + " (" + addCommas(limit) + " washes)</td><td class='right'>$" + formatCurrency(fee) + "</td></tr>");
+                        }
+                    }
+                });
+                openNextAccordion(this);
+                $('.nano').nanoScroller({
+                    preventPageScrolling: true
+                });
+            } else invalidateAccordion(this);
+        });
+
+        $(".accordionContent input.radioCheck").on("change", function () {
+            if(this.checked)
+            {
+                $(this).valid();
+            }
+        });
+
+        $("#frmSubscription").data("validator").settings.submitHandler = function(form) {
+            $("#btnConfirm").attr("disabled",true);
+            form.submit();
+        };
+    });
+    </script>
+    <div class="form-holder floatLeft">
+    <div class="formDesc">@ViewBag.PageSummary</div>
+    <div class="formError">@ViewBag.ErrorMessage</div>
+    @using (Html.BeginUmbracoForm<SubscriptionSurfaceController>("Purchase", null, new { @id = "frmSubscription"}, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <ul id="formAccordion" class="accordion globalAccordion">
+        <li>
+            <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                <span class="title">1. Order details</span>
+                <span class="floatRight editButton"><a href="#" class="ProxiBold"><span class="icon arrowLeft"></span> EDIT</a></span>
+            </div>
+            <div class="accordionContent">
+                <div>
+                    <p class="italic">All fields marked with * are mandatory</p>
+                    <div class="errorContainer"></div>
+                </div>
+                <br />
+                <fieldset>
+                    <legend>Subscriptions</legend>
+                    <div class="labelDescMargin subHeader">
+                        <p>Subscriptions</p>
+                    </div>
+                    <div class="labelDescMargin">
+                        @Html.RequiredTextFor(model => model.SubscriptionModels, new { @class = "inputLabel inlineBlock" })
+                        <p>
+                            <strong>Note</strong>: You may only hold one subscription type A at a time. You cannot choose subscription type A if you already have a current subscription of any type.
+                        </p>
+                    </div>
+                    @Html.HiddenFor(model => model.MinimumSubscriptionModels)
+                    <div class="tableHolder">
+                        <table id="accountSubscription" class="mobileResponsive purchaseSubsTable">
+                            <caption>Available Subscription</caption>
+                            <tr>
+                                <th class="mediumWidth addborderLeftTop center">Type</th>
+                                <th class="right longWidth">Subscription Limit</th>
+                                <th class="right longWidth">Subscription Cost</th>
+                                <th class="center addborderRightTop shortWidth">Qty</th>
+                            </tr>
+                            @{
+                                var counter = 0;
+                                foreach (var subscription in Model.SubscriptionModels)
+                                {
+                                    <tr>
+                                        <td class="center"><label for="@String.Format("SubscriptionModels_{0}__Quantity", counter)" class="standardSize">@subscription.Type</label></td>
+                                        <td data-label="Subscription Limit" class="right">@String.Format("{0:n0}", subscription.Limit)</td>
+                                        <td data-label="Subscription Cost" class="right">@String.Format("${0:n0}", subscription.Price)</td>
+                                        <td data-label="Quantity" class="right">
+                                            <div class="selectParent selectOnTable floatRight subscription">
+                                                @Html.HiddenFor(model => model.SubscriptionModels[counter].Id)
+                                                @Html.HiddenFor(model => model.SubscriptionModels[counter].Type, new { @class = "type" })
+                                                @Html.HiddenFor(model => model.SubscriptionModels[counter].Limit, new { @class = "limit" })
+                                                @Html.HiddenFor(model => model.SubscriptionModels[counter].Price, new { @class = "fee" })
+                                                @if (subscription.IsFree)
+                                                {
+                                                    @Html.LimitedQuantityDropDownListFor(model => model.SubscriptionModels[counter].Quantity, new { @class = "trial" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.QuantityDropDownListFor(model => model.SubscriptionModels[counter].Quantity)
+                                                }
+                                            </div>
+                                            <div class="clear"></div>
+                                        </td>
+                                    </tr>
+                                                counter++;
+                                }
+                            }
+                            <tr class="hideOnMobile noBorder">
+                                <td class="center ProxiSemiBold">Order Total</td>
+                                <td class="right ProxiSemiBold totalLimit">0</td>
+                                <td class="right ProxiSemiBold totalFee">$0</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.SubscriptionModels, "", new { @class = "error" })
+                    @Html.ValidationMessageFor(model => model.MinimumSubscriptionModels, "", new { @class = "error" })
+                    <div class="labelDescMargin showOnMobile hideOnTablet">
+                        <p>Order Total<br />Total Subscription: <span class="totalLimit">0</span><br />Total Fee: <span class="totalFee">$0</span></p>
+                    </div>
+                    <div class="note cclimit hidden">
+                        <p>A maximum of @String.Format("${0:n0}", ViewBag.PaymentLimit) can be paid by Credit Card on any one order.</p>
+                    </div>
+                </fieldset>
+                <hr/>
+                @if (ViewBag.AccountBalance > 0)
+                {
+                    <div class="subHeader">
+                        <p>Account balance available</p>
+                    </div>
+                    <div class="labelDescMargin">
+                        <p>You have an account balance of @String.Format("${0:n}", ViewBag.AccountBalance) which can be applied to this order.</p>
+                    </div>
+                    <div class="formField">
+                        @Html.CheckBoxFor(model => model.UseAccountBalance, new {@class = "radioCheck", data_checkbox_subfield = "applyBalanceTable"})
+                        @Html.RequiredLabelFor(model => model.UseAccountBalance, new { @class = "radioCheckLabel" })
+                    </div>
+                    <div class="applyBalanceTable tableHolder noHeader hidden">
+                        <table>
+                            <caption>Order Payment Summary</caption>
+                            <tr>
+                                <td>Order Total</td>
+                                <td class="right totalFeeDecimal" numeric-value="0">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Account Balance Applied</td>
+                                <td class="right accountBalanceUsed">$0.00</td>
+                            </tr>
+                            <tr class="noBorder">
+                                <td class="ProxiSemiBold">Payment Due</td>
+                                <td class="right ProxiSemiBold paymentDue">$0.00</td>
+                            </tr>
+                        </table>
+                    </div>
+                    @Html.HiddenFor(model => model.AccountBalanceToUse)
+                    <hr/>
+                }
+                <fieldset>
+                    <legend>Order contact person</legend>
+                    <div class="subHeader">
+                        <p>Order contact person</p>
+                    </div>
+                    <div class="labelDescMargin">
+                        <p>Enter the email address of person to be advised of the subscription order.</p>
+                    </div>
+                    @*<div class"formField fieldMargin">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.Name, new {@class = "req inputLabel"})
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.Name, new {@class = "long"})
+                            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>*@
+                    <div class="formField fieldMargin">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.Email, new { @class = "inputLabel" })
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.Email, new {@class = "long", @type = "email"})
+                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="formField fieldMargin">
+                        <div class="floatLeft">
+                            @Html.RequiredLabelFor(model => model.ConfirmEmail, new { @class = "inputLabel" })
+                        </div>
+                        <div class="floatLeft">
+                            @Html.TextBoxFor(model => model.ConfirmEmail, new {@class = "long", @type = "email"})
+                            @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new {@class = "error"})
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+                <hr/>
+                <div>
+                    <button class="ProxiBold next populateConfirm">NEXT</button>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="accordionHeader ProxiBold ui-accordion-header-border-top">
+                <span class="title">2. Confirm order</span>
+            </div>
+            <div class="accordionContent">
+                <div>
+                    <p class="italic">All fields marked with * are mandatory</p>
+                    <div class="errorContainer"></div>
+                </div>
+                <br />
+                <div class="labelDescMargin subHeader">
+                    <p>Order details</p>
+                </div>
+                <div class="tableHolder">
+                    <table>
+                        <caption>Order Details</caption>
+                        <tr>
+                            <th class="addborderLeftTop">Type</th>
+                            <th class="right addborderRightTop">Fee</th>
+                        </tr>
+                        <tr class="noBorder orderTotal">
+                            <td class="ProxiSemiBold">Order Total</td>
+                            <td class="right ProxiSemiBold totalFeeDecimal" numeric-value="0">$0.00</td>
+                        </tr>
+                        <tr class="noBorder applyBalanceTable hidden">
+                            <td>Account Balance Applied</td>
+                            <td class="right accountBalanceUsed">$0.00</td>
+                        </tr>
+                        <tr class="solidBorderTop applyBalanceTable hidden">
+                            <td class="ProxiSemiBold">Payment Due</td>
+                            <td class="right ProxiSemiBold paymentDue">$0.00</td>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div class="subHeader">
+                    <p>Requirements of purchase</p>
+                </div>
+                <p>Please read and agree to the following statement</p>
+                <div class="scrollBarHolder fieldMargin">
+                    <div class="nano">
+                        <div class="nano-content">
+                            <p>This document outlines the Australian Communications and Media Authority’s requirements for purchasing subscriptions to access the Do Not Call Register’s (Register) telephone and fax number list washing services.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Requirements for access seekers</p>
+                            <br/>
+                            <p>Access seekers must comply with a range of requirements when purchasing subscriptions and accessing the Register, including:</p>
+                            <ul>
+                                <li>The <a href="https://www.legislation.gov.au/Details/F2017L00841" target="_blank">Do Not Call Register (Access Fees) Determination 2017</a>, which sets out the requirements for fees payable for the washing services provided under subsection 19(2) of the <a href="https://www.legislation.gov.au/Series/C2006A00088" target="_blank">Do Not Call Register Act 2006</a> and the refunds of those fees for services.</li>
+                                <li>The <a href="https://www.legislation.gov.au/Details/F2017L00839" target="_blank">Do Not Call Register (Access to Register) Determination 2017</a>, which sets out the requirements that govern, among other things, the manner in which access seekers may access the Register.</li>
+                                <li>The requirements set out in Do Not Call Register <a href="https://www.donotcall.gov.au/industry/subscription-overview/terms-of-use/" target="_blank">Terms of Use</a>.</li>
+                            </ul>
+                            <br/>
+                            <p>More information on subscriptions is available from the <a class="generalGreyShade1" href="https://www.donotcall.gov.au/industry/subscription-overview/" target="_blank">Subscription Overview</a> page on the Register website.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Payment procedures</p>
+                            <br/>
+                            <p>The ACMA accepts payment for subscriptions by credit card, EFT and BPay. Credit card payments are limited to $30,000. Visa, MasterCard and American Express credit cards are accepted. Subscriptions paid for by credit card will generally be activated immediately. Subscriptions paid for by EFT and BPay will not be activated until payment has been received and processed by the ACMA. You will be given notification by email once your subscription is activated.</p>
+                            <br/>
+                            <p>If you pay the subscription fees by BPay or bank transfer, your payment must have the correct payment reference for successful activation of your subscription. Failure to provide the correct reference will result in delays in subscription activation.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Subscription expiry</p>
+                            <br/>
+                            <p>A subscription is valid for 12 months, unless it has been cancelled by the ACMA in accordance with the Access Determination. A subscription expiry reminder will be sent to you in the last month of your subscription. If you hold a subscription type B or higher and purchase an additional subscription type B or higher before your current 12 month subscription expires, any unused numbers from the current subscription will be included for use with your new subscription. After your subscription expires, any unused numbers from the expired subscription will be forfeited and will not be included in any subsequent subscription that you purchase.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Unpaid orders</p>
+                            <br/>
+                            <p>Any unpaid orders, or orders that are not fully paid, will be cancelled 21 days after the order was placed.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Authorised Use</p>
+                            <br/>
+                            <p>You must ensure that your access seeker account username and password remain secure. You are entirely responsible for all use, activities and charges associated with, or arising from, any use of your username and password.</p>
+                            <br/>
+                            <p class="ProxiSemiBold">Refunds</p>
+                            <br/>
+                            <p>To apply for a refund of a subscription, please contact the Do Not Call Register on 1300 785 749 or email: <a class="generalGreyShade1" href="mailto:enquiries@donotcall.gov.au">enquiries@donotcall.gov.au</a>.</p>
+                            <br/>
+                            <p>The decision to grant a refund is at the sole discretion of the Australian Communications and Media Authority.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="formField">
+                    @Html.CheckBoxFor(model => model.AcceptTerms, new {@class = "radioCheck"})
+                    @Html.RequiredLabelFor(model => model.AcceptTerms, new {@class = "ProxiSemiBold radioCheckLabel"})
+                    @Html.ValidationMessageFor(model => model.AcceptTerms, "", new { @class = "error" })
+                </div>
+                <hr class="needPayment"/>
+                <div class="needPayment subHeader">
+                    <p>Choose payment method</p>
+                </div>
+                <div class="fieldMargin needPayment">
+                    <div class="formField">
+                        <p class="hidden">Choose payment method</p>
+                        <fieldset>
+                            <legend>Choose payment method</legend>
+                            <div class="radio-holder">
+                                @Html.RadioButtonFor(model => model.PaymentMethod, "Credit card", new {@id = "cc", @class = "radioCheck", data_other_option_field = "ccterms"})
+                                @Html.Label("cc", "Pay online by credit card")
+                                <p>(A maximum of @String.Format("${0:n0}", ViewBag.PaymentLimit) can be paid by Credit Card)</p>
+                            </div>
+                            <div class="radio-holder toolTipContainer">
+                                @Html.RadioButtonFor(model => model.PaymentMethod, "EFT", new {@id = "eft", @class = "radioCheck", data_other_option_field = "eftterms"})
+                                @Html.Label("eft", "Pay by Bpay or EFT")
+                                <a href="#" class="tooltip"><img src="/images/tooltip.png" alt="tip" /><span>Subscription will be activated upon receiving the payment; could take between 2 to 5 days</span></a>
+                                <p>
+                                    (Your subscription becomes active once your payment arrives and is matched to your order:<br/>i.e. about 3 to 5 business days)
+                                </p>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.PaymentMethod, "", new {@class = "error"})
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="ccterms hidden">
+                    <p>Payment by credit card is via an external site.</p>
+                </div>
+                <div class="eftterms hidden">
+                    <p>Payment can be made online by credit card, BPay and EFT (electronic fund transfer) any time within 21 days from the date of the Subscription Order.</p>
+                    <br />
+                    <p>BPay and EFT account details will be provided on the Subscription Order.</p>
+                    <br />
+                    <p>If paying by BPay or EFT your payment may take 3 days to be received and reconciled against your account. Your subscription will become available when the payment has been reconciled.</p>
+                    <br />
+                    <p>
+                        <strong>You have 21 days to pay. The order will expire on @DateTime.Now.AddDays(22).ToString("dddd, d MMMM yyyy").</strong>
+                    </p>
+                    <br />
+                    <p>After an Order has expired, you cannot make a payment against it. If you wish to continue with the subscription, please log into your Access Seeker account to start another subscription request. A new Subscription order will be issued.</p>
+                    <br />
+                    <p>To see your outstanding Subscription Orders, please check the financial history of your Access Seeker account.</p>
+                    <br />
+                    <p>Please carefully review your order before you select "Confirm Order".</p>
+                </div>
+                @Html.HiddenFor(model => model.PaymentDue)
+                <hr/>
+                <div>
+                    <button id="btnConfirm" class="ProxiBold submit nomargin">CONFIRM ORDER</button>
+                </div>
+            </div>
+        </li>
+        </ul>
+    }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new {Items = ViewBag.Faqs})
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new {Items = ViewBag.Downloads})
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new {Items = ViewBag.RelatedLinks})
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        @if (Model.IsFreeSubscription)
+        {
+            if (String.IsNullOrEmpty(Model.EnquiryId))
+            {
+                <h2 class="ProxiBold industryBlueShade1Color">Thank you</h2>
+                <p class="desc">Download the details of your <a class="industryBlueShade1Color" href="@Url.Action("GenerateInvoice", new {orderId = ViewBag.OrderId})">order</a>.</p>
+            }
+            else
+            {
+                <h2 class="ProxiBold industryBlueShade1Color">Subscription eligibility verification required. Your reference number is @Model.EnquiryId.</h2>
+                <p class="desc">Thank you for your application for a Type A subscription to access the Do Not Call Register. As you have recently created a new access seeker account, your application for a Type A subscription is being reviewed.</p>
+                <p class="desc">For further information please call 1300 785 749 and quote reference number @Model.EnquiryId.</p>
+            }
+        }
+        else
+        {
+            <h2 class="ProxiBold industryBlueShade1Color">Thank you</h2>
+            <p class="desc">Your order, showing payment information, has been sent to your registered email address. You may also download <a class="industryBlueShade1Color" href="@Url.Action("GenerateInvoice", new {orderId = ViewBag.OrderId})">your order</a>.</p>
+        }
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+    if (SessionHelper.RequireLogout)
+    {
+        SessionHelper.ClearSessions();
+    }
+}

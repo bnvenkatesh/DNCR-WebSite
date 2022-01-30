@@ -1,0 +1,252 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+<div id="menuButton"><span class="icon menuIcon" tabindex="0"><img src="/images/r10/menu-icon.png" alt="menu"/></span></div>
+<div id="menu" class="relative">
+    <div class="hideOverflow">
+        <div class="navHolder">
+            @{
+                int index = 0;
+                int activeNavAccordionIndex = 0;
+                var isSignedin = (SessionHelper.AccountId > 0 && SessionHelper.AccountUserId > 0);
+                var isAdmin = SessionHelper.IsAdmin;
+                string[] hideOnSignedInForms = { "IndustryCreateAccountFormPage" };
+                string[] signedInForms = { "IndustryDashboardPage", "IndustryQuickCheckFormPage", "IndustryUploadWashingListFormPage", "IndustryWashHistoryFormPage" };
+                string[] adminOnlyForms = { "IndustryPurchaseSubscriptionFormPage" };
+            }
+            <nav>
+                <ul id="navAccordion">
+                    @foreach (var category in Model.Content.AncestorOrSelf(1).Children)
+                    {
+                        if (category.DocumentTypeAlias == "NavigationCategory" || category.DocumentTypeAlias == "ConsumerAlerts" || category.DocumentTypeAlias == "MediaReleases")
+                        {
+                            String navClass;
+                            if (Model.Content.AncestorOrSelf(2).Id == category.Id)
+                            {
+                                navClass = "navItem activeItem";
+                                activeNavAccordionIndex = index;
+                            }
+                            else
+                            {
+                                navClass = "navItem";
+                            }
+                            if (Model.Content.Level == 1 && category.Name == "Home")
+                            {
+                                navClass = "navItem activeItem";
+                            }
+                            navClass += (" category_" + category.Name.Replace(' ', '_').ToLower());
+
+                            <li class="@navClass">
+                                <div class="navItemLabel">@category.Name</div>
+                                <div class="navItemContent">
+                                    @if (category.Name == "Home")
+                                    {
+                                        String activeNode = "";
+                                        if (Model.Content.Level == 1)
+                                        {
+                                            activeNode = "activeSub";
+                                        }
+                                        <a class="@activeNode" href="/">Home Page</a>
+                                    }
+                                    else if (category.Name == "Industry")
+                                    {
+                                        if (isSignedin)
+                                        {
+                                            <a href="@Url.Action("SignOut", "UserSurface")">Sign Out</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" class="openSignIn">Sign In</a>
+                                        }
+                                    }
+                                    @foreach (var item in category.Children)
+                                    {
+                                        String activeNode = "";
+
+                                        if (item.DocumentTypeAlias != "MediaReleasePage" && item.DocumentTypeAlias != "ConsumerAlertPage")
+                                        {
+                                            if ((item.HasValue("showInNav") && (bool) item.GetPropertyValue("showInNav") && !(isSignedin && hideOnSignedInForms.Contains(item.GetTemplateAlias())))
+                                                || (isSignedin && signedInForms.Contains(item.GetTemplateAlias()))
+                                                || (isAdmin && adminOnlyForms.Contains(item.GetTemplateAlias())))
+                                            {
+                                                if (Model.Content.Id == item.Id || (Model.Content.Parent != null && Model.Content.Parent.Id == item.Id && Model.Content.HasProperty("showInNav") && !(bool) Model.Content.GetPropertyValue("showInNav")))
+                                                {
+                                                    activeNode = "activeSub";
+                                                }
+                                                <a class="@activeNode" href="@item.Url">@item.Name</a>
+                                                if (item.Children.Any())
+                                                {
+                                                    var subitems = item.Children.Where(x => x.HasProperty("showInNav") && (bool) x.GetPropertyValue("showInNav")).ToList();
+                                                    if (subitems.Any())
+                                                    {
+                                                        <ul class="ulInsideContent">
+                                                            @foreach (var subitem in subitems)
+                                                            {
+                                                                activeNode = "";
+                                                                if (Model.Content.Id == subitem.Id)
+                                                                {
+                                                                    activeNode = "activeSub";
+                                                                }
+                                                                <li><a class="@activeNode" href="@subitem.Url">@subitem.Name</a></li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (item.DocumentTypeAlias == "RecentMediaReleasesPage")
+                                        {
+                                            var articles = item.Siblings().Where(x => x.DocumentTypeAlias == "MediaReleasePage" && x.HasProperty("showInNav") && (bool) x.GetPropertyValue("showInNav")).OrderByDescending(a => a.GetPropertyValue("articleDate")).ToList();
+                                            if (articles.Any())
+                                            {
+                                                <ul class="ulInsideContent">
+                                                    @foreach (var article in articles)
+                                                    {
+                                                        activeNode = "";
+                                                        if (Model.Content.Id == article.Id)
+                                                        {
+                                                            activeNode = "activeSub";
+                                                        }
+                                                        <li><a class="@activeNode" href="@article.Url">@article.GetPropertyValue("PageTitle") (@DateTime.Parse(article.GetPropertyValue("articleDate").ToString()).ToString("dd/MM/yy"))</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+                                        if (item.DocumentTypeAlias == "RecentConsumerAlertsPage")
+                                        {
+                                            var articles = item.Siblings().Where(x => x.DocumentTypeAlias == "ConsumerAlertPage" && x.HasProperty("showInNav") && (bool) x.GetPropertyValue("showInNav")).OrderByDescending(a => a.GetPropertyValue("articleDate")).ToList();
+                                            if (articles.Any())
+                                            {
+                                                <ul class="ulInsideContent">
+                                                    @foreach (var article in articles)
+                                                    {
+                                                        activeNode = "";
+                                                        if (Model.Content.Id == article.Id)
+                                                        {
+                                                            activeNode = "activeSub";
+                                                        }
+                                                        <li><a class="@activeNode" href="@article.Url">@article.GetPropertyValue("PageTitle") (@DateTime.Parse(article.GetPropertyValue("articleDate").ToString()).ToString("dd/MM/yy"))</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+
+                                        if (item.DocumentTypeAlias == "NavigationSeparator")
+                                        {
+                                            <br/>
+                                        }
+                                    }
+                                </div>
+                            </li>
+                            index++;
+                        }
+                    }
+                </ul>
+            </nav>
+            <div class="structurelabel" role="navigation">
+                <ul id="sitenav">
+                    @foreach (var category in Model.Content.AncestorOrSelf(1).Children)
+                    {
+                        if (category.DocumentTypeAlias == "NavigationCategory" || category.DocumentTypeAlias == "ConsumerAlerts" || category.DocumentTypeAlias == "MediaReleases")
+                        {
+                            <li>@category.Name</li>
+                            <ul>
+                                @if (category.Name == "Home")
+                                    {
+                                        <li><a href="/">Home Page</a></li>
+                                    }
+                                    else if (category.Name == "Industry")
+                                    {
+                                        if (isSignedin)
+                                        {
+                                            <li><a href="@Url.Action("SignOut", "UserSurface")">Sign Out</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="#" class="openSignIn">Sign In</a></li>
+                                        }
+                                    }
+                                    @foreach (var item in category.Children)
+                                    {
+                                        if (item.DocumentTypeAlias != "MediaReleasePage" && item.DocumentTypeAlias != "ConsumerAlertPage")
+                                        {
+                                            if ((item.HasValue("showInNav") && (bool)item.GetPropertyValue("showInNav") && !(isSignedin && hideOnSignedInForms.Contains(item.GetTemplateAlias())))
+                                                || (isSignedin && signedInForms.Contains(item.GetTemplateAlias()))
+                                                || (isAdmin && adminOnlyForms.Contains(item.GetTemplateAlias())))
+                                            {
+                                                <li><a href="@item.Url">@item.Name</a></li>
+                                                if (item.Children.Any())
+                                                {
+                                                    var subitems = item.Children.Where(x => x.HasProperty("showInNav") && (bool)x.GetPropertyValue("showInNav")).ToList();
+                                                    if (subitems.Any())
+                                                    {
+                                                        <ul>
+                                                            @foreach (var subitem in subitems)
+                                                            {
+                                                                <li><a href="@subitem.Url">@subitem.Name</a></li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (item.DocumentTypeAlias == "RecentMediaReleasesPage")
+                                        {
+                                            var articles = item.Siblings().Where(x => x.DocumentTypeAlias == "MediaReleasePage" && x.HasProperty("showInNav") && (bool)x.GetPropertyValue("showInNav")).ToList();
+                                            if (articles.Any())
+                                            {
+                                                <ul>
+                                                    @foreach (var article in articles)
+                                                    {
+                                                        <li><a href="@article.Url">@article.GetPropertyValue("PageTitle") (@DateTime.Parse(article.GetPropertyValue("articleDate").ToString()).ToString("dd/MM/yy"))</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+                                        if (item.DocumentTypeAlias == "RecentConsumerAlertsPage")
+                                        {
+                                            var articles = item.Siblings().Where(x => x.DocumentTypeAlias == "ConsumerAlertPage" && x.HasProperty("showInNav") && (bool)x.GetPropertyValue("showInNav")).ToList();
+                                            if (articles.Any())
+                                            {
+                                                <ul>
+                                                    @foreach (var article in articles)
+                                                    {
+                                                        <li><a href="@article.Url">@article.GetPropertyValue("PageTitle") (@DateTime.Parse(article.GetPropertyValue("articleDate").ToString()).ToString("dd/MM/yy"))</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        }
+                                    }
+                                </ul>
+                        }
+                    }
+                </ul>
+            </div>
+            <div id="navSearchHolder" class="showOnMobile">
+                @Html.Action("Search", "SearchSurface")
+            </div>
+            @if (Model.Content.HasProperty("showFactoid") && (bool) Model.Content.GetPropertyValue("showFactoid"))
+            {
+                @Umbraco.RenderMacro("Factoid", new {Item = Model.Content.GetPropertyValue("factoid")})
+            }            
+        </div>
+        <div class="socialHolder">
+            @{
+                var home = Model.Content.AncestorOrSelf(1);
+            }
+            @*<a class="icon fb" href="@home.GetPropertyValue("facebookLink")" target="_blank" title="Facebook" aria-label="Facebook logo"></a>
+            <a class="icon tweet" href="@home.GetPropertyValue("twitterLink")" target="_blank" title="Twitter" aria-label="Twitter logo"></a>
+            <a class="icon yt" href="@home.GetPropertyValue("youtubeLink")" target="_blank" title="YouTube" aria-label="YouTube logo"></a>
+            <a class="icon rss" href="@home.GetPropertyValue("rssUrl")" target="_blank" title="RSS Feed" aria-label="RSS Feed logo"></a>*@
+            <a class="icon" href="@home.GetPropertyValue("facebookLink")" target="_blank" title="Facebook"><img class="R10-imgHover" data-img-src="/images/r10/social/icon-facebook" src="/images/r10/social/icon-facebook.png" alt="Facebook" /></a>
+            <a class="icon" href="@home.GetPropertyValue("twitterLink")" target="_blank" title="Twitter"><img class="R10-imgHover" data-img-src="/images/r10/social/icon-twitter" src="/images/r10/social/icon-twitter.png" alt="Twitter" /></a>
+            <a class="icon" href="@home.GetPropertyValue("youtubeLink")" target="_blank" title="YouTube"><img class="R10-imgHover" data-img-src="/images/r10/social/icon-youtube" src="/images/r10/social/icon-youtube.png" alt="Youtube" /></a>
+            <a class="icon" href="@home.GetPropertyValue("rssUrl")" target="_blank" title="RSS Feed"><img class="R10-imgHover" data-img-src="/images/r10/social/icon-rss" src="/images/r10/social/icon-rss.png" alt="RSS" /></a>
+        </div>
+    </div>
+</div>
+<script>
+    var activeNavAccordionIndex = @activeNavAccordionIndex;
+
+</script>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b632aec7-9a3e-4015-8407-79d27e91fc3a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OnlineAccountService1.disco" MetadataType="Disco" ID="9cb12b4c-1b8b-42b4-9088-06e4f9c96b1e" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?disco" />
+    <MetadataFile FileName="OnlineAccountService8.xsd" MetadataType="Schema" ID="8f7412f4-d88b-408f-9197-fed6195d8ebf" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OnlineAccountService81.xsd" MetadataType="Schema" ID="b1d01569-eb28-4abf-be7d-80ba56e95fbb" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OnlineAccountService82.xsd" MetadataType="Schema" ID="5b49f408-1ef0-4449-ab2a-a6c2464f659d" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OnlineAccountService83.xsd" MetadataType="Schema" ID="e22bc2c8-33be-4a84-8ca4-020e2c05c8e0" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OnlineAccountService84.xsd" MetadataType="Schema" ID="07e2dcf6-073a-427f-8496-a1d851c5fbbb" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd6" />
+    <MetadataFile FileName="OnlineAccountService85.xsd" MetadataType="Schema" ID="cf39c720-2b92-4a9f-a9b4-b21134a88163" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd7" />
+    <MetadataFile FileName="OnlineAccountService86.xsd" MetadataType="Schema" ID="216f75a1-5137-493e-9c84-b942aab3d98a" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd4" />
+    <MetadataFile FileName="OnlineAccountService87.xsd" MetadataType="Schema" ID="af09287c-4650-43cd-aa0d-f0bd43a41780" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?xsd=xsd5" />
+    <MetadataFile FileName="OnlineAccountService1.wsdl" MetadataType="Wsdl" ID="2c75b7fb-6894-4f8a-93cb-a42124555487" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/AccessSeeker/OnlineAccountService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

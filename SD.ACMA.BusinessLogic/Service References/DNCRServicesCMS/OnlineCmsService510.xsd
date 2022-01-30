@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Enquiry" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" />
+  <xs:import schemaLocation="http://localhost/Salmat.Dncr.Services/Services/Cms/OnlineCmsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" />
+  <xs:complexType name="LodgeEnquiryRequestArgs">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Cms.Complaint" minOccurs="0" name="ContactDetails" nillable="true" type="q1:OnlineContactRequest" />
+      <xs:element minOccurs="0" name="EnquiryDetails" nillable="true" type="tns:OnlineEnquiryRequest" />
+      <xs:element minOccurs="0" name="RefundDetails" nillable="true" type="tns:OnlineRefundRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LodgeEnquiryRequestArgs" nillable="true" type="tns:LodgeEnquiryRequestArgs" />
+  <xs:complexType name="OnlineEnquiryRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentUserId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Anonymous" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="Channel" type="q2:channels.channelsEnum" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Details" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="EnquiryCategory" nillable="true" type="q3:enquiry_category.enquiry_categoryEnum" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="EnquiryTelemarketerType" type="q4:enquiry_telemarketer_type.enquiry_telemarketer_typeEnum" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="EnquiryType" nillable="true" type="q5:enquiry_types.enquiry_typesEnum" />
+      <xs:element minOccurs="0" name="IsRefund" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OnlineEnquiryRequest" nillable="true" type="tns:OnlineEnquiryRequest" />
+  <xs:complexType name="OnlineRefundRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountID" type="xs:int" />
+      <xs:element minOccurs="0" name="BankDetailsAccountName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BankDetailsAccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BankDetailsBSB" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BankDetailsOther" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DishonouredPaymentRefundID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="EnquiryRefundPaymentType" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Salmat.Dncr.Business.Entities.Reference" minOccurs="0" name="EnquiryRefundType" type="q6:enquiry_refund_types.enquiry_refund_typesEnum" />
+      <xs:element minOccurs="0" name="RefundAcmaIncrementAccountBalance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefundAcmaIncrementWashCredits" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundAmountFromSubscription" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefundOrderID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundReservedAccountBalance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RefundReservedWashCredits" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundSubscriptionID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundWashCreditsRemainingFromSubscription" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RefundWashTransactionID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCreditsRolloverAmount" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="WashCreditsRolloverTransactionID" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OnlineRefundRequest" nillable="true" type="tns:OnlineRefundRequest" />
+  <xs:complexType name="LodgeEnquiryRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LodgeEnquiryRequestResult" nillable="true" type="tns:LodgeEnquiryRequestResult" />
+</xs:schema>

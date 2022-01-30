@@ -1,0 +1,22 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    var home = Model.Content.AncestorOrSelf(1);
+    var socialSection = Html.Action("HomePage", "SocialMediaSurface").ToHtmlString();
+    socialSection = socialSection.Replace("##FACEBOOK_LINK##", home.GetPropertyValue("facebookLink").ToString());
+    socialSection = socialSection.Replace("##TWITTER_LINK##", home.GetPropertyValue("twitterLink").ToString());
+    socialSection = socialSection.Replace("##YOUTUBE_LINK##", home.GetPropertyValue("youtubeLink").ToString());
+    var socialSectionHTML = new MvcHtmlString(socialSection);
+}
+    <div class="contentItem contentItemConvo">
+    <div id="joinConversation" class="section">
+        <div class="section-separator-line"></div>
+        <div class="labels">
+            <div class="sectionTitle joinConv ProxiBold">
+                <span class="icon"><h2>@home.GetPropertyValue("socialMediaTitle")</h2></span>
+            </div>
+            <div class="sectionDesc">@home.GetPropertyValue("socialMediaBlurb")</div>
+        </div>
+        @socialSectionHTML
+    </div>
+</div>

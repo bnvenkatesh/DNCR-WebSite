@@ -1,0 +1,88 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@using SD.ACMA.DNCRProject.Website.Extensions
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.ConsumerComplaintViewModel>
+
+@{
+    this.MapModel();
+}
+
+<div class="contentHeadline">
+    <div class="contentTitle red">
+        <h1 class="ProxiSemiBold">@ViewBag.PageTitle</h1>
+    </div>
+</div>
+
+@if (ViewBag.Timing != null)
+{
+    <div class="hidden">@ViewBag.Timing</div>
+}
+
+@if (!Model.IsSubmitted)
+{
+    @Html.Partial("_ConsumerForm")
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new {Items = ViewBag.Faqs})
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new {Items = ViewBag.Downloads})
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new {Items = ViewBag.RelatedLinks})
+        }
+        <div class="clear"></div>
+    </div>
+}
+else
+{
+    <div class="thankyou-message floatLeft">
+        <h2 class="ProxiBold consumerGreenShade2Color">Thank you. Your complaint has been received. Your reference number is @Model.RefCode.</h2>
+        <p class="desc">If you have provided an email address, you will receive an acknowledgement email (including your reference number) shortly.</p>
+        @*<p>Where you have provided an email or postal address, you will receive a response to your complaint within 14 days, unless the complaint has been escalated to the ACMA, who will contact you upon resolution.</p>*@
+        <p>If you require any further assistance, you can call 1300 792 958 (please note your reference number to make it easier to identify your complaint).</p>
+        <hr/>
+        <div>
+            @using (Html.BeginUmbracoForm<ComplaintSurfaceController>("Consumer"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.IsAnonymous)
+                @Html.HiddenFor(model => model.Title)
+                @Html.HiddenFor(model => model.FirstName)
+                @Html.HiddenFor(model => model.LastName)
+                @Html.HiddenFor(model => model.AddressLine1)
+                @Html.HiddenFor(model => model.AddressLine2)
+                @Html.HiddenFor(model => model.City)
+                @Html.HiddenFor(model => model.Postcode)
+                @Html.HiddenFor(model => model.State)
+                @Html.HiddenFor(model => model.Country)
+                @Html.HiddenFor(model => model.Email)
+                @Html.HiddenFor(model => model.ContactNumber)
+                @Html.HiddenFor(model => model.Channel)
+                @Html.Hidden("IsSubmitted", Model.IsSubmitted)
+                <button class="ProxiBold">Lodge Another Complaint</button>
+            }
+        </div>
+    </div>
+    <div class="sidebar floatLeft">
+        @if (ViewBag.Faqs != "")
+        {
+            @Umbraco.RenderMacro("FAQs", new { Items = ViewBag.Faqs })
+        }
+
+        @if (ViewBag.Downloads != "")
+        {
+            @Umbraco.RenderMacro("Downloads", new { Items = ViewBag.Downloads })
+        }
+
+        @if (ViewBag.RelatedLinks != "")
+        {
+            @Umbraco.RenderMacro("RelatedLinks", new { Items = ViewBag.RelatedLinks })
+        }
+        <div class="clear"></div>
+    </div>
+}

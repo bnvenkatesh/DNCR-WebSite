@@ -1,0 +1,112 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.DashboardUserViewModel
+
+@if (Model.Users.Any())
+{
+    <script>
+        $(function () {
+            $("#dashboardUser .paginationHolder li a").off();
+            $("#dashboardUser .paginationHolder li a").on("click", function (event) {
+                event.preventDefault();
+                var page = $(this).data('page');
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("Dashboard", "UserSurface")',
+                    data: { currentPage: page, editUserNodeUrl: "@ViewBag.EditUserNodeUrl" },
+                    success: function (result) {
+                        $("#dashboardUser").html(result);
+                    }
+                });
+            });
+
+            $("#dashboardUser").on("change", ".isActive", function () {
+                if (!$(this).is(":checked") && $("#activateUser").is(':hidden')) {
+                    $("#deactivateUser span#userEmail").text($(this).data("username"));
+                    $("button#deactivateButton").data("userid", $(this).data("userid"));
+                    $("#deactivateUser").dialog("open");
+                    $(this).prop('checked', true);
+                }
+                if ($(this).is(":checked") && $("#deactivateUser").is(':hidden')) {
+                    $("#activateUser span#userEmail").text($(this).data("username"));
+                    $("button#activateButton").data("userid", $(this).data("userid"));
+                    $(".activationLink").hide();
+                    $("#activateUser").dialog("open");
+                    $(this).prop('checked', false);
+                }
+            });
+
+            $("#userPageUpdated").show().delay(1000).fadeOut();
+        });
+    </script>
+    <form>
+        <table id="userAccountsTable" class="responsive">
+            <caption>Account Users</caption>
+            <tr>
+                <th class="addborderLeftTop center">@Html.GetDisplayName(model => model.Users.FirstOrDefault().AccountUserId)</th>
+                <th>@Html.GetDisplayName(model => model.Users.FirstOrDefault().User)</th>
+                <th>@Html.GetDisplayName(model => model.Users.FirstOrDefault().Phone)</th>
+                <th>@Html.GetDisplayName(model => model.Users.FirstOrDefault().Email)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Users.FirstOrDefault().CanSeeQuotes)</th>
+                <th>@Html.GetDisplayName(model => model.Users.FirstOrDefault().ReturnFormats)</th>
+                <th class="center">@Html.GetDisplayName(model => model.Users.FirstOrDefault().Status)</th>
+                <th class="right addborderRightTop">Actions</th>
+            </tr>
+            @{
+                var i = 0;
+                foreach (var user in Model.Users)
+                {
+
+                    <tr>
+                        <td class="center">@user.AccountUserId</td>
+                        <td data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().User)">@user.User</td>
+                        <td data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().Phone)">@user.Phone</td>
+                        <td class="wbr" data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().Email)">@user.Email</td>
+                        <td data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().CanSeeQuotes)" class="center">@(user.CanSeeQuotes ? "Yes" : "No")</td>
+                        <td data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().ReturnFormats)">@user.ReturnFormats</td>
+                        <td data-label="@Html.GetDisplayName(model => model.Users.FirstOrDefault().Status)" class="center">
+                            <label for="@String.Format("Users_{0}__IsActive", i)" class="hidden">User is active</label>
+                            @if (user.Status == SD.ACMA.DNCR.Infrastructure.Enums.AccountUserStatusEnum.Active.ToString())
+                            {
+                                <span>@Html.CheckBoxSimple("Users[" + i + "].IsActive", new {@class = "radioCheck isActive", data_userid = user.AccountUserId, data_username = user.Email, @checked = "checked"})</span>
+                            }
+                            else
+                            {
+                                <span>@Html.CheckBoxSimple("Users[" + i + "].IsActive", new {@class = "radioCheck isActive", data_userid = user.AccountUserId, data_username = user.Email})</span>
+                            }
+                            <div class="clear"></div>
+                        </td>
+                        <td data-label="Actions" class="right">
+                            <div class="hideOnTablet">
+                                <a href="@String.Format("{0}?accountUserId={1}", ViewBag.EditUserNodeUrl, user.AccountUserId)"><span class="icon edit" title="Edit" aria-label="Edit">Edit</span></a>
+                                <a href="#" class="deleteAction" data-userid="@user.AccountUserId" data-username="@user.Email"><span class="icon trash" title="Delete" aria-label="Delete">Delete</span></a>
+                            </div>
+                            <div class="showOnTablet">
+                                <div class="floatLeft tableEditBt">
+                                    <a class="ProxiBold" href="@String.Format("{0}?accountUserId={1}", ViewBag.EditUserNodeUrl, user.AccountUserId)">EDIT</a>
+                                </div>
+                                <div class="floatLeft tableDeleteBt">
+                                    <a class="ProxiBold deleteAction" data-userid="@user.AccountUserId" data-username="@user.Email">DELETE</a>
+                                </div>
+
+                            </div>
+
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </table>
+    </form>
+    <div class="paginationHolder">
+        @Html.Partial("_DashboardPager")
+    </div>
+}
+else
+{
+    <script>
+        $(function() {
+            $("#noUser").show();
+            $("#dashboardUser").hide();
+        });
+    </script>
+}

@@ -1,0 +1,17 @@
+﻿@model SD.ACMA.DNCRProject.Website.Models.OtherEnquiriesViewModel
+
+<script>
+    $(function() {
+        $(".submit.checkRecaptcha").show();
+    });
+</script>
+<div class="fieldMargin">
+    <div class="labelDescMargin">
+        @Html.RequiredLabelFor(model => model.Details, new { @class = "ProxiSemiBold" })
+    </div>
+    <div class="formField">
+        @Html.TextAreaFor(model => model.Details, new { @class = "long deny-html" })
+        @Html.ValidationMessageFor(model => model.Details, "", new { @class = "error" })
+    </div>
+    <div class="clear"></div>
+</div>

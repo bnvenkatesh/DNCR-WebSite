@@ -1,0 +1,116 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Linq;
+@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@{
+    Layout = "MasterPage.cshtml";    
+}
+
+@helper DisplayNode(IPublishedContent startNode)
+{
+    var isSignedin = (SessionHelper.AccountId > 0 && SessionHelper.AccountUserId > 0);
+    var isAdmin = SessionHelper.IsAdmin;
+
+    string[] signedInForms = { "IndustryDashboardPage", "IndustryQuickCheckFormPage", "IndustryUploadWashingListFormPage", "IndustryWashHistoryFormPage", "IndustryEditAccountFormPage", "IndustryAddUserFormPage" };
+    string[] adminOnlyForms = { "IndustryPurchaseSubscriptionFormPage", "IndustryEditAccountFormPage", "IndustryAddUserFormPage" };
+
+    if (startNode.TemplateId > 0)
+    {
+        if (!(signedInForms.Contains(startNode.GetTemplateAlias()) && !isSignedin) && !(adminOnlyForms.Contains(startNode.GetTemplateAlias()) && !isAdmin))
+        {
+            if (startNode.Parent == null)
+            {
+                if (startNode.Level <= 100 && startNode.Children.Count() > 0)
+                {
+                    foreach (var node in startNode.Children.Where("hideInXmlSitemap == false"))
+                    {
+                        @DisplayNode(node)
+                    }
+                }
+            }
+            else
+            {
+                <li>
+                    <a href="@GetUrlWithDomainPrefix(startNode.Url)">@startNode.Name</a>
+                    <ul>
+                        @if (startNode.Level <= 100 && startNode.Children.Count() > 0)
+                        {
+                            foreach (var node in startNode.Children.Where("hideInXmlSitemap == false"))
+                            {
+                                @DisplayNode(node)
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    }
+    else if (startNode.DocumentTypeAlias == "NavigationCategory" || startNode.DocumentTypeAlias == "MediaReleases" || startNode.DocumentTypeAlias == "ConsumerAlerts")
+    {
+        if (startNode.DocumentTypeAlias == "NavigationCategory" && startNode.Name == "Home")
+        {
+            <li><a href="/">Home</a>
+                <ul>
+                    @if (startNode.Level <= 100 && startNode.Children.Count() > 0)
+                    {
+                        foreach (var node in startNode.Children.Where("hideInXmlSitemap == false"))
+                        {
+                            @DisplayNode(node)
+                        }
+                    }
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>@startNode.Name
+                <ul>
+                    @if (startNode.Level <= 100 && startNode.Children.Count() > 0)
+                    {
+                        foreach (var node in startNode.Children.Where("hideInXmlSitemap == false"))
+                        {
+                            @DisplayNode(node)
+                        }
+                    }
+                </ul>
+            </li>
+        }
+    }
+}
+
+
+@functions {
+    private static string GetUrlWithDomainPrefix(string url)
+    {
+        if (url.StartsWith("/"))
+            url = url.Substring(1);
+
+        var domainPrefix = string.Format("http://{0}/", HttpContext.Current.Request.ServerVariables["HTTP_HOST"]);
+
+        if (url.StartsWith(domainPrefix))
+            return url;
+        else
+            return domainPrefix + url;
+    }
+}
+
+<div class="section sectionSubPage addSectionMinHeight">
+    <div class="subPages" id="readspeaker">
+        <div class="contentHeadline">
+            <div class="articleTitle red">
+                <h1 class="ProxiSemiBold">Sitemap</h1>
+            </div>
+        </div>
+        <div id="article">
+            <div class="article-holder floatLeft">
+                <div class="articleDesc">@Model.Content.GetPropertyValue("pageSummary")</div>
+                <div class="articleContent">
+                    <ul>
+                        @DisplayNode(Umbraco.TypedContent(UmbracoContext.Current.PageId).AncestorOrSelf(1))
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>

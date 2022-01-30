@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B5146AA5-F09E-4B52-8997-9FD79AB2E0A7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SD.ACMA.POCO</RootNamespace>
+    <AssemblyName>SD.ACMA.POCO</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'devint|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\devint\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'SIT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\SIT\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UAT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\UAT\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Prod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.Core.Data.Repository.PetaPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DAL\SD.Core.Data.Repository.PetaPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BaseWebServiceResponse.cs" />
+    <Compile Include="Base\CountryModel.cs" />
+    <Compile Include="Base\GetAccountRefundsResponse.cs" />
+    <Compile Include="Base\GetCountriesResponse.cs" />
+    <Compile Include="Base\GetManualAdjustmentLimitResponse.cs" />
+    <Compile Include="Base\GetServiceProvidersResponse.cs" />
+    <Compile Include="Base\GetSuburbForPostCodeResponse.cs" />
+    <Compile Include="Base\ImpersonateCSRResponse.cs" />
+    <Compile Include="Base\LodgeEnquiryModel.cs" />
+    <Compile Include="Base\LodgeEnquiryResponse.cs" />
+    <Compile Include="Base\PayForOrderResponse.cs" />
+    <Compile Include="Base\ServiceProviderModel.cs" />
+    <Compile Include="Consumer\BulkRegistration.cs" />
+    <Compile Include="Consumer\BulkRegistrationResponse.cs" />
+    <Compile Include="Consumer\AttachMailResponseRequest.cs" />
+    <Compile Include="Base\LodgeComplaintModel.cs" />
+    <Compile Include="Base\LodgeComplaintResponse.cs" />
+    <Compile Include="Consumer\ConsumerEnquiry.cs" />
+    <Compile Include="Consumer\ConsumerEnquiryResponse.cs" />
+    <Compile Include="Consumer\Registration.cs" />
+    <Compile Include="Consumer\RegistrationConfirmation.cs" />
+    <Compile Include="Consumer\WebServiceFault.cs" />
+    <Compile Include="Consumer\RegistrationRequestResult.cs" />
+    <Compile Include="Consumer\RegistrationResult.cs" />
+    <Compile Include="FacebookPostModel.cs" />
+    <Compile Include="Industry\AccountAdjustmentModel.cs" />
+    <Compile Include="Industry\AccountAdjustmentTypesModel.cs" />
+    <Compile Include="Industry\AccountModel.cs" />
+    <Compile Include="Industry\AccountActivationResponse.cs" />
+    <Compile Include="Industry\AccountRefundsModel.cs" />
+    <Compile Include="Industry\AccountSummaryDetailResponse.cs" />
+    <Compile Include="Industry\AccountSummaryModel.cs" />
+    <Compile Include="Industry\AccountTransactionModel.cs" />
+    <Compile Include="Industry\ActivateAccountResponse.cs" />
+    <Compile Include="Industry\AccountUserModel.cs" />
+    <Compile Include="Industry\ActivateWashOnlyUserResponse.cs" />
+    <Compile Include="Industry\CreateAccountModel.cs" />
+    <Compile Include="Industry\CreateAccountResponse.cs" />
+    <Compile Include="Industry\CreateWashOnlyUserModel.cs" />
+    <Compile Include="Industry\DownloadErrorLogResponse.cs" />
+    <Compile Include="Industry\DownloadWashFileResponse.cs" />
+    <Compile Include="Industry\EnquiryRefundsModel.cs" />
+    <Compile Include="Industry\GenerateInvoiceResponse.cs" />
+    <Compile Include="Industry\GenericAccountModel.cs" />
+    <Compile Include="Industry\CreateOrderResult.cs" />
+    <Compile Include="Industry\DashboardDetails.cs" />
+    <Compile Include="Industry\FinancialDetails.cs" />
+    <Compile Include="Base\GenericResponseModel.cs" />
+    <Compile Include="Industry\GetAccountResponse.cs" />
+    <Compile Include="Industry\GetAccountUserHeaderInformationResponse.cs" />
+    <Compile Include="Industry\GetAccountUserResponse.cs" />
+    <Compile Include="Industry\GetAllAccountUsersResponse.cs" />
+    <Compile Include="Industry\GetAvailableSubscriptionsResponse.cs" />
+    <Compile Include="Industry\GetFinancialHistoryResponse.cs" />
+    <Compile Include="Industry\GetStatesResponse.cs" />
+    <Compile Include="Industry\ImpersonateResponse.cs" />
+    <Compile Include="Industry\OnlineRefundRequestModel.cs" />
+    <Compile Include="Industry\PayForOrderArguments.cs" />
+    <Compile Include="Industry\StateModel.cs" />
+    <Compile Include="Industry\SubscriptionHistoryDetailsResponse.cs" />
+    <Compile Include="Industry\IndustryComplaint.cs" />
+    <Compile Include="Industry\IndustryEnquiry.cs" />
+    <Compile Include="Industry\LoginResponse.cs" />
+    <Compile Include="Industry\OrderLineModel.cs" />
+    <Compile Include="Industry\OrderModel.cs" />
+    <Compile Include="Industry\OrderNoteModel.cs" />
+    <Compile Include="Industry\OrderTransactionModel.cs" />
+    <Compile Include="Industry\PaymentModel.cs" />
+    <Compile Include="Industry\PreWashResponse.cs" />
+    <Compile Include="Industry\QuickWashResponse.cs" />
+    <Compile Include="Industry\SubscriptionHistoryModel.cs" />
+    <Compile Include="Industry\SubscriptionModel.cs" />
+    <Compile Include="Industry\SubscriptionPurchaseDetails.cs" />
+    <Compile Include="Industry\SubscriptionSummaryDetailsResponse.cs" />
+    <Compile Include="Industry\SubscriptionSummaryModel.cs" />
+    <Compile Include="Industry\SubscriptionVsQuantityModel.cs" />
+    <Compile Include="Industry\UpdateAccountModel.cs" />
+    <Compile Include="Industry\UpdateAccountUserModel.cs" />
+    <Compile Include="Industry\UserContextModel.cs" />
+    <Compile Include="Industry\WashByFileUploadModel.cs" />
+    <Compile Include="Industry\WashByFileUploadResponse.cs" />
+    <Compile Include="Industry\WashFileUpload.cs" />
+    <Compile Include="Industry\WashHistoryRequestModel.cs" />
+    <Compile Include="Industry\WashHistoryResponse.cs" />
+    <Compile Include="Industry\WashingFormat.cs" />
+    <Compile Include="Industry\WashNumberModel.cs" />
+    <Compile Include="PetaPoco\Attachment.cs" />
+    <Compile Include="PetaPoco\FinancialReport.cs" />
+    <Compile Include="PetaPoco\CreditCardPayment.cs" />
+    <Compile Include="PetaPoco\FinancialReport_ExceptionsReport.cs" />
+    <Compile Include="PetaPoco\FinancialReport_CreditNotesReport.cs" />
+    <Compile Include="PetaPoco\FinancialReport_PaymentsReconReport.cs" />
+    <Compile Include="PetaPoco\Media.cs" />
+    <Compile Include="PetaPoco\Post.cs" />
+    <Compile Include="PetaPoco\SiteLogging.cs" />
+    <Compile Include="PetaPoco\SocialMediaAccount.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocialMediaModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SD.ACMA.DNCR.Infrastructure\SD.ACMA.DNCR.Infrastructure.csproj">
+      <Project>{16a62f2e-2ce7-4587-b70b-f9760800acd4}</Project>
+      <Name>SD.ACMA.DNCR.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

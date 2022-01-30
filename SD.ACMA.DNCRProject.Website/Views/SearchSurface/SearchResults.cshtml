@@ -1,0 +1,86 @@
+﻿@using SD.ACMA.DNCRProject.Website.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<SD.ACMA.DNCRProject.Website.Models.SearchResultsViewModel>
+
+<script>
+    $(function () {
+        var currentPage = @Model.Pager.CurrentPage;
+
+        $(".loadMore").on("click", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: '@Url.Action("LoadSearchResults", "SearchSurface")',
+                data: {keywords: "@Model.SearchTerm", itemsPerPage: "@Model.Pager.ItemsPerPage", currentPage: currentPage + 1 },
+                success: function (result) {
+                    $(".search-results").append(result);
+                    currentPage++;
+                    if($('#Pager_IsLastPage').length > 0)
+                    {
+                        $(".loadMore").hide();
+                    }
+                }
+            });
+        });
+
+        if($('#Pager_IsLastPage').length > 0)
+        {
+            $(".loadMore").hide();
+        }
+    });
+</script>
+
+<div class="mobileSearch">
+    @Html.Action("SearchAgainMobile", "SearchSurface", new { keyword = @Model.SearchTerm })
+</div>
+<div class="search">
+    <div class="washFilterHolder">
+        @Html.Action("SearchAgain", "SearchSurface", new { keyword = @Model.SearchTerm })
+        @if (Model.Pager.NumberOfItems == 1)
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.Pager.NumberOfItems search result found
+            </div>
+        }
+        else
+        {
+            <div class="searchMessage ProxiBold floatRight">
+                @Model.Pager.NumberOfItems search results found
+            </div>
+        }
+        <div class="clear"></div>
+    </div>
+</div>
+
+@if (Model.SearchResults.Any())
+{
+    <div class="search-results">
+        @Html.Partial("_LoadSearchResults")
+    </div>
+}
+else
+{
+    <div class="search-results">
+        <div class="result-item">
+            <div class="itemDesc">
+                <p>Your search - <strong>@Model.SearchTerm</strong> - did not match any results</p>
+                <p>Suggestions:</p>
+                <ul>
+                    <li>Make sure that all words are spelled correctly.</li>
+                    <li>Try different keywords.</li>
+                    <li>Try more general keywords.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="paginationHolder hideOnMobile">
+    @Html.Partial("_Pager")
+</div>
+@if (Model.Pager.Pages.Count() > 1)
+{
+    <div class="loadMore">
+        <a href="#" class="purple ProxiBold">LOAD MORE</a>
+    </div>
+}

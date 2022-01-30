@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1ebe494d-0697-4c56-8d49-4aef7536a37f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OnlineWashingService7.xsd" MetadataType="Schema" ID="ee250ac7-f400-4513-b1fb-e68806807670" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OnlineWashingService2.wsdl" MetadataType="Wsdl" ID="b70a3e91-99c8-4501-a422-b4e78e653b20" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?wsdl" />
+    <MetadataFile FileName="OnlineWashingService71.xsd" MetadataType="Schema" ID="69224e5a-0b95-4c51-a867-8d2609d71bcc" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd5" />
+    <MetadataFile FileName="OnlineWashingService1.disco" MetadataType="Disco" ID="2af27166-468d-47f0-9ed7-c04febbbb00d" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?disco" />
+    <MetadataFile FileName="OnlineWashingService72.xsd" MetadataType="Schema" ID="165393f1-9e05-41ae-935b-63f468aa61e0" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OnlineWashingService21.wsdl" MetadataType="Wsdl" ID="9e2ec583-75c7-47e6-bace-674e955d5f4d" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="OnlineWashingService73.xsd" MetadataType="Schema" ID="e2cb7dae-e975-4cf5-9bb3-c30e95eb0b6f" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd6" />
+    <MetadataFile FileName="OnlineWashingService74.xsd" MetadataType="Schema" ID="17170f8b-b315-4c0f-9526-efbdd76b281a" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OnlineWashingService75.xsd" MetadataType="Schema" ID="b9a43957-e545-4a08-aaf1-4ed9b74160fe" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OnlineWashingService76.xsd" MetadataType="Schema" ID="0569618a-fc1a-4f6f-bcf7-81d3be75b354" SourceId="1" SourceUrl="http://localhost/Salmat.Dncr.Services/Services/Washing/OnlineWashingService.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

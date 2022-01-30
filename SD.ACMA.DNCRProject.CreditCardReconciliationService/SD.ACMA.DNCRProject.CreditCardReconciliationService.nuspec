@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SD.ACMA.DNCRProject.CreditCardReconciliationService</id>
+    <version>$version$</version>
+    <title>SD.ACMA.DNCRProject.CreditCardReconciliationService</title>
+    <authors>Salmat Digital</authors>
+    <owners>ACMA</owners>
+    <description>SD.ACMA.DNCRProject.CreditCardReconciliationService</description>
+  </metadata>
+</package>

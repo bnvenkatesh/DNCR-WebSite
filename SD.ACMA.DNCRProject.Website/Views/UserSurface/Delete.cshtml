@@ -1,0 +1,56 @@
+﻿@using SD.ACMA.DNCR.Infrastructure.Configuration
+@using SD.ACMA.DNCRProject.Website.Helpers
+@if (SessionHelper.AccountId == 0 || SessionHelper.AccountUserId == 0)
+{
+    Response.Redirect(Url.Action("SignOut", "UserSurface"));
+}
+else
+{
+    <script>
+        $(function() {
+            $("#dashboardUser").on("click", ".deleteAction", function (event) {
+                event.preventDefault();
+                $("#deleteUser span#userEmail").text($(this).data("username"));
+                $("button#deleteButton").data("userid", $(this).data("userid"));
+                $("#deleteUser").dialog("open");
+            });
+            $("#closeDeleteUser").click(function() {
+                $("#deleteUser").dialog("close");
+            });
+            $("button#deleteButton").click(function(event) {
+                //event.preventDefault();
+                var userid = $(this).data('userid');
+                var page = 1;
+                if ($("#dashboardUser .paginationHolder li a.active").length > 0) {
+                    page = $("#dashboardUser .paginationHolder li a.active").data("page");
+                }
+                $.ajax({
+                    type: 'GET',
+                    cache: false,
+                    url: '@Url.Action("Delete", "UserSurface")',
+                    data: { userId: userid, currentPage: page, editUserNodeUrl: "@ViewBag.EditUserNodeUrl" },
+                    success: function(result) {
+                        $("#dashboardUser").html(result);
+                        $("#deleteUser").dialog("close");
+                    }
+                });
+            });
+        });
+    </script>
+    <div id="deleteUser" class="dialog" title="Delete User?">
+        <form>
+            <div class="dialogDesc">
+                <p>
+                    Are you sure you want to delete user "<span id='userEmail'></span>"?
+                </p>
+                <p class="addMargin">
+                    All details of this user will be removed. However, please note that any washes performed by this user will still appear in the Wash History with this user's name.
+                </p>
+            </div>
+            <div class="formField">
+                <button id="deleteButton" class="shaded width150">DELETE USER</button>
+                <button type="button" id="closeDeleteUser" class="width125 industryBlueShade1Color industryBlueShade1Border">CANCEL</button>
+            </div>
+        </form>
+    </div>
+}
